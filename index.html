@@ -313,6 +313,83 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .c-nav-right{display:flex;gap:8px;}
 .reset-link{font-size:12px;color:var(--gray400);cursor:pointer;background:none;border:none;text-decoration:underline;}
 .reset-link:hover{color:var(--gray600);}
+
+/* ── Section A: Component Gallery ── */
+.a-mode-toggle{display:flex;gap:0;border:1px solid var(--gray200);border-radius:var(--radius-md);overflow:hidden;width:fit-content;margin-bottom:20px;}
+.a-mode-btn{padding:8px 20px;font-size:13px;font-weight:500;border:none;background:var(--gray100);color:var(--gray500);cursor:pointer;transition:all .15s;}
+.a-mode-btn.active{background:#fff;color:var(--gray900);box-shadow:var(--shadow-sm);}
+.comp-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.cgcard{border:1.5px solid var(--gray200);border-radius:var(--radius-md);padding:16px;cursor:pointer;background:#fff;transition:all .18s;}
+.cgcard:hover{border-color:var(--g600);box-shadow:var(--shadow-sm);}
+.cgcard.cg-active{border-color:var(--g800);background:var(--g50);}
+.cg-icon{font-size:24px;margin-bottom:8px;}
+.cg-name{font-size:14px;font-weight:600;color:var(--gray900);margin-bottom:3px;}
+.cg-sub{font-size:12px;color:var(--gray500);margin-bottom:8px;line-height:1.5;}
+.cg-pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;margin-bottom:8px;}
+.cg-mvp{background:var(--g100);color:var(--g800);}
+.cg-opt{background:var(--gray100);color:var(--gray600);border:1px solid var(--gray200);}
+.cg-later{background:var(--a100);color:var(--a900);}
+.cg-try{font-size:11px;color:var(--g800);font-weight:600;margin-top:6px;}
+.demo-panel{background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:16px;animation:fadeUp .25s ease;}
+.demo-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray100);}
+.demo-panel-title{font-size:14px;font-weight:600;color:var(--gray900);}
+.demo-panel-pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;}
+/* Peer Benchmark */
+.bmark-row{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+.bmark-label{font-size:13px;color:var(--gray700);width:190px;flex-shrink:0;}
+.bmark-bar-outer{flex:1;background:var(--gray100);border-radius:999px;height:10px;overflow:hidden;}
+.bmark-bar-inner{height:100%;border-radius:999px;transition:width 1s ease;}
+.bmark-pct{font-size:13px;font-weight:700;width:36px;text-align:right;flex-shrink:0;}
+/* Gap Advisor */
+.ga-path-sel{padding:7px 12px;font-size:13px;border:1px solid var(--gray300);border-radius:var(--radius-sm);background:#fff;color:var(--gray900);margin-bottom:14px;width:100%;}
+.ga-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray100);}
+.ga-row:last-of-type{border-bottom:none;}
+.ga-toggle{font-size:11px;padding:3px 10px;border-radius:999px;border:none;cursor:pointer;font-weight:600;transition:all .2s;flex-shrink:0;margin-top:1px;}
+.ga-missing{background:var(--r100);color:var(--r700);}
+.ga-partial{background:var(--a100);color:var(--a900);}
+.ga-done{background:var(--g100);color:var(--g800);}
+.ga-info{flex:1;}
+.ga-label{font-size:13px;color:var(--gray900);font-weight:500;}
+.ga-impact{font-size:11px;color:var(--gray500);margin-top:2px;}
+.ga-score-bar{background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 14px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:13px;}
+.ga-score-label{color:var(--gray600);}
+.ga-score-val{font-weight:700;color:var(--g800);}
+/* What-if Simulator */
+.wi-selectors{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px;}
+.wi-select{padding:8px 12px;font-size:13px;border:1px solid var(--gray300);border-radius:var(--radius-sm);background:#fff;color:var(--gray900);width:100%;}
+.wi-vs{font-size:12px;font-weight:600;color:var(--gray400);text-align:center;}
+.wi-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.wi-col{border-radius:var(--radius-md);padding:14px;}
+.wi-col-a{background:var(--g50);border:1px solid var(--g100);}
+.wi-col-b{background:var(--b100);border:1px solid #93C5FD;}
+.wi-col-title{font-size:12px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.wi-col-a .wi-col-title{color:var(--g800);}
+.wi-col-b .wi-col-title{color:var(--b900);}
+.wi-metric{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid rgba(0,0,0,.06);}
+.wi-metric:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.wi-metric-label{color:var(--gray500);}
+.wi-metric-val{font-weight:600;}
+.wi-col-a .wi-metric-val{color:var(--g800);}
+.wi-col-b .wi-metric-val{color:var(--b900);}
+/* AI Path Generator */
+.ai-btn{background:var(--p700);color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:background .2s;}
+.ai-btn:hover{background:var(--p900);}
+.ai-loading{display:none;align-items:center;gap:8px;font-size:13px;color:var(--gray500);padding:10px 0;margin-top:10px;}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--p700);display:inline-block;animation:aipulse 1.2s infinite;}
+.ai-dot:nth-child(2){animation-delay:.2s;}
+.ai-dot:nth-child(3){animation-delay:.4s;}
+@keyframes aipulse{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
+.ai-results{display:none;margin-top:14px;}
+.ai-card{border:1px solid var(--p100);border-radius:var(--radius-md);padding:14px;margin-bottom:10px;background:var(--gray50);}
+.ai-card:last-child{margin-bottom:0;}
+.ai-card-path{font-size:14px;font-weight:600;color:var(--p900);margin-bottom:5px;}
+.ai-card-why{font-size:12px;color:var(--gray600);line-height:1.6;margin-bottom:8px;}
+.ai-card-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.ai-tag{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--p100);color:var(--p700);font-weight:500;}
+/* Prep Brief standalone */
+.pb-field{margin-bottom:12px;}
+.pb-field-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g800);margin-bottom:4px;}
+.pb-field-val{font-size:13px;color:var(--gray700);line-height:1.65;background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-sm);padding:8px 12px;}
 </style>
 </head>
 <body>
@@ -357,9 +434,202 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div id="page-a">
     <div class="section-header">
       <div class="section-tag st-a">A · Career Twin</div>
-      <div class="section-title">Explore your career paths before your Pact conversation</div>
-      <div class="section-desc">You are CPT Wong Jia Ming. War-game your career options before sitting down with your Career Manager. Pick a path → see where it leads → get your prep brief.</div>
+      <div class="section-title">War-game your career before the conversation</div>
+      <div class="section-desc">Career Twin has 6 components. Browse and interact with each one below, or switch to Path Simulation to experience the full member journey end-to-end.</div>
     </div>
+
+    <!-- Mode toggle -->
+    <div class="a-mode-toggle">
+      <button class="a-mode-btn active" id="abtn-gallery" onclick="aMode('gallery')">🧩 Component ideas</button>
+      <button class="a-mode-btn" id="abtn-sim" onclick="aMode('sim')">▶ Path simulation</button>
+    </div>
+
+    <!-- ── Component Gallery mode ── -->
+    <div id="a-gallery">
+      <div class="comp-gallery">
+
+        <div class="cgcard cg-active" onclick="showDemo('path-explorer',this)">
+          <div class="cg-icon">🗺️</div>
+          <div class="cg-name">Path Explorer</div>
+          <div class="cg-sub">Browse realistic career paths from your current position</div>
+          <div class="cg-pill cg-mvp">MVP</div>
+          <div class="cg-try">▶ Try in Path Simulation</div>
+        </div>
+
+        <div class="cgcard" onclick="showDemo('peer-benchmark',this)">
+          <div class="cg-icon">📊</div>
+          <div class="cg-name">Peer Benchmark</div>
+          <div class="cg-sub">See how common each path is among similar profiles</div>
+          <div class="cg-pill cg-mvp">MVP</div>
+          <div class="cg-try">▶ Open demo</div>
+        </div>
+
+        <div class="cgcard" onclick="showDemo('prep-brief',this)">
+          <div class="cg-icon">📋</div>
+          <div class="cg-name">Prep Brief Generator</div>
+          <div class="cg-sub">Auto-draft sent to all four seats before the Pact meeting</div>
+          <div class="cg-pill cg-mvp">MVP</div>
+          <div class="cg-try">▶ Open demo</div>
+        </div>
+
+        <div class="cgcard" onclick="showDemo('gap-advisor',this)">
+          <div class="cg-icon">✅</div>
+          <div class="cg-name">Gap Advisor</div>
+          <div class="cg-sub">Checklist of what you still need to unlock your target path</div>
+          <div class="cg-pill cg-opt">Optional</div>
+          <div class="cg-try">▶ Open demo</div>
+        </div>
+
+        <div class="cgcard" onclick="showDemo('whatsif',this)">
+          <div class="cg-icon">⚖️</div>
+          <div class="cg-name">What-if Simulator</div>
+          <div class="cg-sub">Compare two paths side-by-side to see the trade-offs</div>
+          <div class="cg-pill cg-opt">Optional</div>
+          <div class="cg-try">▶ Open demo</div>
+        </div>
+
+        <div class="cgcard" onclick="showDemo('ai-gen',this)">
+          <div class="cg-icon">🤖</div>
+          <div class="cg-name">AI Path Generator</div>
+          <div class="cg-sub">Surface non-obvious cross-vocation routes based on your profile</div>
+          <div class="cg-pill cg-later">Later</div>
+          <div class="cg-try">▶ Open demo</div>
+        </div>
+
+      </div>
+
+      <!-- Demo panel — swaps content based on selected card -->
+      <div id="comp-demo-panel">
+        <!-- path-explorer -->
+        <div class="demo-panel" id="demo-path-explorer" style="display:block;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">🗺️ Path Explorer</div>
+            <span class="demo-panel-pill cg-mvp">MVP</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);line-height:1.65;margin-bottom:16px;">Path Explorer is the core of the Career Twin simulation. It lets a member pick any career path and see a 3-step timeline showing where they'd be in 2 and 5 years, who else took that route, and what they still need to get there.</div>
+          <div style="background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:600;color:var(--g800);margin-bottom:10px;">Available paths for CPT Wong Jia Ming</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">⭐ Command Track <span style="float:right;color:var(--g800);font-weight:600;">38%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🏛️ Staff / HQ Track <span style="float:right;color:var(--g800);font-weight:600;">29%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🔬 Technical Specialist <span style="float:right;color:var(--g800);font-weight:600;">18%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🔄 Cross-Vocation: C4I <span style="float:right;color:var(--g800);font-weight:600;">9%</span></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="aMode('sim')">▶ Go to Path Simulation →</button>
+        </div>
+
+        <!-- peer-benchmark -->
+        <div class="demo-panel" id="demo-peer-benchmark" style="display:none;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">📊 Peer Benchmark</div>
+            <span class="demo-panel-pill cg-mvp">MVP</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);margin-bottom:16px;">For each path, Peer Benchmark shows how many officers with a similar profile (same vocation, rank band, service years) took that route — and what typically happened to them. Grounds aspiration in data, not rumour.</div>
+          <div id="bmark-chart"></div>
+          <div style="font-size:11px;color:var(--gray400);margin-top:12px;">Based on anonymised career histories of Signals officers at MAJ-select band, last 10 cohorts.</div>
+        </div>
+
+        <!-- prep-brief -->
+        <div class="demo-panel" id="demo-prep-brief" style="display:none;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">📋 Prep Brief Generator</div>
+            <span class="demo-panel-pill cg-mvp">MVP</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);margin-bottom:16px;">After exploring paths, the Career Twin auto-drafts a prep brief and sends it to all four seats before the Pact meeting. Everyone arrives prepared — no more blank-sheet conversations.</div>
+          <div class="pb-field"><div class="pb-field-label">Member</div><div class="pb-field-val">CPT Wong Jia Ming · Signals · OC Comms, 3 SIR · 8 years service</div></div>
+          <div class="pb-field"><div class="pb-field-label">Stated aspiration</div><div class="pb-field-val">Wants to pursue the Command Track — targeting CO-level posting by 2031. Prefers HQ Signal Bn as next posting for leadership breadth.</div></div>
+          <div class="pb-field"><div class="pb-field-label">Paths explored in Career Twin</div><div class="pb-field-val" id="pb-explored">Command Track · Staff / HQ Track</div></div>
+          <div class="pb-field"><div class="pb-field-label">Key questions for the conversation</div><div class="pb-field-val">1. Can the Command Module be scheduled in FY2027?&nbsp; 2. Is HQ Signal Bn available for Q4 2026?&nbsp; 3. What is the realistic CO nomination timeline?</div></div>
+          <div class="pb-field"><div class="pb-field-label">Gaps to discuss</div><div class="pb-field-val">Missing: Command Module, 1yr additional operational posting, Advanced Comms Systems course.</div></div>
+          <div style="display:flex;gap:8px;margin-top:4px;align-items:center;">
+            <button class="btn btn-primary" style="font-size:12px;padding:7px 14px;">✓ Send to all seats</button>
+            <span style="font-size:11px;color:var(--gray400);">Will be sent to: Member · Supervisor · Career Manager · SSO</span>
+          </div>
+        </div>
+
+        <!-- gap-advisor -->
+        <div class="demo-panel" id="demo-gap-advisor" style="display:none;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">✅ Gap Advisor</div>
+            <span class="demo-panel-pill cg-opt">Optional</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Select a target path to see exactly what you still need. Click any item to toggle its status — track what you've completed, what's in progress, and what's still missing.</div>
+          <select class="ga-path-sel" onchange="renderGapAdvisor(this.value)" id="ga-path-select">
+            <option value="command">⭐ Command Track</option>
+            <option value="staff">🏛️ Staff / HQ Track</option>
+            <option value="tech">🔬 Technical Specialist</option>
+            <option value="cross">🔄 Cross-Vocation: C4I</option>
+          </select>
+          <div id="ga-items"></div>
+          <div class="ga-score-bar">
+            <span class="ga-score-label">Readiness score</span>
+            <span class="ga-score-val" id="ga-score-val">—</span>
+          </div>
+        </div>
+
+        <!-- whatsif -->
+        <div class="demo-panel" id="demo-whatsif" style="display:none;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">⚖️ What-if Simulator</div>
+            <span class="demo-panel-pill cg-opt">Optional</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Pick any two paths and see them side-by-side. Compare timelines, peer benchmarks, readiness gaps, and promotion outlook to make the trade-offs visible before the Pact conversation.</div>
+          <div class="wi-selectors">
+            <select class="wi-select" id="wi-path-a" onchange="renderWhatsIf()">
+              <option value="command">⭐ Command Track</option>
+              <option value="staff">🏛️ Staff / HQ Track</option>
+              <option value="tech">🔬 Technical Specialist</option>
+              <option value="cross">🔄 Cross-Vocation: C4I</option>
+            </select>
+            <div class="wi-vs">vs.</div>
+            <select class="wi-select" id="wi-path-b" onchange="renderWhatsIf()">
+              <option value="staff">🏛️ Staff / HQ Track</option>
+              <option value="command">⭐ Command Track</option>
+              <option value="tech">🔬 Technical Specialist</option>
+              <option value="cross">🔄 Cross-Vocation: C4I</option>
+            </select>
+          </div>
+          <div class="wi-cols" id="wi-cols"></div>
+        </div>
+
+        <!-- ai-gen -->
+        <div class="demo-panel" id="demo-ai-gen" style="display:none;">
+          <div class="demo-panel-header">
+            <div class="demo-panel-title">🤖 AI Path Generator</div>
+            <span class="demo-panel-pill cg-later">Later</span>
+          </div>
+          <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Analyzes your full profile — skills, service history, aspirations — and surfaces non-obvious cross-vocation paths you wouldn't have thought to explore. Builds on the MVP data layer.</div>
+          <button class="ai-btn" onclick="runAIGen()" id="ai-gen-btn">Analyse my profile</button>
+          <div class="ai-loading" id="ai-loading">
+            <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
+            <span>Analysing career profile…</span>
+          </div>
+          <div class="ai-results" id="ai-results">
+            <div style="font-size:12px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">3 non-obvious paths suggested for CPT Wong Jia Ming</div>
+            <div class="ai-card">
+              <div class="ai-card-path">🛡️ SAF Capability Development Officer (CASG)</div>
+              <div class="ai-card-why">Your technical depth (91%) and cross-system Signals experience are rare in the capability planning space. CASG officers with C4I backgrounds are in short supply — this path leverages your expertise differently from a command track but carries equivalent seniority ceiling.</div>
+              <div class="ai-card-tags"><span class="ai-tag">Skill match: 87%</span><span class="ai-tag">Uncommon path</span><span class="ai-tag">No vocation change required</span></div>
+            </div>
+            <div class="ai-card">
+              <div class="ai-card-path">🌐 RSAF-Industry Liaison Officer (DSTA / DSO)</div>
+              <div class="ai-card-why">Officers with Advanced Comms expertise and operational command experience are valuable as liaison officers coordinating with DSO and DSTA on C4I procurements. This path opens options for post-SAF roles and offers a non-traditional route to LTC rank.</div>
+              <div class="ai-card-tags"><span class="ai-tag">Skill match: 79%</span><span class="ai-tag">Post-SAF transition ready</span><span class="ai-tag">Requires 1 attachment</span></div>
+            </div>
+            <div class="ai-card">
+              <div class="ai-card-path">🏫 SAF Training Institute — Comms Systems Faculty</div>
+              <div class="ai-card-why">Top technical officers are increasingly tapped to build SAFTI-MI faculty depth in specialist areas. Your 91% technical score and 8 years operational experience make you a strong candidate. Combines purpose (teaching) with a stable command-equivalent role.</div>
+              <div class="ai-card-tags"><span class="ai-tag">Skill match: 74%</span><span class="ai-tag">High impact</span><span class="ai-tag">Rarely surfaced by traditional CM</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /comp-demo-panel -->
+    </div><!-- /a-gallery -->
+
+    <!-- ── Path Simulation mode ── -->
+    <div id="a-sim" style="display:none;">
 
     <!-- Stepper -->
     <div class="stepper" id="a-stepper">
@@ -532,7 +802,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <button class="btn btn-ghost" onclick="aReset()">↺ Start over</button>
       </div>
     </div>
-  </div>
+
+    </div><!-- /a-sim -->
+  </div><!-- /page-a -->
 
 
   <!-- ══════════════════════════════════
@@ -903,6 +1175,153 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 </div><!-- /app -->
 
 <script>
+/* ══ Section A: Component Gallery ══ */
+function aMode(mode) {
+  document.getElementById('a-gallery').style.display = mode==='gallery' ? 'block' : 'none';
+  document.getElementById('a-sim').style.display    = mode==='sim'     ? 'block' : 'none';
+  document.getElementById('abtn-gallery').classList.toggle('active', mode==='gallery');
+  document.getElementById('abtn-sim').classList.toggle('active', mode==='sim');
+  if (mode==='sim') aGoTo(1);
+}
+
+function showDemo(id, card) {
+  document.querySelectorAll('.cgcard').forEach(c=>c.classList.remove('cg-active'));
+  card.classList.add('cg-active');
+  document.querySelectorAll('#comp-demo-panel .demo-panel').forEach(p=>p.style.display='none');
+  document.getElementById('demo-'+id).style.display='block';
+  // Init demos that need it
+  if (id==='peer-benchmark') renderBmarkChart();
+  if (id==='gap-advisor') renderGapAdvisor('command');
+  if (id==='whatsif') renderWhatsIf();
+}
+
+/* Peer Benchmark */
+const bmarkData = [
+  {label:'⭐ Command Track',pct:38,color:'#27500A'},
+  {label:'🏛️ Staff / HQ Track',pct:29,color:'#1D4ED8'},
+  {label:'🔬 Technical Specialist',pct:18,color:'#D97706'},
+  {label:'🔄 Cross-Vocation: C4I',pct:9,color:'#6D28D9'},
+  {label:'🔀 Other / mixed paths',pct:6,color:'#9CA3AF'}
+];
+function renderBmarkChart() {
+  const el = document.getElementById('bmark-chart');
+  el.innerHTML = bmarkData.map(d=>`
+    <div class="bmark-row">
+      <div class="bmark-label">${d.label}</div>
+      <div class="bmark-bar-outer"><div class="bmark-bar-inner" data-w="${d.pct}" style="width:0%;background:${d.color}"></div></div>
+      <div class="bmark-pct" style="color:${d.color}">${d.pct}%</div>
+    </div>`).join('');
+  setTimeout(()=>{
+    el.querySelectorAll('.bmark-bar-inner').forEach(b=>{b.style.width=b.dataset.w+'%';});
+  },80);
+}
+
+/* Gap Advisor */
+const gapData = {
+  command:[
+    {label:'SAF Command Module',status:'missing',impact:'Hard gate for CO nomination'},
+    {label:'2-yr operational command posting',status:'partial',impact:'1yr completed — 1yr remaining'},
+    {label:'Advanced Comms Systems course',status:'missing',impact:'Technical prerequisite for HQ posting'},
+    {label:'IPPT Gold standard',status:'done',impact:'Maintained — no action required'},
+    {label:'SAF 3rd Appointment (Bn-level)',status:'done',impact:'Completed as OC Comms'}
+  ],
+  staff:[
+    {label:'Advanced Staff Course (ASC)',status:'missing',impact:'Required for RSAF HQ staff posting'},
+    {label:'Policy writing attachment',status:'partial',impact:'Some exposure — needs formalisation'},
+    {label:'Joint ops attachment (JSOC)',status:'done',impact:'Completed FY2023'},
+    {label:'Defence Studies elective',status:'missing',impact:'Recommended for senior staff roles'}
+  ],
+  tech:[
+    {label:'Advanced Comms Systems course',status:'missing',impact:'Core qualification — Q3 2026 slot available'},
+    {label:'Technical Expert (TE) certification',status:'partial',impact:'In progress — exam pending Q2 2026'},
+    {label:'Industry attachment (DSO / ST Eng)',status:'missing',impact:'Strongly recommended for PTO track'},
+    {label:'Published technical paper or SIT',status:'missing',impact:'Differentiator for Principal Technical Officer'}
+  ],
+  cross:[
+    {label:'C4I Conversion Course',status:'missing',impact:'Mandatory — no waiver possible'},
+    {label:'Cyber Security Fundamentals cert',status:'missing',impact:'Required for Cyber track entry'},
+    {label:'Cross-vocation endorsement (SSO)',status:'missing',impact:'Requires Tier 3 Career Pact approval'},
+    {label:'C4I attachment (3-month min)',status:'missing',impact:'Strongly recommended before conversion'}
+  ]
+};
+const statusCycle = ['missing','partial','done'];
+function renderGapAdvisor(path) {
+  const items = gapData[path];
+  const el = document.getElementById('ga-items');
+  el.innerHTML = items.map((g,i)=>`
+    <div class="ga-row" id="ga-row-${i}">
+      <button class="ga-toggle ga-${g.status}" onclick="toggleGap(${i},'${path}')" id="ga-btn-${i}">${g.status==='missing'?'Missing':g.status==='partial'?'Partial':'Done ✓'}</button>
+      <div class="ga-info">
+        <div class="ga-label">${g.label}</div>
+        <div class="ga-impact">${g.impact}</div>
+      </div>
+    </div>`).join('');
+  updateGaScore(path);
+}
+function toggleGap(idx, path) {
+  const current = gapData[path][idx].status;
+  const next = statusCycle[(statusCycle.indexOf(current)+1)%3];
+  gapData[path][idx].status = next;
+  const btn = document.getElementById('ga-btn-'+idx);
+  btn.className = 'ga-toggle ga-'+next;
+  btn.textContent = next==='missing'?'Missing':next==='partial'?'Partial':'Done ✓';
+  updateGaScore(path);
+}
+function updateGaScore(path) {
+  const items = gapData[path];
+  const done = items.filter(i=>i.status==='done').length;
+  const partial = items.filter(i=>i.status==='partial').length;
+  const total = items.length;
+  const pct = Math.round((done + partial*0.5)/total*100);
+  document.getElementById('ga-score-val').textContent = `${pct}% ready (${done} of ${total} requirements met)`;
+}
+
+/* What-if Simulator */
+const wiData = {
+  command:{name:'Command Track',icon:'⭐',bench:'38%',timeline:'CPT → MAJ (OC) → LTC (CO)',timeframe:'~6–8 years to LTC',gaps:'2 missing, 1 partial',risk:'Medium',outcome:'Command authority, strongest promotion ceiling'},
+  staff:{name:'Staff / HQ Track',icon:'🏛️',bench:'29%',timeline:'CPT → MAJ Staff → LTC Sr Staff',timeframe:'~5–7 years to LTC',gaps:'1 missing, 1 partial',risk:'Low',outcome:'Broad policy influence, good promotion odds'},
+  tech:{name:'Technical Specialist',icon:'🔬',bench:'18%',timeline:'CPT → TO → Principal TO',timeframe:'~6–9 years to PTO',gaps:'3 missing, 1 partial',risk:'Medium',outcome:'Deep expertise, strong industry value post-SAF'},
+  cross:{name:'C4I / Cyber',icon:'🔄',bench:'9%',timeline:'CPT (Signals) → CPT (C4I) → MAJ',timeframe:'~7–10 years to MAJ',gaps:'4 missing',risk:'High',outcome:'Cutting-edge domain, highest post-SAF value'}
+};
+function renderWhatsIf() {
+  const a = document.getElementById('wi-path-a').value;
+  const b = document.getElementById('wi-path-b').value;
+  const da = wiData[a], db = wiData[b];
+  const fields = [
+    ['Peer benchmark',  'bench'],
+    ['Timeline',        'timeline'],
+    ['Time to LTC/equiv','timeframe'],
+    ['Gaps remaining',  'gaps'],
+    ['Transition risk', 'risk'],
+    ['Long-term outcome','outcome']
+  ];
+  const col = (d,cls,titleCls)=>`
+    <div class="wi-col ${cls}">
+      <div class="wi-col-title ${titleCls}">${d.icon} ${d.name}</div>
+      ${fields.map(([lbl,key])=>`
+        <div class="wi-metric">
+          <span class="wi-metric-label">${lbl}</span>
+          <span class="wi-metric-val">${d[key]}</span>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('wi-cols').innerHTML =
+    col(da,'wi-col-a','') + col(db,'wi-col-b','');
+}
+
+/* AI Path Generator */
+function runAIGen() {
+  document.getElementById('ai-gen-btn').disabled=true;
+  document.getElementById('ai-gen-btn').textContent='Analysing…';
+  document.getElementById('ai-loading').style.display='flex';
+  document.getElementById('ai-results').style.display='none';
+  setTimeout(()=>{
+    document.getElementById('ai-loading').style.display='none';
+    document.getElementById('ai-results').style.display='block';
+    document.getElementById('ai-gen-btn').textContent='Re-analyse';
+    document.getElementById('ai-gen-btn').disabled=false;
+  },2000);
+}
+
 /* ══ Navigation ══ */
 const sections = {
   a: { label:'Career Twin', mode:'Explore your career paths' },
