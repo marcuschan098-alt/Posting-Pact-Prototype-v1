@@ -3,928 +3,1246 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Posting Pact — Design Prototype</title>
+<title>The Posting Pact — Interactive Prototype</title>
 <style>
-  /* ── Reset & Base ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --green-900: #1C3A0E;
-    --green-800: #27500A;
-    --green-700: #336010;
-    --green-100: #EAF3DE;
-    --green-50:  #F4FAF0;
-    --amber-100: #FEF3C7;
-    --amber-700: #B45309;
-    --amber-900: #78350F;
-    --red-100:   #FEE2E2;
-    --red-700:   #B91C1C;
-    --red-900:   #7F1D1D;
-    --blue-100:  #DBEAFE;
-    --blue-700:  #1D4ED8;
-    --blue-900:  #1E3A8A;
-    --gray-50:   #F9FAFB;
-    --gray-100:  #F3F4F6;
-    --gray-200:  #E5E7EB;
-    --gray-300:  #D1D5DB;
-    --gray-400:  #9CA3AF;
-    --gray-500:  #6B7280;
-    --gray-700:  #374151;
-    --gray-900:  #111827;
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-    --shadow-md: 0 4px 16px rgba(0,0,0,.1);
-  }
-  html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; color: var(--gray-900); background: var(--gray-50); }
+/* ── Reset & Variables ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --g900:#1C3A0E; --g800:#27500A; --g700:#336010; --g600:#4A8018;
+  --g100:#EAF3DE; --g50:#F4FAF0;
+  --a100:#FEF3C7; --a700:#B45309; --a900:#78350F; --a500:#D97706;
+  --r100:#FEE2E2; --r700:#B91C1C; --r900:#7F1D1D;
+  --b100:#DBEAFE; --b700:#1D4ED8; --b900:#1E3A8A;
+  --p100:#EDE9FE; --p700:#6D28D9; --p900:#4C1D95;
+  --gray50:#F9FAFB; --gray100:#F3F4F6; --gray200:#E5E7EB;
+  --gray300:#D1D5DB; --gray400:#9CA3AF; --gray500:#6B7280;
+  --gray600:#4B5563; --gray700:#374151; --gray900:#111827;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:14px; --radius-xl:18px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:0 4px 16px rgba(0,0,0,.1);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.12);
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;color:var(--gray900);background:var(--gray50);}
 
-  /* ── Layout ── */
-  .app { display: flex; height: 100vh; overflow: hidden; }
+/* ── App shell ── */
+.app{display:flex;height:100vh;overflow:hidden;}
 
-  /* ── Sidebar ── */
-  .sidebar {
-    width: 240px; flex-shrink: 0;
-    background: var(--green-900);
-    display: flex; flex-direction: column;
-    padding: 0;
-    overflow-y: auto;
-  }
-  .sidebar-brand {
-    padding: 22px 20px 16px;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-  }
-  .sidebar-brand-tag {
-    font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(255,255,255,.5); margin-bottom: 4px;
-  }
-  .sidebar-brand-title {
-    font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3;
-  }
-  .sidebar-brand-sub {
-    font-size: 11px; color: rgba(255,255,255,.45); margin-top: 3px;
-  }
-  .sidebar-nav { padding: 14px 12px; flex: 1; }
-  .nav-section-label {
-    font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
-    color: rgba(255,255,255,.35); padding: 10px 8px 6px; margin-top: 6px;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 9px 10px; border-radius: var(--radius-sm);
-    cursor: pointer; transition: background .15s;
-    color: rgba(255,255,255,.7); font-size: 13px; font-weight: 500;
-    border: none; background: transparent; width: 100%; text-align: left;
-  }
-  .nav-item:hover { background: rgba(255,255,255,.08); color: #fff; }
-  .nav-item.active { background: rgba(255,255,255,.15); color: #fff; }
-  .nav-item .nav-letter {
-    width: 24px; height: 24px; border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; flex-shrink: 0;
-  }
-  .nav-item.active .nav-letter, .nav-item:hover .nav-letter { opacity: 1; }
-  .nl-a { background: var(--green-100); color: var(--green-800); }
-  .nl-b { background: var(--amber-100); color: var(--amber-900); }
-  .nl-c { background: var(--red-100); color: var(--red-900); }
-  .sidebar-footer {
-    padding: 14px 16px; border-top: 1px solid rgba(255,255,255,.1);
-    font-size: 11px; color: rgba(255,255,255,.3); line-height: 1.6;
-  }
+/* ── Sidebar ── */
+.sidebar{width:230px;flex-shrink:0;background:var(--g900);display:flex;flex-direction:column;overflow-y:auto;}
+.sb-brand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.1);}
+.sb-pretitle{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px;}
+.sb-title{font-size:16px;font-weight:700;color:#fff;line-height:1.3;}
+.sb-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:3px;}
+.sb-nav{padding:12px 10px;flex:1;}
+.sb-group-label{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:10px 8px 5px;margin-top:6px;}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;color:rgba(255,255,255,.65);font-size:13px;font-weight:500;border:none;background:transparent;width:100%;text-align:left;}
+.nav-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+.nav-btn.active{background:rgba(255,255,255,.16);color:#fff;}
+.nav-letter{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.nl-a{background:var(--g100);color:var(--g800);}
+.nl-b{background:var(--a100);color:var(--a900);}
+.nl-c{background:var(--r100);color:var(--r900);}
+.sb-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(255,255,255,.25);line-height:1.7;}
 
-  /* ── Main content ── */
-  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-  .topbar {
-    height: 54px; flex-shrink: 0;
-    background: #fff; border-bottom: 1px solid var(--gray-200);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 28px;
-  }
-  .topbar-breadcrumb { font-size: 13px; color: var(--gray-500); }
-  .topbar-breadcrumb strong { color: var(--gray-900); font-weight: 600; }
-  .topbar-badge {
-    font-size: 11px; font-weight: 600; padding: 4px 10px;
-    border-radius: 999px; background: var(--green-100); color: var(--green-800);
-  }
-  .content { flex: 1; overflow-y: auto; padding: 28px 32px; }
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{height:52px;flex-shrink:0;background:#fff;border-bottom:1px solid var(--gray200);display:flex;align-items:center;justify-content:space-between;padding:0 26px;}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.tb-crumb{font-size:13px;color:var(--gray500);}
+.tb-crumb strong{color:var(--gray900);font-weight:600;}
+.tb-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--g100);color:var(--g800);}
+.content{flex:1;overflow-y:auto;padding:26px 30px;}
 
-  /* ── Section header ── */
-  .section-header { margin-bottom: 24px; }
-  .section-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--green-800); background: var(--green-100); padding: 4px 10px; border-radius: 999px;
-    margin-bottom: 10px;
-  }
-  .section-title { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
-  .section-desc { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 680px; }
+/* ── Shared ── */
+.section-header{margin-bottom:22px;}
+.section-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px;}
+.st-a{background:var(--g100);color:var(--g800);}
+.st-b{background:var(--a100);color:var(--a900);}
+.st-c{background:var(--r100);color:var(--r900);}
+.section-title{font-size:21px;font-weight:700;color:var(--gray900);margin-bottom:5px;}
+.section-desc{font-size:13px;color:var(--gray500);line-height:1.65;max-width:660px;}
 
-  /* ── Cards ── */
-  .card {
-    background: #fff; border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg); padding: 20px;
-    box-shadow: var(--shadow-sm);
-  }
-  .card-title { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 14px; text-transform: uppercase; letter-spacing: .06em; }
+.card{background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);}
 
-  /* ── PAGE: A ── */
-  #page-a { display: block; }
-  #page-b, #page-c { display: none; }
+/* Buttons */
+.btn{padding:9px 20px;font-size:13px;font-weight:600;border-radius:var(--radius-sm);border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--g800);color:#fff;}
+.btn-primary:hover{background:var(--g700);}
+.btn-primary:disabled{background:var(--gray300);color:#fff;cursor:not-allowed;}
+.btn-secondary{background:#fff;color:var(--gray700);border:1px solid var(--gray300);}
+.btn-secondary:hover{background:var(--gray50);}
+.btn-ghost{background:transparent;color:var(--gray500);border:1px solid var(--gray200);}
+.btn-ghost:hover{background:var(--gray100);}
 
-  .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
-  .comp-card {
-    border: 1.5px solid var(--gray-200); border-radius: var(--radius-md);
-    padding: 16px; cursor: pointer; transition: all .18s;
-    background: #fff; position: relative; user-select: none;
-  }
-  .comp-card:hover { border-color: var(--green-700); box-shadow: var(--shadow-sm); }
-  .comp-card.selected { border-color: var(--green-800); background: var(--green-50); }
-  .comp-card .check {
-    position: absolute; top: 12px; right: 12px;
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 1.5px solid var(--gray-300); background: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; transition: all .15s;
-  }
-  .comp-card.selected .check { background: var(--green-800); border-color: var(--green-800); color: #fff; }
-  .comp-icon { font-size: 24px; margin-bottom: 10px; }
-  .comp-name { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
-  .comp-sub { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
-  .comp-body { font-size: 12px; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px; }
-  .comp-pill {
-    display: inline-block; font-size: 10px; font-weight: 600;
-    padding: 2px 8px; border-radius: 999px;
-  }
-  .pill-mvp { background: var(--green-100); color: var(--green-800); }
-  .pill-opt { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
-  .pill-later { background: var(--amber-100); color: var(--amber-900); }
+/* Step indicator */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:24px;}
+.step-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--gray400);}
+.step-item.active{color:var(--g800);}
+.step-item.done{color:var(--gray400);}
+.step-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:1.5px solid var(--gray300);background:#fff;flex-shrink:0;}
+.step-item.active .step-num{border-color:var(--g800);background:var(--g800);color:#fff;}
+.step-item.done .step-num{border-color:var(--gray300);background:var(--gray100);color:var(--gray400);}
+.step-connector{width:28px;height:1.5px;background:var(--gray200);margin:0 2px;flex-shrink:0;}
 
-  .summary-panel {
-    background: var(--green-50); border: 1px solid var(--green-100); border-radius: var(--radius-md);
-    padding: 16px 20px;
-  }
-  .summary-panel h4 { font-size: 13px; font-weight: 600; color: var(--green-800); margin-bottom: 10px; }
-  .summary-list { display: flex; flex-wrap: wrap; gap: 8px; min-height: 28px; }
-  .summary-chip {
-    font-size: 12px; font-weight: 500; padding: 4px 12px;
-    border-radius: 999px; background: #fff; border: 1px solid var(--green-700); color: var(--green-800);
-  }
-  .summary-empty { font-size: 12px; color: var(--gray-400); font-style: italic; align-self: center; }
+/* ══════════════════════════════════════════
+   SECTION A — Career Twin Simulator
+══════════════════════════════════════════ */
+#page-a{display:block;}
+#page-b,#page-c{display:none;}
 
-  /* ── PAGE: B ── */
-  .view-toggle {
-    display: flex; gap: 0; border: 1px solid var(--gray-200); border-radius: var(--radius-md);
-    overflow: hidden; width: fit-content; margin-bottom: 22px;
-  }
-  .view-btn {
-    padding: 9px 22px; font-size: 13px; font-weight: 500; cursor: pointer;
-    border: none; background: var(--gray-100); color: var(--gray-500);
-    transition: all .15s; display: flex; align-items: center; gap: 7px;
-  }
-  .view-btn.active { background: #fff; color: var(--gray-900); box-shadow: var(--shadow-sm); }
-  .view-btn .vb-dot { width: 8px; height: 8px; border-radius: 50%; }
+/* Profile card */
+.profile-card{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:20px;box-shadow:var(--shadow-sm);}
+.avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.av-g{background:var(--g800);color:#fff;}
+.av-b{background:var(--b900);color:#fff;}
+.av-a{background:var(--a500);color:#fff;}
+.av-r{background:var(--r700);color:#fff;}
+.av-p{background:var(--p700);color:#fff;}
+.profile-name{font-size:15px;font-weight:600;color:var(--gray900);}
+.profile-sub{font-size:12px;color:var(--gray500);margin-top:2px;}
+.profile-chips{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.chip{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--gray100);color:var(--gray600);}
 
-  .dash { display: none; }
-  .dash.active { display: block; }
+/* Path grid */
+.path-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+.path-card{border:1.5px solid var(--gray200);border-radius:var(--radius-md);padding:16px;cursor:pointer;transition:all .18s;background:#fff;position:relative;}
+.path-card:hover{border-color:var(--g600);box-shadow:var(--shadow-sm);}
+.path-card.selected{border-color:var(--g800);background:var(--g50);}
+.path-card .sel-ring{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--gray300);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.path-card.selected .sel-ring{background:var(--g800);border-color:var(--g800);color:#fff;}
+.path-icon{font-size:26px;margin-bottom:8px;}
+.path-name{font-size:14px;font-weight:600;color:var(--gray900);margin-bottom:3px;}
+.path-sub{font-size:12px;color:var(--gray500);margin-bottom:10px;}
+.path-benchmark{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray500);}
+.path-benchmark strong{color:var(--g800);}
 
-  .dash-topbar {
-    padding: 12px 20px; border-radius: var(--radius-md) var(--radius-md) 0 0;
-    display: flex; align-items: center; justify-content: space-between; margin-bottom: 0;
-  }
-  .dash-topbar-hr { background: var(--green-900); }
-  .dash-topbar-pers { background: var(--blue-900); }
-  .dash-title { font-size: 15px; font-weight: 600; color: #fff; }
-  .dash-badge {
-    font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
-  }
-  .badge-hr { background: var(--amber-100); color: var(--amber-900); }
-  .badge-pers { background: var(--green-100); color: var(--green-800); }
+/* Outcome view */
+.outcome-view{display:none;}
+.timeline-row{display:flex;align-items:stretch;gap:0;margin-bottom:20px;overflow:hidden;border-radius:var(--radius-md);border:1px solid var(--gray200);}
+.tl-step{flex:1;padding:14px 16px;background:#fff;position:relative;}
+.tl-step+.tl-step{border-left:1px solid var(--gray200);}
+.tl-step:first-child{background:var(--g50);border-left:3px solid var(--g800);}
+.tl-year{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--gray400);margin-bottom:5px;}
+.tl-role{font-size:13px;font-weight:600;color:var(--gray900);margin-bottom:2px;}
+.tl-unit{font-size:11px;color:var(--gray500);}
+.tl-arrow{display:flex;align-items:center;padding:0 6px;color:var(--gray300);font-size:16px;background:#fff;border-top:1px solid var(--gray200);border-bottom:1px solid var(--gray200);}
 
-  .dash-body {
-    border: 1px solid var(--gray-200); border-top: none;
-    border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 20px; background: #fff;
-    margin-bottom: 16px;
-  }
-  .profile-row {
-    display: flex; align-items: center; gap: 14px;
-    padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--gray-100);
-  }
-  .avatar {
-    width: 46px; height: 46px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700; flex-shrink: 0;
-  }
-  .av-hr { background: var(--green-800); color: #fff; }
-  .av-pers { background: var(--green-100); color: var(--green-800); }
-  .profile-name { font-size: 16px; font-weight: 600; color: var(--gray-900); }
-  .profile-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.col-card{background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-md);padding:16px;}
+.col-card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray500);margin-bottom:12px;}
 
-  .metric-grid { display: grid; gap: 12px; margin-bottom: 16px; }
-  .mg-3 { grid-template-columns: repeat(3, 1fr); }
-  .mg-2 { grid-template-columns: repeat(2, 1fr); }
-  .m-card { padding: 14px; border-radius: var(--radius-sm); }
-  .m-label { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
-  .m-value { font-size: 24px; font-weight: 700; line-height: 1.1; margin-bottom: 2px; }
-  .m-sub { font-size: 11px; }
-  .mc-green { background: var(--green-100); }
-  .mc-green .m-label, .mc-green .m-value { color: var(--green-800); }
-  .mc-green .m-sub { color: var(--green-700); }
-  .mc-amber { background: var(--amber-100); }
-  .mc-amber .m-label, .mc-amber .m-value { color: var(--amber-900); }
-  .mc-amber .m-sub { color: var(--amber-700); }
-  .mc-red { background: var(--red-100); }
-  .mc-red .m-label, .mc-red .m-value { color: var(--red-900); }
-  .mc-red .m-sub { color: var(--red-700); }
-  .mc-blue { background: var(--blue-100); }
-  .mc-blue .m-label, .mc-blue .m-value { color: var(--blue-900); }
-  .mc-blue .m-sub { color: var(--blue-700); }
-  .mc-gray { background: var(--gray-100); }
-  .mc-gray .m-label { color: var(--gray-500); }
-  .mc-gray .m-value { color: var(--gray-900); }
-  .mc-gray .m-sub { color: var(--gray-500); }
+.gap-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--gray100);}
+.gap-item:last-child{border-bottom:none;}
+.gap-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.gap-dot.missing{background:var(--r700);}
+.gap-dot.partial{background:var(--a500);}
+.gap-dot.done{background:var(--g800);}
+.gap-label{font-size:13px;font-weight:500;color:var(--gray900);}
+.gap-impact{font-size:11px;color:var(--gray500);margin-top:2px;}
 
-  .sens-tag {
-    display: inline-flex; align-items: center; gap: 3px;
-    font-size: 9px; font-weight: 700; padding: 1px 5px;
-    border-radius: 3px; background: var(--red-100); color: var(--red-700);
-    vertical-align: middle;
-  }
+.bench-num{font-size:36px;font-weight:700;color:var(--g800);margin-bottom:4px;}
+.bench-sub{font-size:12px;color:var(--gray600);line-height:1.5;}
+.bench-bar-wrap{background:var(--gray100);border-radius:999px;height:8px;margin-top:12px;overflow:hidden;}
+.bench-bar-fill{height:100%;border-radius:999px;background:var(--g800);transition:width 1s ease;}
 
-  .prog-section { margin-bottom: 16px; }
-  .prog-section-label { font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; }
-  .prog-row { margin-bottom: 9px; }
-  .prog-label-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-  .prog-label { font-size: 12px; color: var(--gray-600); }
-  .prog-val { font-size: 12px; font-weight: 600; color: var(--gray-900); }
-  .prog-bar { height: 6px; background: var(--gray-100); border-radius: 999px; overflow: hidden; }
-  .prog-fill { height: 100%; border-radius: 999px; }
-  .pf-g { background: var(--green-800); }
-  .pf-a { background: #D97706; }
-  .pf-b { background: #2563EB; }
+/* Prep brief */
+.brief-box{background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:18px 20px;margin-bottom:20px;display:none;}
+.brief-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.brief-title{font-size:14px;font-weight:600;color:var(--g800);}
+.brief-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--g800);color:#fff;}
+.brief-section{margin-bottom:12px;}
+.brief-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g800);margin-bottom:5px;}
+.brief-text{font-size:13px;color:var(--gray700);line-height:1.65;}
+.brief-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.brief-chip{font-size:12px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--g100);color:var(--g800);font-weight:500;}
 
-  .stars-box { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px; }
-  .stars-title { font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; }
-  .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
-  .star-icon { font-size: 16px; width: 24px; }
-  .star-label { color: var(--gray-700); flex: 1; }
-  .star-rating { color: var(--green-800); font-size: 13px; }
+/* Nav buttons */
+.step-nav{display:flex;align-items:center;gap:10px;justify-content:space-between;padding-top:16px;border-top:1px solid var(--gray100);margin-top:6px;}
 
-  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
-  .data-table th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--gray-50); color: var(--gray-500); border-bottom: 1px solid var(--gray-200); }
-  .data-table td { padding: 9px 10px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); vertical-align: top; }
-  .data-table tr:last-child td { border-bottom: none; }
-  .locked-cell { display: flex; align-items: center; gap: 5px; color: var(--gray-400); font-size: 12px; }
+/* ══════════════════════════════════════════
+   SECTION B — Poach Value
+══════════════════════════════════════════ */
+.role-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;}
+.role-card{border:1.5px solid var(--gray200);border-radius:var(--radius-md);padding:14px 12px;cursor:pointer;transition:all .18s;background:#fff;text-align:center;}
+.role-card:hover{border-color:var(--gray400);}
+.role-card.active-role{border-color:var(--g800);background:var(--g50);box-shadow:var(--shadow-sm);}
+.role-icon-lg{font-size:26px;margin-bottom:7px;}
+.role-name{font-size:12px;font-weight:600;color:var(--gray900);margin-bottom:3px;}
+.role-sub{font-size:11px;color:var(--gray400);}
+.role-card.active-role .role-name{color:var(--g800);}
 
-  .dash-action-bar { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid var(--gray-100); }
-  .btn-primary { padding: 8px 18px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--green-800); color: #fff; cursor: pointer; }
-  .btn-primary:hover { background: var(--green-700); }
-  .btn-secondary { padding: 8px 18px; font-size: 13px; font-weight: 500; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); background: #fff; color: var(--gray-700); cursor: pointer; }
-  .btn-secondary:hover { background: var(--gray-50); }
+.dash-shell{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray200);box-shadow:var(--shadow-sm);}
+.dash-topbar{padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
+.dash-tb-personnel{background:#1E3A8A;}
+.dash-tb-supervisor{background:#4C1D95;}
+.dash-tb-hr{background:var(--g900);}
+.dash-tb-commander{background:#111827;}
+.dash-tb-title{font-size:14px;font-weight:600;color:#fff;}
+.dash-tb-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;}
+.badge-personnel{background:var(--b100);color:var(--b900);}
+.badge-supervisor{background:var(--p100);color:var(--p900);}
+.badge-hr{background:var(--g100);color:var(--g800);}
+.badge-commander{background:var(--a100);color:var(--a900);}
 
-  .tier-note {
-    background: var(--amber-100); border-left: 3px solid #D97706; border-radius: var(--radius-sm);
-    padding: 12px 16px; font-size: 12px; color: var(--amber-900); line-height: 1.6; margin-bottom: 16px;
-  }
+.dash-body{background:#fff;padding:20px;}
+.db-profile{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--gray100);}
+.db-name{font-size:15px;font-weight:600;color:var(--gray900);}
+.db-sub{font-size:12px;color:var(--gray500);margin-top:2px;}
 
-  /* ── PAGE: C ── */
-  .seat-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
-  .seat-chip {
-    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
-    padding: 5px 12px; border-radius: 999px; border: 1.5px solid transparent;
-  }
-  .sc1 { background: var(--green-100); color: var(--green-800); border-color: var(--green-800); }
-  .sc2 { background: var(--blue-100); color: var(--blue-900); border-color: var(--blue-700); }
-  .sc3 { background: var(--amber-100); color: var(--amber-900); border-color: #D97706; }
-  .sc4 { background: var(--red-100); color: var(--red-900); border-color: var(--red-700); }
+.metric-grid{display:grid;gap:12px;margin-bottom:16px;}
+.mg-2{grid-template-columns:repeat(2,1fr);}
+.mg-3{grid-template-columns:repeat(3,1fr);}
+.mg-4{grid-template-columns:repeat(4,1fr);}
+.m-card{padding:14px;border-radius:var(--radius-sm);}
+.m-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.m-value{font-size:22px;font-weight:700;line-height:1.1;margin-bottom:2px;}
+.m-sub{font-size:11px;}
+.mc-g{background:var(--g100);} .mc-g .m-label,.mc-g .m-value{color:var(--g800);} .mc-g .m-sub{color:var(--g700);}
+.mc-a{background:var(--a100);} .mc-a .m-label,.mc-a .m-value{color:var(--a900);} .mc-a .m-sub{color:var(--a700);}
+.mc-r{background:var(--r100);} .mc-r .m-label,.mc-r .m-value{color:var(--r900);} .mc-r .m-sub{color:var(--r700);}
+.mc-b{background:var(--b100);} .mc-b .m-label,.mc-b .m-value{color:var(--b900);} .mc-b .m-sub{color:var(--b700);}
+.mc-p{background:var(--p100);} .mc-p .m-label,.mc-p .m-value{color:var(--p900);} .mc-p .m-sub{color:var(--p700);}
+.mc-gray{background:var(--gray100);} .mc-gray .m-label{color:var(--gray500);} .mc-gray .m-value{color:var(--gray900);} .mc-gray .m-sub{color:var(--gray500);}
+.sens-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;background:var(--r100);color:var(--r700);vertical-align:middle;}
 
-  .tier-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
-  .tier-card {
-    border: 1.5px solid var(--gray-200); border-radius: var(--radius-lg);
-    overflow: hidden; background: #fff; transition: border-color .15s;
-    cursor: pointer;
-  }
-  .tier-card:hover { border-color: var(--gray-300); }
-  .tier-card.open { border-color: var(--gray-400); box-shadow: var(--shadow-md); }
-  .tier-card-head {
-    display: flex; align-items: center; gap: 14px; padding: 16px 20px;
-    border-bottom: 1px solid transparent; transition: border-color .15s;
-  }
-  .tier-card.open .tier-card-head { border-bottom-color: var(--gray-200); }
-  .t-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
-  .tb1 { background: var(--green-100); color: var(--green-800); }
-  .tb2 { background: var(--amber-100); color: var(--amber-900); }
-  .tb3 { background: var(--red-100); color: var(--red-900); }
-  .tier-head-info { flex: 1; }
-  .tier-title-text { font-size: 15px; font-weight: 600; color: var(--gray-900); }
-  .tier-sub-text { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
-  .tier-toggle { font-size: 12px; color: var(--gray-400); padding: 4px 10px; border-radius: var(--radius-sm); background: var(--gray-100); font-weight: 500; }
-  .tier-body { padding: 20px; display: none; }
-  .tier-card.open .tier-body { display: block; }
+.prog-section{margin-bottom:16px;}
+.prog-section-title{font-size:12px;font-weight:600;color:var(--gray600);margin-bottom:10px;}
+.prog-row{margin-bottom:9px;}
+.prog-lrow{display:flex;justify-content:space-between;margin-bottom:4px;}
+.prog-label{font-size:12px;color:var(--gray600);}
+.prog-val{font-size:12px;font-weight:600;color:var(--gray900);}
+.prog-bar{height:6px;background:var(--gray100);border-radius:999px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:999px;transition:width .8s ease;}
+.pf-g{background:var(--g800);}
+.pf-a{background:var(--a500);}
+.pf-b{background:var(--b700);}
+.pf-p{background:var(--p700);}
 
-  .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
-  .seat-box { border-radius: var(--radius-sm); padding: 12px 10px; text-align: center; transition: opacity .2s; }
-  .seat-box.present { border: 1.5px solid; }
-  .seat-box.absent { opacity: 0.28; background: var(--gray-50); border: 1.5px dashed var(--gray-200); }
-  .sbox-1.present { background: var(--green-100); border-color: var(--green-800); }
-  .sbox-2.present { background: var(--blue-100); border-color: var(--blue-700); }
-  .sbox-3.present { background: var(--amber-100); border-color: #D97706; }
-  .sbox-4.present { background: var(--red-100); border-color: var(--red-700); }
-  .seat-icon-lg { font-size: 22px; margin-bottom: 6px; }
-  .seat-name-text { font-size: 11px; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
-  .sbox-1 .seat-name-text { color: var(--green-800); }
-  .sbox-2 .seat-name-text { color: var(--blue-900); }
-  .sbox-3 .seat-name-text { color: var(--amber-900); }
-  .sbox-4 .seat-name-text { color: var(--red-900); }
-  .absent .seat-name-text { color: var(--gray-400); }
-  .seat-contrib-text { font-size: 11px; line-height: 1.4; margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(0,0,0,.07); }
-  .sbox-1 .seat-contrib-text { color: #27500A; }
-  .sbox-2 .seat-contrib-text { color: var(--blue-900); }
-  .sbox-3 .seat-contrib-text { color: var(--amber-900); }
-  .sbox-4 .seat-contrib-text { color: var(--red-900); }
+.stars-box{background:var(--gray50);border:1px solid var(--gray100);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;}
+.stars-title{font-size:12px;font-weight:600;color:var(--gray600);margin-bottom:10px;}
+.star-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.star-icon-s{font-size:15px;width:22px;}
+.star-lbl{color:var(--gray700);font-size:13px;flex:1;}
+.star-rating{font-size:13px;}
 
-  .outcome-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-  .outcome-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--gray-600); }
-  .out-check { color: var(--green-800); font-weight: 700; }
-  .doc-pill {
-    display: inline-flex; align-items: center; gap: 5px; font-size: 11px;
-    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--gray-200);
-    background: var(--gray-50); color: var(--gray-600); margin-bottom: 12px;
-  }
-  .tier-note-inline {
-    background: var(--amber-100); border-left: 3px solid #D97706; border-radius: var(--radius-sm);
-    padding: 10px 14px; font-size: 12px; color: var(--amber-900); line-height: 1.6;
-  }
+.dtable{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;}
+.dtable th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--gray50);color:var(--gray500);border-bottom:1px solid var(--gray200);}
+.dtable td{padding:9px 10px;border-bottom:1px solid var(--gray100);color:var(--gray900);vertical-align:middle;}
+.dtable tr:last-child td{border-bottom:none;}
+.locked-cell{display:flex;align-items:center;gap:5px;color:var(--gray400);font-size:12px;}
 
-  .trg-section { }
-  .trg-label { font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 10px; }
-  .trg-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .trg-table th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--gray-50); color: var(--gray-500); border-bottom: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200); }
-  .trg-table td { padding: 9px 10px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); vertical-align: middle; }
-  .trg-table tr:last-child td { border-bottom: none; }
-  .trg-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
-  .trg-table tr:hover td { background: var(--gray-50); }
+.dash-actions{display:flex;gap:8px;padding-top:14px;border-top:1px solid var(--gray100);}
+.access-note{background:var(--a100);border-left:3px solid var(--a500);border-radius:var(--radius-sm);padding:11px 15px;font-size:12px;color:var(--a900);line-height:1.6;margin-top:14px;}
 
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
-    .sidebar { width: 200px; }
-    .comp-grid { grid-template-columns: repeat(2, 1fr); }
-    .seat-grid { grid-template-columns: repeat(2, 1fr); }
-    .metric-grid.mg-3 { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 650px) {
-    .app { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; }
-    .comp-grid { grid-template-columns: 1fr; }
-    .seat-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+/* ══════════════════════════════════════════
+   SECTION C — Four-seat Structure
+══════════════════════════════════════════ */
+.scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:22px;}
+.scenario-card{border:1.5px solid var(--gray200);border-radius:var(--radius-md);padding:16px;cursor:pointer;transition:all .18s;background:#fff;position:relative;}
+.scenario-card:hover{border-color:var(--gray400);}
+.scenario-card.sel-scenario{border-color:var(--g800);background:var(--g50);}
+.scenario-card .sel-ring{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--gray300);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.scenario-card.sel-scenario .sel-ring{background:var(--g800);border-color:var(--g800);color:#fff;}
+.scenario-icon{font-size:24px;margin-bottom:8px;}
+.scenario-name{font-size:14px;font-weight:600;color:var(--gray900);margin-bottom:3px;}
+.scenario-sub{font-size:12px;color:var(--gray500);margin-bottom:8px;}
+.scenario-tier-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;}
+.stb-1{background:var(--g100);color:var(--g800);}
+.stb-2{background:var(--a100);color:var(--a900);}
+.stb-3{background:var(--r100);color:var(--r900);}
+
+/* Seats panel */
+.seats-panel{display:none;background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.seats-title{font-size:13px;font-weight:600;color:var(--gray700);margin-bottom:14px;}
+.seat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.seat-box{border-radius:var(--radius-sm);padding:12px 10px;text-align:center;transition:all .3s;}
+.seat-box.present{border:1.5px solid;}
+.seat-box.absent{opacity:.25;background:var(--gray50);border:1.5px dashed var(--gray200);}
+.sb1.present{background:var(--g100);border-color:var(--g800);}
+.sb2.present{background:var(--b100);border-color:var(--b700);}
+.sb3.present{background:var(--a100);border-color:var(--a500);}
+.sb4.present{background:var(--r100);border-color:var(--r700);}
+.seat-icon-m{font-size:20px;margin-bottom:5px;}
+.seat-name-m{font-size:11px;font-weight:600;line-height:1.3;margin-bottom:4px;}
+.sb1 .seat-name-m{color:var(--g800);}
+.sb2 .seat-name-m{color:var(--b900);}
+.sb3 .seat-name-m{color:var(--a900);}
+.sb4 .seat-name-m{color:var(--r900);}
+.absent .seat-name-m{color:var(--gray400);}
+.seat-role-m{font-size:10px;color:var(--gray400);line-height:1.4;}
+.sb1.present .seat-role-m{color:var(--g700);}
+.sb2.present .seat-role-m{color:var(--b700);}
+.sb3.present .seat-role-m{color:var(--a700);}
+.sb4.present .seat-role-m{color:var(--r700);}
+
+/* Conversation */
+.convo-panel{display:none;background:#fff;border:1px solid var(--gray200);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.convo-title{font-size:13px;font-weight:600;color:var(--gray700);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.convo-progress{font-size:11px;color:var(--gray400);}
+.convo-thread{min-height:120px;margin-bottom:16px;}
+.bubble-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.bubble-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.bubble-content{flex:1;}
+.bubble-name{font-size:11px;font-weight:600;margin-bottom:4px;}
+.bubble-text{font-size:13px;line-height:1.65;color:var(--gray700);background:var(--gray50);border:1px solid var(--gray100);border-radius:0 var(--radius-md) var(--radius-md) var(--radius-md);padding:10px 14px;}
+.bav-1{background:var(--g100);color:var(--g800);}
+.bav-2{background:var(--b100);color:var(--b900);}
+.bav-3{background:var(--a100);color:var(--a900);}
+.bav-4{background:var(--r100);color:var(--r900);}
+.bname-1{color:var(--g800);}
+.bname-2{color:var(--b900);}
+.bname-3{color:var(--a900);}
+.bname-4{color:var(--r900);}
+
+/* Output doc */
+.output-doc{display:none;background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:16px;}
+.output-doc-title{font-size:13px;font-weight:600;color:var(--g800);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.output-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--g100);font-size:12px;}
+.output-row:last-child{border-bottom:none;}
+.output-check{color:var(--g800);font-weight:700;}
+.output-label{color:var(--gray700);}
+.sig-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.sig-chip{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:500;border:1px solid;}
+.sig-1{background:var(--g100);border-color:var(--g800);color:var(--g800);}
+.sig-2{background:var(--b100);border-color:var(--b700);color:var(--b900);}
+.sig-3{background:var(--a100);border-color:var(--a500);color:var(--a900);}
+.sig-4{background:var(--r100);border-color:var(--r700);color:var(--r900);}
+
+.c-nav{display:flex;gap:10px;justify-content:space-between;align-items:center;}
+.c-nav-right{display:flex;gap:8px;}
+.reset-link{font-size:12px;color:var(--gray400);cursor:pointer;background:none;border:none;text-decoration:underline;}
+.reset-link:hover{color:var(--gray600);}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-brand">
-      <div class="sidebar-brand-tag">Design prototype</div>
-      <div class="sidebar-brand-title">The Posting Pact</div>
-      <div class="sidebar-brand-sub">RSAF Career Management</div>
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-pretitle">Interactive prototype</div>
+    <div class="sb-title">The Posting Pact</div>
+    <div class="sb-sub">RSAF Career Management</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-group-label">Try each tool</div>
+    <button class="nav-btn active" onclick="navigate('a',this)">
+      <span class="nav-letter nl-a">A</span> Career Twin
+    </button>
+    <button class="nav-btn" onclick="navigate('b',this)">
+      <span class="nav-letter nl-b">B</span> Poach Value
+    </button>
+    <button class="nav-btn" onclick="navigate('c',this)">
+      <span class="nav-letter nl-c">C</span> Four-Seat Pact
+    </button>
+  </div>
+  <div class="sb-footer">ACLM CPI · CVF Council · June 2026<br>Discussion prototype — not live system</div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="tb-crumb">The Posting Pact &rsaquo; <strong id="tb-section">Career Twin</strong></div>
     </div>
-    <div class="sidebar-nav">
-      <div class="nav-section-label">Refinements</div>
-      <button class="nav-item active" onclick="navigate('a', this)">
-        <span class="nav-letter nl-a">A</span>
-        Career Twin
-      </button>
-      <button class="nav-item" onclick="navigate('b', this)">
-        <span class="nav-letter nl-b">B</span>
-        Poach Value
-      </button>
-      <button class="nav-item" onclick="navigate('c', this)">
-        <span class="nav-letter nl-c">C</span>
-        Four-Seat Structure
-      </button>
+    <span class="tb-badge" id="tb-mode">Explore your career paths</span>
+  </div>
+  <div class="content">
+
+
+  <!-- ══════════════════════════════════
+       PAGE A  ·  Career Twin
+  ══════════════════════════════════ -->
+  <div id="page-a">
+    <div class="section-header">
+      <div class="section-tag st-a">A · Career Twin</div>
+      <div class="section-title">Explore your career paths before your Pact conversation</div>
+      <div class="section-desc">You are CPT Wong Jia Ming. War-game your career options before sitting down with your Career Manager. Pick a path → see where it leads → get your prep brief.</div>
     </div>
-    <div class="sidebar-footer">
-      Discussion prototype · June 2026<br>
-      CVF Council — ACLM CPI Project
+
+    <!-- Stepper -->
+    <div class="stepper" id="a-stepper">
+      <div class="step-item active" id="a-step1"><div class="step-num">1</div> Your profile</div>
+      <div class="step-connector"></div>
+      <div class="step-item" id="a-step2"><div class="step-num">2</div> Choose a path</div>
+      <div class="step-connector"></div>
+      <div class="step-item" id="a-step3"><div class="step-num">3</div> See outcomes</div>
+      <div class="step-connector"></div>
+      <div class="step-item" id="a-step4"><div class="step-num">4</div> Prep brief</div>
     </div>
-  </nav>
 
-  <!-- Main -->
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-breadcrumb">The Posting Pact &rsaquo; <strong id="topbar-section">Career Twin</strong></div>
-      <span class="topbar-badge">Prototype</span>
-    </div>
-    <div class="content">
-
-      <!-- ═══════════════════════════════════════════
-           PAGE A — Career Twin
-           ═══════════════════════════════════════════ -->
-      <div id="page-a">
-        <div class="section-header">
-          <div class="section-tag">Section A · Career Twin</div>
-          <div class="section-title">What should the Career Twin include?</div>
-          <div class="section-desc">Career Twin is the pre-conversation tool — members explore and war-game their own paths before the four-seat Pact. Select the components you want to include. Click to toggle.</div>
-        </div>
-
-        <div class="comp-grid" id="comp-grid">
-
-          <div class="comp-card selected" onclick="toggleComp(this, 'Path Explorer')" data-name="Path Explorer">
-            <div class="check">✓</div>
-            <div class="comp-icon">🗺️</div>
-            <div class="comp-name">Path Explorer</div>
-            <div class="comp-sub">See where your choices lead</div>
-            <div class="comp-body">A branching map of realistic career paths from the member's current position. Pick a course, posting, or vocation and see the 3–5 year progression — built on historical career-path data.</div>
-            <span class="comp-pill pill-mvp">MVP</span>
-          </div>
-
-          <div class="comp-card selected" onclick="toggleComp(this, 'Prep Brief Generator')" data-name="Prep Brief Generator">
-            <div class="check">✓</div>
-            <div class="comp-icon">📋</div>
-            <div class="comp-name">Prep Brief Generator</div>
-            <div class="comp-sub">Auto-draft for all four seats</div>
-            <div class="comp-body">After exploring paths, the Twin auto-drafts a short prep brief — aspirations, explored paths, top questions — sent to all four conversation seats before the Pact meeting. Replaces blank-sheet prep.</div>
-            <span class="comp-pill pill-mvp">MVP</span>
-          </div>
-
-          <div class="comp-card selected" onclick="toggleComp(this, 'Peer Benchmark')" data-name="Peer Benchmark">
-            <div class="check">✓</div>
-            <div class="comp-icon">📊</div>
-            <div class="comp-name">Peer Benchmark</div>
-            <div class="comp-sub">How common is this path?</div>
-            <div class="comp-body">For each path explored, shows how many people with similar profiles took this route — and what happened to them. Grounds aspiration in real precedent, prevents both under-ambition and fantasy plans.</div>
-            <span class="comp-pill pill-mvp">MVP</span>
-          </div>
-
-          <div class="comp-card" onclick="toggleComp(this, 'Gap Advisor')" data-name="Gap Advisor">
-            <div class="check"></div>
-            <div class="comp-icon">✅</div>
-            <div class="comp-name">Gap Advisor</div>
-            <div class="comp-sub">What you need to get there</div>
-            <div class="comp-body">For a chosen target path, shows what qualifications, courses, or postings are required to unlock it — and which the member already has. Turns aspirations into an actionable checklist.</div>
-            <span class="comp-pill pill-opt">Optional</span>
-          </div>
-
-          <div class="comp-card" onclick="toggleComp(this, 'What-if Simulator')" data-name="What-if Simulator">
-            <div class="check"></div>
-            <div class="comp-icon">⚖️</div>
-            <div class="comp-name">What-if Simulator</div>
-            <div class="comp-sub">Play out a specific decision</div>
-            <div class="comp-body">Pick a specific fork — "what if I take this posting vs. that one?" — and see both outcomes side by side: readiness implications, next likely posting, time to promotion band.</div>
-            <span class="comp-pill pill-opt">Optional</span>
-          </div>
-
-          <div class="comp-card" onclick="toggleComp(this, 'AI Path Generator')" data-name="AI Path Generator">
-            <div class="check"></div>
-            <div class="comp-icon">🤖</div>
-            <div class="comp-name">AI Path Generator</div>
-            <div class="comp-sub">Suggest non-obvious routes</div>
-            <div class="comp-body">AI layer that surfaces unconventional cross-vocation paths the member wouldn't have thought to explore — cross-silo possibilities based on transferable skills. Upgrade after MVP data layer is proven.</div>
-            <span class="comp-pill pill-later">Later</span>
-          </div>
-
-        </div>
-
-        <div class="summary-panel">
-          <h4>Selected components</h4>
-          <div class="summary-list" id="summary-list">
-            <span class="summary-chip">Path Explorer</span>
-            <span class="summary-chip">Prep Brief Generator</span>
-            <span class="summary-chip">Peer Benchmark</span>
+    <!-- Step 1: Profile -->
+    <div id="a-s1">
+      <div class="profile-card">
+        <div class="avatar av-g">WJ</div>
+        <div>
+          <div class="profile-name">CPT Wong Jia Ming</div>
+          <div class="profile-sub">Signals Vocation · 8 years service · OC Comms, 3 SIR</div>
+          <div class="profile-chips">
+            <span class="chip">MAJ-select band</span>
+            <span class="chip">Career Score 78/100</span>
+            <span class="chip">Technical: Expert</span>
+            <span class="chip">Next review due</span>
           </div>
         </div>
       </div>
-
-
-      <!-- ═══════════════════════════════════════════
-           PAGE B — Poach Value
-           ═══════════════════════════════════════════ -->
-      <div id="page-b">
-        <div class="section-header">
-          <div class="section-tag" style="background:var(--amber-100);color:var(--amber-900);">Section B · Poach Value</div>
-          <div class="section-title">Tiered information by user type</div>
-          <div class="section-desc">HR Practitioners and Commanders see full sensitive data to support personnel management decisions. RSAF personnel see a softer points/score system for self-awareness — no ROI or market $ figures.</div>
-        </div>
-
-        <div class="view-toggle">
-          <button class="view-btn active" onclick="switchView('hr', this)">
-            <span class="vb-dot" style="background:#27500A"></span>
-            HR / Commander view
-          </button>
-          <button class="view-btn" onclick="switchView('pers', this)">
-            <span class="vb-dot" style="background:#1D4ED8"></span>
-            Personnel view
-          </button>
-        </div>
-
-        <!-- HR / Commander -->
-        <div class="dash active" id="dash-hr">
-          <div class="dash-topbar dash-topbar-hr">
-            <div class="dash-title">Poach Value · Profile Analysis</div>
-            <span class="dash-badge badge-hr">HR Practitioner / Commander</span>
+      <div class="card" style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:600;color:var(--gray700);margin-bottom:12px;">Your current career map snapshot</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div>
+            <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Aspiration (stated)</div>
+            <div style="font-size:13px;color:var(--gray900);">Wants a command track — targeting CO-level posting by 2031</div>
           </div>
-          <div class="dash-body">
-            <div class="profile-row">
-              <div class="avatar av-hr">WJ</div>
-              <div>
-                <div class="profile-name">CPT Wong Jia Ming</div>
-                <div class="profile-sub">Signals · 8 yr service · Current: OC Comms, 3 SIR</div>
-              </div>
-            </div>
-
-            <div class="metric-grid mg-3">
-              <div class="m-card mc-green">
-                <div class="m-label">Job Fit Score</div>
-                <div class="m-value">84%</div>
-                <div class="m-sub">Target role match</div>
-              </div>
-              <div class="m-card mc-amber">
-                <div class="m-label">Retention Risk</div>
-                <div class="m-value">High</div>
-                <div class="m-sub">Within 12 months</div>
-              </div>
-              <div class="m-card mc-red">
-                <div class="m-label">Replacement Cost <span class="sens-tag">🔒 Sensitive</span></div>
-                <div class="m-value">$220K</div>
-                <div class="m-sub">Full replacement est.</div>
-              </div>
-            </div>
-
-            <div class="metric-grid mg-2">
-              <div class="m-card mc-blue">
-                <div class="m-label">RSAF Investment ROI <span class="sens-tag">🔒 Sensitive</span></div>
-                <div class="m-value">3.4×</div>
-                <div class="m-sub">vs. fresh recruit cohort</div>
-              </div>
-              <div class="m-card mc-gray">
-                <div class="m-label">Market Value (Civil) <span class="sens-tag">🔒 Sensitive</span></div>
-                <div class="m-value">$95K</div>
-                <div class="m-sub">Comparable role, p.a.</div>
-              </div>
-            </div>
-
-            <div class="prog-section">
-              <div class="prog-section-label">Job Fit Breakdown</div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Technical competency</span><span class="prog-val">91%</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-g" style="width:91%"></div></div>
-              </div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Leadership readiness</span><span class="prog-val">78%</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-g" style="width:78%"></div></div>
-              </div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Unit fit (cultural)</span><span class="prog-val">70%</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-a" style="width:70%"></div></div>
-              </div>
-            </div>
-
-            <table class="data-table">
-              <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
-              <tbody>
-                <tr><td>Course assignment</td><td>Advanced Comms Systems (Q3 2026) — closes 9% fit gap</td></tr>
-                <tr><td>Next posting</td><td>HQ Signal Bn — aligns aspiration, high mission value</td></tr>
-                <tr><td>Retention lever</td><td>Career conversation due (overdue by 4 months)</td></tr>
-              </tbody>
-            </table>
-
-            <div class="dash-action-bar">
-              <button class="btn-primary">Schedule Career Pact</button>
-              <button class="btn-secondary">Download PDF brief</button>
-            </div>
+          <div>
+            <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Last career conversation</div>
+            <div style="font-size:13px;color:var(--r700);font-weight:600;">4 months overdue</div>
           </div>
-
-          <div class="tier-note">
-            <strong>Sensitive data policy:</strong> Fields marked 🔒 are visible to HR Practitioners and Commanders only. These figures support retention and posting decisions. They are not surfaced to the member in their personal view to avoid transactional framing of the career relationship.
-          </div>
-        </div>
-
-        <!-- Personnel -->
-        <div class="dash" id="dash-pers">
-          <div class="dash-topbar dash-topbar-pers">
-            <div class="dash-title">My Career Health</div>
-            <span class="dash-badge badge-pers">Personnel</span>
-          </div>
-          <div class="dash-body">
-            <div class="profile-row">
-              <div class="avatar av-pers">WJ</div>
-              <div>
-                <div class="profile-name">CPT Wong Jia Ming</div>
-                <div class="profile-sub">Signals · 8 yr service</div>
-              </div>
-            </div>
-
-            <div class="metric-grid mg-2">
-              <div class="m-card mc-green" style="text-align:center;">
-                <div class="m-label">Career Score</div>
-                <div class="m-value" style="font-size:36px;">78</div>
-                <div class="m-sub">out of 100</div>
-              </div>
-              <div class="m-card mc-gray">
-                <div class="m-label">Growth Potential</div>
-                <div class="m-value" style="font-size:24px;">High</div>
-                <div class="m-sub">Based on current trajectory</div>
-              </div>
-            </div>
-
-            <div class="stars-box">
-              <div class="stars-title">What your score reflects</div>
-              <div class="star-row"><span class="star-icon">⚡</span><span class="star-label">Technical skills</span><span class="star-rating">★★★★☆</span></div>
-              <div class="star-row"><span class="star-icon">🎯</span><span class="star-label">Role readiness</span><span class="star-rating">★★★★☆</span></div>
-              <div class="star-row"><span class="star-icon">🌱</span><span class="star-label">Growth momentum</span><span class="star-rating">★★★☆☆</span></div>
-              <div class="star-row"><span class="star-icon">🤝</span><span class="star-label">Team contribution</span><span class="star-rating">★★★★☆</span></div>
-            </div>
-
-            <div class="prog-section">
-              <div class="prog-section-label">Suggested next steps</div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Complete Advanced Comms course</span><span class="prog-val">+8 pts</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-b" style="width:65%"></div></div>
-              </div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Update career map aspirations</span><span class="prog-val">+5 pts</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-b" style="width:45%"></div></div>
-              </div>
-              <div class="prog-row">
-                <div class="prog-label-row"><span class="prog-label">Schedule Career Pact conversation</span><span class="prog-val">+3 pts</span></div>
-                <div class="prog-bar"><div class="prog-fill pf-a" style="width:30%"></div></div>
-              </div>
-            </div>
-
-            <table class="data-table">
-              <thead><tr><th>Information</th><th>Available to you</th></tr></thead>
-              <tbody>
-                <tr><td>Your career score</td><td>✓ Always visible</td></tr>
-                <tr><td>Growth potential</td><td>✓ Always visible</td></tr>
-                <tr><td>Suggested next steps</td><td>✓ Always visible</td></tr>
-                <tr><td>Job fit % (vs. specific role)</td><td><span class="locked-cell">🔒 Shared during Career Pact conversation</span></td></tr>
-                <tr><td>Replacement / market value</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
-              </tbody>
-            </table>
-
-            <div class="dash-action-bar">
-              <button class="btn-primary">Request Career Pact</button>
-              <button class="btn-secondary">Explore career paths</button>
-            </div>
-          </div>
-
-          <div class="tier-note">
-            <strong>Design rationale:</strong> Personnel see growth signals in points and stars — same underlying data, expressed as development language, not dollar figures. This keeps the career conversation human-centred rather than transactional. Sensitive figures like ROI and replacement cost are reserved for HR decision-making.
+          <div>
+            <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Upcoming trigger</div>
+            <div style="font-size:13px;color:var(--gray900);">Standard posting cycle — Q4 2026</div>
           </div>
         </div>
       </div>
+      <div class="step-nav">
+        <div style="font-size:12px;color:var(--gray400);">This is your starting point. Next, explore where you could go.</div>
+        <button class="btn btn-primary" onclick="aGoTo(2)">Choose a path →</button>
+      </div>
+    </div>
 
+    <!-- Step 2: Choose path -->
+    <div id="a-s2" style="display:none;">
+      <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Select a career path you want to explore. You can go back and try a different one.</div>
+      <div class="path-grid" id="path-grid">
 
-      <!-- ═══════════════════════════════════════════
-           PAGE C — Four-Seat Structure
-           ═══════════════════════════════════════════ -->
-      <div id="page-c">
-        <div class="section-header">
-          <div class="section-tag" style="background:var(--red-100);color:var(--red-900);">Section C · Four-Seat Structure</div>
-          <div class="section-title">Tiered involvement — not every conversation needs all four seats</div>
-          <div class="section-desc">Roles defined: <strong>Personnel/Member</strong> — aspirations &amp; commitments · <strong>Supervisor</strong> — support given · <strong>Career Manager</strong> — realistic options, best commitment · <strong>SSO/Authority</strong> — sign off. Click a tier to expand.</div>
+        <div class="path-card" onclick="selectPath('command',this)" data-path="command">
+          <div class="sel-ring"></div>
+          <div class="path-icon">⭐</div>
+          <div class="path-name">Command Track</div>
+          <div class="path-sub">OC → CO pathway within Signals formation</div>
+          <div class="path-benchmark"><strong>38%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
-        <div class="seat-legend">
-          <div class="seat-chip sc1">🟢 Seat 1: Personnel / Member</div>
-          <div class="seat-chip sc2">🔵 Seat 2: Supervisor</div>
-          <div class="seat-chip sc3">🟡 Seat 3: Career Manager</div>
-          <div class="seat-chip sc4">🔴 Seat 4: SSO / Endorsing Authority</div>
+        <div class="path-card" onclick="selectPath('staff',this)" data-path="staff">
+          <div class="sel-ring"></div>
+          <div class="path-icon">🏛️</div>
+          <div class="path-name">Staff / HQ Track</div>
+          <div class="path-sub">HQ Signal Bn → RSAF HQ staff roles</div>
+          <div class="path-benchmark"><strong>29%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
-        <div class="tier-cards">
+        <div class="path-card" onclick="selectPath('tech',this)" data-path="tech">
+          <div class="sel-ring"></div>
+          <div class="path-icon">🔬</div>
+          <div class="path-name">Technical Specialist</div>
+          <div class="path-sub">Advanced Comms Systems → Principal Technical Officer</div>
+          <div class="path-benchmark"><strong>18%</strong>&nbsp;of similar profiles took this route</div>
+        </div>
 
-          <!-- Tier 1 -->
-          <div class="tier-card open" id="tc1" onclick="toggleTier('tc1')">
-            <div class="tier-card-head">
-              <span class="t-badge tb1">Tier 1 · Routine</span>
-              <div class="tier-head-info">
-                <div class="tier-title-text">Career check-in</div>
-                <div class="tier-sub-text">Annual review · Career map update</div>
-              </div>
-              <span class="tier-toggle" id="tc1-toggle">▲ Collapse</span>
-            </div>
-            <div class="tier-body" id="tc1-body">
-              <div class="seat-grid">
-                <div class="seat-box sbox-1 present">
-                  <div class="seat-icon-lg">🟢</div>
-                  <div class="seat-name-text">Personnel / Member</div>
-                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
-                </div>
-                <div class="seat-box sbox-2 absent">
-                  <div class="seat-icon-lg">—</div>
-                  <div class="seat-name-text">Supervisor</div>
-                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required</div>
-                </div>
-                <div class="seat-box sbox-3 present">
-                  <div class="seat-icon-lg">🟡</div>
-                  <div class="seat-name-text">Career Manager</div>
-                  <div class="seat-contrib-text">Realistic options · update career map</div>
-                </div>
-                <div class="seat-box sbox-4 absent">
-                  <div class="seat-icon-lg">—</div>
-                  <div class="seat-name-text">SSO / Authority</div>
-                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required</div>
-                </div>
-              </div>
-              <div class="outcome-row">
-                <div class="outcome-item"><span class="out-check">✓</span> Updated career map</div>
-                <div class="outcome-item"><span class="out-check">✓</span> Next milestones logged</div>
-                <div class="outcome-item" style="color:var(--amber-700)">→ Escalates to Tier 2 if posting is imminent</div>
-              </div>
-              <div class="doc-pill">📄 Career map update (signed: Member + CM)</div>
+        <div class="path-card" onclick="selectPath('cross',this)" data-path="cross">
+          <div class="sel-ring"></div>
+          <div class="path-icon">🔄</div>
+          <div class="path-name">Cross-Vocation: C4I / Cyber</div>
+          <div class="path-sub">Signals → C4I or Cyber vocation pivot</div>
+          <div class="path-benchmark"><strong>9%</strong>&nbsp;of similar profiles took this route</div>
+        </div>
+
+      </div>
+      <div class="step-nav">
+        <button class="btn btn-ghost" onclick="aGoTo(1)">← Back</button>
+        <button class="btn btn-primary" id="a-to-step3" onclick="aGoTo(3)" disabled>See outcomes →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Outcomes -->
+    <div id="a-s3" style="display:none;">
+      <div class="outcome-view" id="outcome-view" style="display:block;">
+
+        <!-- Timeline -->
+        <div style="font-size:12px;font-weight:600;color:var(--gray500);margin-bottom:8px;text-transform:uppercase;letter-spacing:.07em;">Your progression timeline</div>
+        <div class="timeline-row" id="tl-row">
+          <!-- filled by JS -->
+        </div>
+
+        <div class="two-col">
+          <!-- Gaps -->
+          <div class="col-card">
+            <div class="col-card-title">What you still need</div>
+            <div id="gap-list"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray500);"><span style="width:8px;height:8px;border-radius:50%;background:var(--r700);display:inline-block;"></span> Missing</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray500);"><span style="width:8px;height:8px;border-radius:50%;background:var(--a500);display:inline-block;"></span> Partial</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray500);"><span style="width:8px;height:8px;border-radius:50%;background:var(--g800);display:inline-block;"></span> Completed</div>
             </div>
           </div>
 
-          <!-- Tier 2 -->
-          <div class="tier-card" id="tc2" onclick="toggleTier('tc2')">
-            <div class="tier-card-head">
-              <span class="t-badge tb2">Tier 2 · Posting</span>
-              <div class="tier-head-info">
-                <div class="tier-title-text">Career Pact conversation</div>
-                <div class="tier-sub-text">Posting cycle · Voluntary posting request</div>
-              </div>
-              <span class="tier-toggle" id="tc2-toggle">▼ Expand</span>
-            </div>
-            <div class="tier-body" id="tc2-body">
-              <div class="seat-grid">
-                <div class="seat-box sbox-1 present">
-                  <div class="seat-icon-lg">🟢</div>
-                  <div class="seat-name-text">Personnel / Member</div>
-                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
-                </div>
-                <div class="seat-box sbox-2 present">
-                  <div class="seat-icon-lg">🔵</div>
-                  <div class="seat-name-text">Supervisor</div>
-                  <div class="seat-contrib-text">Support given · unit readiness input</div>
-                </div>
-                <div class="seat-box sbox-3 present">
-                  <div class="seat-icon-lg">🟡</div>
-                  <div class="seat-name-text">Career Manager</div>
-                  <div class="seat-contrib-text">Realistic options · best commitment</div>
-                </div>
-                <div class="seat-box sbox-4 absent">
-                  <div class="seat-icon-lg">—</div>
-                  <div class="seat-name-text">SSO / Authority</div>
-                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required unless escalated</div>
-                </div>
-              </div>
-              <div class="outcome-row">
-                <div class="outcome-item"><span class="out-check">✓</span> Posting shortlist agreed</div>
-                <div class="outcome-item"><span class="out-check">✓</span> Support commitments logged</div>
-                <div class="outcome-item" style="color:var(--amber-700)">→ Escalates to Tier 3 if contested or re-contract</div>
-              </div>
-              <div class="doc-pill">📄 Career Pact (signed: Member + Supervisor + CM)</div>
-              <div class="tier-note-inline">The SSO is briefed on outcomes but does not need to be in the room for a standard posting. Their absence keeps the conversation authentic — people speak more freely when the approving authority is not present.</div>
-            </div>
-          </div>
-
-          <!-- Tier 3 -->
-          <div class="tier-card" id="tc3" onclick="toggleTier('tc3')">
-            <div class="tier-card-head">
-              <span class="t-badge tb3">Tier 3 · Full Pact</span>
-              <div class="tier-head-info">
-                <div class="tier-title-text">Full four-seat Career Pact</div>
-                <div class="tier-sub-text">Re-contract · Major vocation change · Contested posting · High-value retention</div>
-              </div>
-              <span class="tier-toggle" id="tc3-toggle">▼ Expand</span>
-            </div>
-            <div class="tier-body" id="tc3-body">
-              <div class="seat-grid">
-                <div class="seat-box sbox-1 present">
-                  <div class="seat-icon-lg">🟢</div>
-                  <div class="seat-name-text">Personnel / Member</div>
-                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
-                </div>
-                <div class="seat-box sbox-2 present">
-                  <div class="seat-icon-lg">🔵</div>
-                  <div class="seat-name-text">Supervisor</div>
-                  <div class="seat-contrib-text">Support given · advocacy or flag</div>
-                </div>
-                <div class="seat-box sbox-3 present">
-                  <div class="seat-icon-lg">🟡</div>
-                  <div class="seat-name-text">Career Manager</div>
-                  <div class="seat-contrib-text">Options + recommended commitment</div>
-                </div>
-                <div class="seat-box sbox-4 present">
-                  <div class="seat-icon-lg">🔴</div>
-                  <div class="seat-name-text">SSO / Authority</div>
-                  <div class="seat-contrib-text">Endorses or signs off · holds veto</div>
-                </div>
-              </div>
-              <div class="outcome-row">
-                <div class="outcome-item"><span class="out-check">✓</span> Binding pact signed by all 4</div>
-                <div class="outcome-item"><span class="out-check">✓</span> Override documented if SSO overrules</div>
-                <div class="outcome-item"><span class="out-check">✓</span> Ledger entry created</div>
-              </div>
-              <div class="doc-pill">📄 Full Career Pact + Ledger entry (all 4 signatures)</div>
-            </div>
+          <!-- Benchmark -->
+          <div class="col-card">
+            <div class="col-card-title">Peer benchmark</div>
+            <div class="bench-num" id="bench-num">—</div>
+            <div class="bench-sub" id="bench-sub">—</div>
+            <div class="bench-bar-wrap"><div class="bench-bar-fill" id="bench-bar" style="width:0%"></div></div>
+            <div style="margin-top:14px;font-size:12px;color:var(--gray500);line-height:1.6;" id="bench-note">—</div>
           </div>
         </div>
 
-        <!-- Trigger table -->
-        <div class="trg-section card">
-          <div class="trg-label">Trigger → Tier mapping</div>
-          <table class="trg-table">
-            <thead>
-              <tr><th>Event trigger</th><th>Tier</th><th>Seats required</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Annual career map review</td>
-                <td><span class="trg-badge tb1">Tier 1</span></td>
-                <td>Member + Career Manager</td>
-              </tr>
-              <tr>
-                <td>Standard posting cycle</td>
-                <td><span class="trg-badge tb2">Tier 2</span></td>
-                <td>Member + Supervisor + Career Manager</td>
-              </tr>
-              <tr>
-                <td>Voluntary posting request</td>
-                <td><span class="trg-badge tb2">Tier 2</span></td>
-                <td>Member + Supervisor + Career Manager</td>
-              </tr>
-              <tr>
-                <td>Contested posting / appeal</td>
-                <td><span class="trg-badge tb3">Tier 3</span></td>
-                <td>All 4 seats</td>
-              </tr>
-              <tr>
-                <td>Re-contract decision</td>
-                <td><span class="trg-badge tb3">Tier 3</span></td>
-                <td>All 4 seats</td>
-              </tr>
-              <tr>
-                <td>Vocation change / major pivot</td>
-                <td><span class="trg-badge tb3">Tier 3</span></td>
-                <td>All 4 seats</td>
-              </tr>
-              <tr>
-                <td>High-retention-risk flag (Poach Value)</td>
-                <td><span class="trg-badge tb3">Tier 3</span></td>
-                <td>All 4 seats — fast-track scheduling</td>
-              </tr>
-            </tbody>
-          </table>
+        <div style="background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-sm);padding:12px 16px;font-size:12px;color:var(--g800);margin-bottom:16px;">
+          💡 <strong>Twin insight:</strong> <span id="twin-insight">—</span>
         </div>
 
-      </div><!-- /page-c -->
+      </div>
+      <div class="step-nav">
+        <button class="btn btn-ghost" onclick="aGoTo(2)">← Try a different path</button>
+        <button class="btn btn-primary" onclick="aGoTo(4)">Generate prep brief →</button>
+      </div>
+    </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
+    <!-- Step 4: Prep Brief -->
+    <div id="a-s4" style="display:none;">
+      <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Your Career Twin has drafted the following brief. It will be shared with all four seats before your Career Pact conversation.</div>
+      <div class="brief-box" id="brief-box" style="display:block;">
+        <div class="brief-header">
+          <div class="brief-title">📋 Career Pact Prep Brief</div>
+          <span class="brief-badge">Auto-generated</span>
+        </div>
+        <div class="brief-section">
+          <div class="brief-section-label">Member</div>
+          <div class="brief-text">CPT Wong Jia Ming · Signals · OC Comms, 3 SIR · 8 years service</div>
+        </div>
+        <div class="brief-section">
+          <div class="brief-section-label">Stated Aspiration</div>
+          <div class="brief-text" id="brief-aspiration">—</div>
+        </div>
+        <div class="brief-section">
+          <div class="brief-section-label">Paths Explored</div>
+          <div class="brief-chips" id="brief-paths-chips"></div>
+        </div>
+        <div class="brief-section">
+          <div class="brief-section-label">Key Questions for Conversation</div>
+          <div class="brief-text" id="brief-questions">—</div>
+        </div>
+        <div class="brief-section">
+          <div class="brief-section-label">Gaps to Discuss</div>
+          <div class="brief-text" id="brief-gaps">—</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn btn-primary">✓ Send brief to all seats</button>
+        <button class="btn btn-ghost" onclick="aGoTo(2)">← Explore another path</button>
+        <button class="btn btn-ghost" onclick="aReset()">↺ Start over</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       PAGE B  ·  Poach Value
+  ══════════════════════════════════ -->
+  <div id="page-b">
+    <div class="section-header">
+      <div class="section-tag st-b">B · Poach Value</div>
+      <div class="section-title">See what your role shows you</div>
+      <div class="section-desc">Select who you are. The dashboard changes to show exactly the information your role is permitted to see. Same person, different views.</div>
+    </div>
+
+    <div class="role-selector">
+      <div class="role-card active-role" onclick="selectRole('personnel',this)">
+        <div class="role-icon-lg">🪖</div>
+        <div class="role-name">Personnel</div>
+        <div class="role-sub">Self-awareness &amp; planning</div>
+      </div>
+      <div class="role-card" onclick="selectRole('supervisor',this)">
+        <div class="role-icon-lg">👤</div>
+        <div class="role-name">Supervisor</div>
+        <div class="role-sub">Unit readiness &amp; support</div>
+      </div>
+      <div class="role-card" onclick="selectRole('hr',this)">
+        <div class="role-icon-lg">📋</div>
+        <div class="role-name">HR Practitioner</div>
+        <div class="role-sub">Full workforce data</div>
+      </div>
+      <div class="role-card" onclick="selectRole('commander',this)">
+        <div class="role-icon-lg">🎖️</div>
+        <div class="role-name">Commander</div>
+        <div class="role-sub">Posting &amp; retention decisions</div>
+      </div>
+    </div>
+
+    <!-- ---- Personnel ---- -->
+    <div class="dash-shell" id="dash-personnel">
+      <div class="dash-topbar dash-tb-personnel">
+        <div class="dash-tb-title">My Career Health</div>
+        <span class="dash-tb-badge badge-personnel">Personnel</span>
+      </div>
+      <div class="dash-body">
+        <div class="db-profile">
+          <div class="avatar av-b">WJ</div>
+          <div><div class="db-name">CPT Wong Jia Ming</div><div class="db-sub">Signals · 8 yr service</div></div>
+        </div>
+        <div class="metric-grid mg-2">
+          <div class="m-card mc-g" style="text-align:center;">
+            <div class="m-label">Career Score</div>
+            <div class="m-value" style="font-size:36px;">78</div>
+            <div class="m-sub">out of 100</div>
+          </div>
+          <div class="m-card mc-gray">
+            <div class="m-label">Growth Potential</div>
+            <div class="m-value" style="font-size:22px;">High</div>
+            <div class="m-sub">Based on trajectory</div>
+          </div>
+        </div>
+        <div class="stars-box">
+          <div class="stars-title">What your score reflects</div>
+          <div class="star-row"><span class="star-icon-s">⚡</span><span class="star-lbl">Technical skills</span><span class="star-rating" style="color:var(--g800);">★★★★☆</span></div>
+          <div class="star-row"><span class="star-icon-s">🎯</span><span class="star-lbl">Role readiness</span><span class="star-rating" style="color:var(--g800);">★★★★☆</span></div>
+          <div class="star-row"><span class="star-icon-s">🌱</span><span class="star-lbl">Growth momentum</span><span class="star-rating" style="color:var(--g800);">★★★☆☆</span></div>
+          <div class="star-row"><span class="star-icon-s">🤝</span><span class="star-lbl">Team contribution</span><span class="star-rating" style="color:var(--g800);">★★★★☆</span></div>
+        </div>
+        <div class="prog-section">
+          <div class="prog-section-title">Suggested next steps</div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Complete Advanced Comms Systems course</span><span class="prog-val">+8 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:65%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Update career map aspirations</span><span class="prog-val">+5 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:45%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Schedule Career Pact conversation</span><span class="prog-val">+3 pts</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:30%"></div></div></div>
+        </div>
+        <table class="dtable">
+          <thead><tr><th>Information</th><th>Visible to you</th></tr></thead>
+          <tbody>
+            <tr><td>Career score &amp; growth potential</td><td>✓ Always</td></tr>
+            <tr><td>Development areas &amp; next steps</td><td>✓ Always</td></tr>
+            <tr><td>Job fit % for a specific role</td><td><span class="locked-cell">🔒 Shared during Career Pact</span></td></tr>
+            <tr><td>Retention risk level</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
+            <tr><td>Replacement cost / market value</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
+          </tbody>
+        </table>
+        <div class="dash-actions">
+          <button class="btn btn-primary" style="background:var(--b700);">Request Career Pact</button>
+          <button class="btn btn-secondary">Explore career paths</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- Supervisor ---- -->
+    <div class="dash-shell" id="dash-supervisor" style="display:none;">
+      <div class="dash-topbar dash-tb-supervisor">
+        <div class="dash-tb-title">Team Member Profile</div>
+        <span class="dash-tb-badge badge-supervisor">Supervisor</span>
+      </div>
+      <div class="dash-body">
+        <div class="db-profile">
+          <div class="avatar av-p">WJ</div>
+          <div><div class="db-name">CPT Wong Jia Ming</div><div class="db-sub">Signals · OC Comms, 3 SIR · reports to you</div></div>
+        </div>
+        <div class="metric-grid mg-3">
+          <div class="m-card mc-g">
+            <div class="m-label">Readiness Level</div>
+            <div class="m-value">High</div>
+            <div class="m-sub">Current posting fit</div>
+          </div>
+          <div class="m-card mc-p">
+            <div class="m-label">Posting Urgency</div>
+            <div class="m-value">Q4</div>
+            <div class="m-sub">Next posting cycle</div>
+          </div>
+          <div class="m-card mc-a">
+            <div class="m-label">Career Pact Status</div>
+            <div class="m-value" style="font-size:16px;">Overdue</div>
+            <div class="m-sub">4 months past due</div>
+          </div>
+        </div>
+        <div class="stars-box">
+          <div class="stars-title">Performance indicators (your assessment input)</div>
+          <div class="star-row"><span class="star-icon-s">⚡</span><span class="star-lbl">Technical performance</span><span class="star-rating" style="color:var(--p700);">★★★★☆</span></div>
+          <div class="star-row"><span class="star-icon-s">🎯</span><span class="star-lbl">Mission delivery</span><span class="star-rating" style="color:var(--p700);">★★★★★</span></div>
+          <div class="star-row"><span class="star-icon-s">🤝</span><span class="star-lbl">Team contribution</span><span class="star-rating" style="color:var(--p700);">★★★★☆</span></div>
+        </div>
+        <div class="prog-section">
+          <div class="prog-section-title">Unit readiness impact if posted out</div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Technical coverage gap</span><span class="prog-val">High</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:80%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Leadership coverage gap</span><span class="prog-val">Medium</span></div><div class="prog-bar"><div class="prog-fill pf-p" style="width:50%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Transition time required</span><span class="prog-val">3 months</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:40%"></div></div></div>
+        </div>
+        <table class="dtable">
+          <thead><tr><th>Information</th><th>Visible to you</th></tr></thead>
+          <tbody>
+            <tr><td>Readiness level &amp; posting urgency</td><td>✓ Always</td></tr>
+            <tr><td>Unit impact if posted out</td><td>✓ Always</td></tr>
+            <tr><td>Career aspiration (stated by member)</td><td>✓ After career map shared</td></tr>
+            <tr><td>Job fit score (vs. specific role)</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
+            <tr><td>Market value / ROI figures</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
+          </tbody>
+        </table>
+        <div class="dash-actions">
+          <button class="btn btn-primary" style="background:var(--p700);">Submit support input</button>
+          <button class="btn btn-secondary">Request 3-month handover plan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- HR Practitioner ---- -->
+    <div class="dash-shell" id="dash-hr" style="display:none;">
+      <div class="dash-topbar dash-tb-hr">
+        <div class="dash-tb-title">Poach Value · Full Profile</div>
+        <span class="dash-tb-badge badge-hr">HR Practitioner</span>
+      </div>
+      <div class="dash-body">
+        <div class="db-profile">
+          <div class="avatar av-g">WJ</div>
+          <div><div class="db-name">CPT Wong Jia Ming</div><div class="db-sub">Signals · 8 yr service · OC Comms, 3 SIR</div></div>
+        </div>
+        <div class="metric-grid mg-3">
+          <div class="m-card mc-g">
+            <div class="m-label">Job Fit Score</div>
+            <div class="m-value">84%</div>
+            <div class="m-sub">Target role match</div>
+          </div>
+          <div class="m-card mc-a">
+            <div class="m-label">Retention Risk</div>
+            <div class="m-value">High</div>
+            <div class="m-sub">Within 12 months</div>
+          </div>
+          <div class="m-card mc-r">
+            <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
+            <div class="m-value">$220K</div>
+            <div class="m-sub">Full replacement est.</div>
+          </div>
+        </div>
+        <div class="metric-grid mg-2">
+          <div class="m-card mc-b">
+            <div class="m-label">RSAF Investment ROI <span class="sens-badge">🔒</span></div>
+            <div class="m-value">3.4×</div>
+            <div class="m-sub">vs. fresh recruit cohort</div>
+          </div>
+          <div class="m-card mc-gray">
+            <div class="m-label">Civil Market Value <span class="sens-badge">🔒</span></div>
+            <div class="m-value">$95K</div>
+            <div class="m-sub">Comparable role p.a.</div>
+          </div>
+        </div>
+        <div class="prog-section">
+          <div class="prog-section-title">Job fit breakdown</div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Technical competency</span><span class="prog-val">91%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:91%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Leadership readiness</span><span class="prog-val">78%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:78%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Unit fit (cultural)</span><span class="prog-val">70%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:70%"></div></div></div>
+        </div>
+        <table class="dtable">
+          <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Course assignment</td><td>Advanced Comms Systems (Q3 2026) — closes 9% fit gap</td></tr>
+            <tr><td>Next posting</td><td>HQ Signal Bn — aligns aspiration, high mission value</td></tr>
+            <tr><td>Priority action</td><td>Career Pact conversation overdue by 4 months — schedule now</td></tr>
+          </tbody>
+        </table>
+        <div class="dash-actions">
+          <button class="btn btn-primary">Schedule Career Pact</button>
+          <button class="btn btn-secondary">Download PDF brief</button>
+          <button class="btn btn-ghost">Flag retention risk</button>
+        </div>
+        <div class="access-note">🔒 Fields marked sensitive are visible to HR Practitioners and Commanders only. They are not shown to the member to avoid transactional framing of the career relationship.</div>
+      </div>
+    </div>
+
+    <!-- ---- Commander ---- -->
+    <div class="dash-shell" id="dash-commander" style="display:none;">
+      <div class="dash-topbar dash-tb-commander">
+        <div class="dash-tb-title">Posting Decision Support</div>
+        <span class="dash-tb-badge badge-commander">Commander</span>
+      </div>
+      <div class="dash-body">
+        <div class="db-profile">
+          <div class="avatar" style="background:var(--gray700);color:#fff;">WJ</div>
+          <div><div class="db-name">CPT Wong Jia Ming</div><div class="db-sub">Signals · 8 yr service · Posting cycle Q4 2026</div></div>
+        </div>
+        <div class="metric-grid mg-2">
+          <div class="m-card mc-g">
+            <div class="m-label">Best-fit posting</div>
+            <div class="m-value" style="font-size:16px;">HQ Signal Bn</div>
+            <div class="m-sub">84% job fit · mission-critical</div>
+          </div>
+          <div class="m-card mc-a">
+            <div class="m-label">Retention Risk <span class="sens-badge">🔒</span></div>
+            <div class="m-value">High</div>
+            <div class="m-sub">Act within 60 days</div>
+          </div>
+        </div>
+        <div class="metric-grid mg-3">
+          <div class="m-card mc-r">
+            <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
+            <div class="m-value">$220K</div>
+            <div class="m-sub">If lost to attrition</div>
+          </div>
+          <div class="m-card mc-b">
+            <div class="m-label">Mission readiness impact</div>
+            <div class="m-value">High</div>
+            <div class="m-sub">Critical technical role</div>
+          </div>
+          <div class="m-card mc-gray">
+            <div class="m-label">Aspiration alignment</div>
+            <div class="m-value">Good</div>
+            <div class="m-sub">Wants command track</div>
+          </div>
+        </div>
+        <div class="prog-section">
+          <div class="prog-section-title">Posting options ranked by fit</div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">HQ Signal Bn (recommended)</span><span class="prog-val">84%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:84%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">3 Div Signals (acceptable)</span><span class="prog-val">71%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:71%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">RSAF HQ Staff (lower fit)</span><span class="prog-val">52%</span></div><div class="prog-bar"><div class="prog-fill" style="width:52%;background:var(--gray400);"></div></div></div>
+        </div>
+        <div class="dash-actions">
+          <button class="btn btn-primary" style="background:var(--gray900);">Approve HQ Signal Bn posting</button>
+          <button class="btn btn-secondary">Override with documentation</button>
+          <button class="btn btn-ghost">Schedule Tier 3 Pact first</button>
+        </div>
+        <div class="access-note">Commander posting authority is not constrained by this tool. All sensitive data supports your decision — the career map is input to your decision, not a veto. Any override is logged in the Ledger.</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       PAGE C  ·  Four-Seat Pact
+  ══════════════════════════════════ -->
+  <div id="page-c">
+    <div class="section-header">
+      <div class="section-tag st-c">C · Four-Seat Structure</div>
+      <div class="section-title">Pick a scenario and walk through the conversation</div>
+      <div class="section-desc">Select the event that triggered this Career Pact. See which seats activate, then step through what each person says — and what document is produced at the end.</div>
+    </div>
+
+    <!-- Scenario picker -->
+    <div class="scenario-grid" id="scenario-grid">
+      <div class="scenario-card" onclick="selectScenario('annual',this)">
+        <div class="sel-ring"></div>
+        <div class="scenario-icon">📅</div>
+        <div class="scenario-name">Annual career map review</div>
+        <div class="scenario-sub">Routine check-in — no posting imminent</div>
+        <span class="scenario-tier-badge stb-1">Tier 1 · 2 seats</span>
+      </div>
+      <div class="scenario-card" onclick="selectScenario('posting',this)">
+        <div class="sel-ring"></div>
+        <div class="scenario-icon">📦</div>
+        <div class="scenario-name">Standard posting cycle</div>
+        <div class="scenario-sub">Q4 posting — member going to a new unit</div>
+        <span class="scenario-tier-badge stb-2">Tier 2 · 3 seats</span>
+      </div>
+      <div class="scenario-card" onclick="selectScenario('recontract',this)">
+        <div class="sel-ring"></div>
+        <div class="scenario-icon">📝</div>
+        <div class="scenario-name">Re-contract decision</div>
+        <div class="scenario-sub">Member deciding whether to sign on again</div>
+        <span class="scenario-tier-badge stb-3">Tier 3 · all 4 seats</span>
+      </div>
+      <div class="scenario-card" onclick="selectScenario('contested',this)">
+        <div class="sel-ring"></div>
+        <div class="scenario-icon">⚠️</div>
+        <div class="scenario-name">Contested posting</div>
+        <div class="scenario-sub">Member objects — posting deviates from career map</div>
+        <span class="scenario-tier-badge stb-3">Tier 3 · all 4 seats</span>
+      </div>
+    </div>
+
+    <!-- Seats panel -->
+    <div class="seats-panel" id="seats-panel">
+      <div class="seats-title" id="seats-title">Seats activated for this conversation</div>
+      <div class="seat-row" id="seat-row">
+        <div class="seat-box sb1 absent" id="seat-1">
+          <div class="seat-icon-m">🟢</div>
+          <div class="seat-name-m">Personnel / Member</div>
+          <div class="seat-role-m">Aspirations &amp; commitments</div>
+        </div>
+        <div class="seat-box sb2 absent" id="seat-2">
+          <div class="seat-icon-m">🔵</div>
+          <div class="seat-name-m">Supervisor</div>
+          <div class="seat-role-m">Support given</div>
+        </div>
+        <div class="seat-box sb3 absent" id="seat-3">
+          <div class="seat-icon-m">🟡</div>
+          <div class="seat-name-m">Career Manager</div>
+          <div class="seat-role-m">Realistic options</div>
+        </div>
+        <div class="seat-box sb4 absent" id="seat-4">
+          <div class="seat-icon-m">🔴</div>
+          <div class="seat-name-m">SSO / Authority</div>
+          <div class="seat-role-m">Sign off</div>
+        </div>
+      </div>
+      <div class="c-nav">
+        <button class="reset-link" onclick="cReset()">↺ Pick a different scenario</button>
+        <button class="btn btn-primary" id="c-start-btn" onclick="startConvo()">Start conversation →</button>
+      </div>
+    </div>
+
+    <!-- Conversation panel -->
+    <div class="convo-panel" id="convo-panel">
+      <div class="convo-title">
+        <span id="convo-scenario-label">Conversation</span>
+        <span class="convo-progress" id="convo-progress"></span>
+      </div>
+      <div class="convo-thread" id="convo-thread"></div>
+      <div class="c-nav">
+        <button class="reset-link" onclick="cReset()">↺ Start over</button>
+        <div class="c-nav-right">
+          <button class="btn btn-ghost" id="c-back-btn" onclick="convoStep(-1)" style="display:none;">← Back</button>
+          <button class="btn btn-primary" id="c-next-btn" onclick="convoStep(1)">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Output doc -->
+    <div class="output-doc" id="output-doc">
+      <div class="output-doc-title">📄 <span id="output-doc-title">Document produced</span></div>
+      <div id="output-rows"></div>
+      <div style="margin-top:12px;font-size:11px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Signed by</div>
+      <div class="sig-row" id="sig-row"></div>
+    </div>
+
+  </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
 </div><!-- /app -->
 
 <script>
-  /* ── Navigation ── */
-  const pages = ['a','b','c'];
-  const labels = { a: 'Career Twin', b: 'Poach Value', c: 'Four-Seat Structure' };
+/* ══ Navigation ══ */
+const sections = {
+  a: { label:'Career Twin', mode:'Explore your career paths' },
+  b: { label:'Poach Value', mode:'Select your role to see your view' },
+  c: { label:'Four-Seat Pact', mode:'Pick a scenario to run through' }
+};
+function navigate(id, btn) {
+  ['a','b','c'].forEach(p => document.getElementById('page-'+p).style.display='none');
+  document.getElementById('page-'+id).style.display='block';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tb-section').textContent = sections[id].label;
+  document.getElementById('tb-mode').textContent = sections[id].mode;
+}
+document.getElementById('page-b').style.display='none';
+document.getElementById('page-c').style.display='none';
 
-  function navigate(id, btn) {
-    pages.forEach(p => document.getElementById('page-' + p).style.display = 'none');
-    document.getElementById('page-' + id).style.display = 'block';
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('topbar-section').textContent = labels[id];
+/* ══ Section A ══ */
+const pathData = {
+  command: {
+    timeline:[
+      {year:'Now',role:'CPT · OC Comms',unit:'3 SIR'},
+      {year:'2028',role:'MAJ · OC Signals',unit:'HQ Signal Bn'},
+      {year:'2031',role:'LTC · CO',unit:'Signal Formation'}
+    ],
+    gaps:[
+      {label:'Command Module (SAF Command Course)',status:'missing',impact:'Required for CO nomination'},
+      {label:'2-yr operational command posting',status:'partial',impact:'1yr completed — 1yr remaining'},
+      {label:'Advanced Comms Systems course',status:'missing',impact:'Technical prerequisite for HQ role'}
+    ],
+    benchmark:38,
+    benchSub:'of officers with similar profiles who went Command Track reached MAJ posting within 3 years.',
+    benchNote:'This is the most common path for Signals officers at MAJ-select band. Competitive — only 1 in 3 who start this track reach LTC CO level.',
+    insight:'Your technical score (91%) is your strongest asset for this track — but the missing Command Module is a hard gate. Prioritise this before your next posting cycle.',
+    aspiration:'Wants to pursue the Command Track, targeting CO-level posting by 2031. Prefers HQ Signal Bn as next posting for leadership breadth.',
+    questions:'1. Can the Command Module be scheduled in FY2027? 2. Is HQ Signal Bn available for Q4 2026 posting? 3. What is the realistic timeline to CO nomination?',
+    gaps_brief:'Missing: Command Module, 1yr additional operational posting. Advanced Comms Systems course partially addressed.'
+  },
+  staff: {
+    timeline:[
+      {year:'Now',role:'CPT · OC Comms',unit:'3 SIR'},
+      {year:'2028',role:'MAJ · Staff Officer',unit:'HQ Signal Bn'},
+      {year:'2031',role:'LTC · Senior Staff Officer',unit:'RSAF HQ'}
+    ],
+    gaps:[
+      {label:'Advanced Staff Course',status:'missing',impact:'Required for RSAF HQ posting'},
+      {label:'Policy writing experience',status:'partial',impact:'Some exposure via current role'},
+      {label:'Joint ops attachment',status:'done',impact:'Completed FY2023'}
+    ],
+    benchmark:29,
+    benchSub:'of similar profiles who entered Staff Track reached Senior Staff Officer by year 10.',
+    benchNote:'Less competitive than Command Track. Broader exposure across the SAF. Suits those who prefer influence through policy over line command.',
+    insight:'Your leadership readiness score (78%) means you are ready for a staff role now. This path gives the broadest RSAF exposure but fewer command appointments.',
+    aspiration:'Open to Staff Track as an alternative if Command Track timelines are longer than expected. Wants to remain mission-relevant.',
+    questions:'1. Which staff role at HQ Signal Bn would accelerate promotion? 2. Is a joint ops posting possible in the next 2 years? 3. Can I return to Command Track later from a Staff posting?',
+    gaps_brief:'Missing: Advanced Staff Course. Joint ops attachment completed. Policy writing experience is partial.'
+  },
+  tech: {
+    timeline:[
+      {year:'Now',role:'CPT · OC Comms',unit:'3 SIR'},
+      {year:'2028',role:'MAJ · Technical Officer',unit:'RSAF C4I Centre'},
+      {year:'2031',role:'LTC · Principal Technical Officer',unit:'RSAF HQ / Industry'}
+    ],
+    gaps:[
+      {label:'Advanced Comms Systems course',status:'missing',impact:'Core qualification for this track'},
+      {label:'Industry attachment (DSO/ST Eng)',status:'missing',impact:'Strongly recommended for PTO track'},
+      {label:'Technical Expert certification',status:'partial',impact:'In progress — exam pending'}
+    ],
+    benchmark:18,
+    benchSub:'of Signals officers follow the Technical Specialist track beyond the MAJ level.',
+    benchNote:'Niche track with high demand from RSAF industry partners. Offers transition to DSO, DSTA, or ST Engineering. Less traditional but growing in importance.',
+    insight:'Your technical score of 91% is exceptional and rare. This path would make fullest use of your strongest asset. Consider it seriously if command authority is less important than technical depth.',
+    aspiration:'Interested in Technical Specialist track as a path that uses existing strengths. Open to industry partnership roles post-SAF.',
+    questions:'1. Is the Advanced Comms Systems course available in Q3 2026? 2. Is a DSO attachment possible? 3. What does the PTO promotion timeline look like vs. Command Track?',
+    gaps_brief:'Missing: Advanced Comms Systems course (Q3 2026 slot available), Industry attachment. Technical Expert certification in progress.'
+  },
+  cross: {
+    timeline:[
+      {year:'Now',role:'CPT · OC Comms',unit:'3 SIR (Signals)'},
+      {year:'2027',role:'CPT · C4I Officer',unit:'RSAF C4I Squadron'},
+      {year:'2030',role:'MAJ · C4I Specialist',unit:'RSAF HQ / Cyber'}
+    ],
+    gaps:[
+      {label:'C4I Conversion Course',status:'missing',impact:'Mandatory for vocation change'},
+      {label:'Cyber Security Fundamentals',status:'missing',impact:'Required for Cyber track'},
+      {label:'Cross-vocation endorsement (SSO)',status:'missing',impact:'Requires Tier 3 Career Pact approval'}
+    ],
+    benchmark:9,
+    benchSub:'of officers make a formal cross-vocation move at CPT level. It is uncommon but successfully done.',
+    benchNote:'This is the highest-risk, highest-reward path. Requires a Tier 3 Career Pact with SSO endorsement. Uncommon but increasingly valued as RSAF digital capabilities grow.',
+    insight:'This path requires a full Tier 3 Career Pact with SSO sign-off before it can proceed — a cross-vocation move cannot be handled at Tier 1 or 2. Prepare a strong case before that conversation.',
+    aspiration:'Interested in pivoting to C4I or Cyber vocation to align with long-term interest in digital/tech. Willing to accept reset of seniority clock if the vocation is a better fit.',
+    questions:'1. Is cross-vocation from Signals to C4I possible at CPT level? 2. What is the timeline impact on MAJ promotion? 3. Who is the endorsing authority for a vocation change?',
+    gaps_brief:'Missing: C4I Conversion Course, Cyber Security Fundamentals, SSO cross-vocation endorsement. This path requires a Tier 3 Career Pact before proceeding.'
   }
+};
 
-  /* ── Section A: toggle components ── */
-  function toggleComp(card, name) {
-    card.classList.toggle('selected');
-    card.querySelector('.check').textContent = card.classList.contains('selected') ? '✓' : '';
-    updateSummary();
-  }
+let selectedPath = null;
+let exploredPaths = [];
 
-  function updateSummary() {
-    const selected = Array.from(document.querySelectorAll('.comp-card.selected')).map(c => c.dataset.name);
-    const list = document.getElementById('summary-list');
-    if (selected.length === 0) {
-      list.innerHTML = '<span class="summary-empty">No components selected yet</span>';
-    } else {
-      list.innerHTML = selected.map(n => `<span class="summary-chip">${n}</span>`).join('');
+function selectPath(id, card) {
+  document.querySelectorAll('.path-card').forEach(c => { c.classList.remove('selected'); c.querySelector('.sel-ring').textContent=''; });
+  card.classList.add('selected');
+  card.querySelector('.sel-ring').textContent='✓';
+  selectedPath = id;
+  if (!exploredPaths.includes(id)) exploredPaths.push(id);
+  document.getElementById('a-to-step3').disabled = false;
+}
+
+function aGoTo(step) {
+  [1,2,3,4].forEach(s => document.getElementById('a-s'+s).style.display='none');
+  document.getElementById('a-s'+step).style.display='block';
+  [1,2,3,4].forEach(s => {
+    const el = document.getElementById('a-step'+s);
+    el.classList.remove('active','done');
+    if (s===step) el.classList.add('active');
+    else if (s<step) el.classList.add('done');
+  });
+  if (step===3) renderOutcome();
+  if (step===4) renderBrief();
+}
+
+function renderOutcome() {
+  const d = pathData[selectedPath];
+  // Timeline
+  let tlHTML = d.timeline.map((t,i) => {
+    let html = `<div class="tl-step"><div class="tl-year">${t.year}</div><div class="tl-role">${t.role}</div><div class="tl-unit">${t.unit}</div></div>`;
+    if (i < d.timeline.length-1) html += `<div class="tl-arrow">→</div>`;
+    return html;
+  }).join('');
+  document.getElementById('tl-row').innerHTML = tlHTML;
+  // Gaps
+  let gapHTML = d.gaps.map(g => `
+    <div class="gap-item">
+      <span class="gap-dot ${g.status}"></span>
+      <div><div class="gap-label">${g.label}</div><div class="gap-impact">${g.impact}</div></div>
+    </div>`).join('');
+  document.getElementById('gap-list').innerHTML = gapHTML;
+  // Benchmark
+  document.getElementById('bench-num').textContent = d.benchmark+'%';
+  document.getElementById('bench-sub').textContent = d.benchSub;
+  document.getElementById('bench-note').textContent = d.benchNote;
+  document.getElementById('twin-insight').textContent = d.insight;
+  setTimeout(()=>{ document.getElementById('bench-bar').style.width = d.benchmark+'%'; },100);
+}
+
+function renderBrief() {
+  const d = pathData[selectedPath];
+  document.getElementById('brief-aspiration').textContent = d.aspiration;
+  const pnames = { command:'Command Track', staff:'Staff / HQ Track', tech:'Technical Specialist', cross:'Cross-Vocation (C4I / Cyber)' };
+  document.getElementById('brief-paths-chips').innerHTML = exploredPaths.map(p=>`<span class="brief-chip">${pnames[p]}</span>`).join('');
+  document.getElementById('brief-questions').textContent = d.questions;
+  document.getElementById('brief-gaps').textContent = d.gaps_brief;
+}
+
+function aReset() {
+  selectedPath = null; exploredPaths = [];
+  document.querySelectorAll('.path-card').forEach(c=>{ c.classList.remove('selected'); c.querySelector('.sel-ring').textContent=''; });
+  document.getElementById('a-to-step3').disabled=true;
+  aGoTo(1);
+}
+
+/* ══ Section B ══ */
+function selectRole(role, card) {
+  document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('active-role'));
+  card.classList.add('active-role');
+  ['personnel','supervisor','hr','commander'].forEach(r => {
+    document.getElementById('dash-'+r).style.display = (r===role)?'block':'none';
+  });
+}
+
+/* ══ Section C ══ */
+const scenarioData = {
+  annual: {
+    label:'Annual career map review',
+    tier:'Tier 1',
+    seats:[true,false,true,false],
+    seatNotes:['Aspirations & commitments stated','Not required for routine review','Realistic options · update career map','Not required'],
+    convo:[
+      {seat:0,text:"I'd like to explore the Command Track seriously. My aspiration is to reach CO level by 2031. I know I still need the Command Module — can we talk about when that can happen?"},
+      {seat:2,text:"Looking at your profile, Command Track is realistic — your technical score is strong and you're in the MAJ-select band. The key gap is the Command Module. I can put you forward for FY2027 if you commit to the Advanced Comms Systems course first as a technical prerequisite."},
+      {seat:0,text:"That works for me. I'll commit to Advanced Comms Systems in Q3 2026 and aim for the Command Module in FY2027. I'd like that logged in my career map."},
+      {seat:2,text:"Noted and logged. Updated career map: primary track Command, milestone Advanced Comms Systems Q3 2026, Command Module FY2027 target, next review at 6 months. I'll mark this conversation complete."}
+    ],
+    output:{
+      title:'Career Map Update',
+      rows:['Career map updated with Command Track as primary aspiration','Milestone: Advanced Comms Systems course Q3 2026','Milestone: Command Module FY2027 (to be confirmed by CM)','Next review scheduled: December 2026'],
+      sigs:[0,2]
+    }
+  },
+  posting: {
+    label:'Standard posting — Q4 2026',
+    tier:'Tier 2',
+    seats:[true,true,true,false],
+    seatNotes:['Aspirations & commitments stated','Support given · unit readiness input','Realistic options · best commitment','Briefed on outcome — not required in room'],
+    convo:[
+      {seat:0,text:"I'm up for posting in Q4. My preferred posting is HQ Signal Bn — it aligns with my Command Track aspiration. I'm committed to completing the Advanced Comms Systems course before I move."},
+      {seat:1,text:"From the unit's side, we'll need a 3-month handover. CPT Wong is the primary technical expert for our Comms systems — I can support the posting but need time to transition the role. I formally support his posting to HQ Signal Bn."},
+      {seat:2,text:"HQ Signal Bn is the best fit — 84% job match and mission-critical role. Recommended commitment: Advanced Comms Systems course completion by November 2026, handover to current unit by end October, posting effective 1 November. I'll prepare the Pact document for both of you to sign."},
+      {seat:0,text:"Agreed. I commit to completing Advanced Comms Systems by November and supporting the 3-month handover. HQ Signal Bn — that's my commitment."},
+      {seat:1,text:"Confirmed. I commit to a full 3-month handover plan and nominating a replacement technical lead by end July. Signed."}
+    ],
+    output:{
+      title:'Career Pact — Posting Q4 2026',
+      rows:['Posting confirmed: HQ Signal Bn, effective 1 November 2026','Commitment (Member): Advanced Comms Systems course by November 2026','Commitment (Supervisor): 3-month handover plan, replacement nominated by July 2026','Next Pact review: 90 days post-posting (career map check-in)'],
+      sigs:[0,1,2]
+    }
+  },
+  recontract: {
+    label:'Re-contract decision',
+    tier:'Tier 3',
+    seats:[true,true,true,true],
+    seatNotes:['Aspirations & commitments stated','Support given · retention advocacy','Realistic options · career roadmap','Endorses re-contract terms · sign off'],
+    convo:[
+      {seat:0,text:"I'm considering my re-contract options. I'll re-sign if I can see a clear, credible command path — specifically confirmation that a CO-track posting is realistic in FY2028. If the answer is 'maybe', I'd rather plan my exit now with respect."},
+      {seat:1,text:"I want to formally advocate for retention. CPT Wong is one of the strongest technical officers I've commanded. He's ready for the next level and I believe the Command Module in FY2027 followed by a CO posting in FY2028 is achievable. I support his re-contract."},
+      {seat:2,text:"Based on his profile — technical score 91%, MAJ-select band, strong advocacy — Command Track to CO by FY2028 is realistic. I recommend: re-contract on a 5-year term, Command Module in FY2027, CO nomination submitted for FY2028 cycle. I can put that in writing in the Pact."},
+      {seat:3,text:"I endorse the re-contract terms as stated. Command Module slot in FY2027 is confirmed — I'll personally put forward the CO nomination in FY2028 if the Command Module is completed. That commitment goes into the Pact and the Ledger. Signed."},
+      {seat:0,text:"I accept those terms. 5-year re-contract. I commit to completing the Command Module in FY2027 and maintaining current performance standards. Thank you — this conversation is exactly what I needed."}
+    ],
+    output:{
+      title:'Full Career Pact — Re-contract',
+      rows:['Re-contract: 5-year term confirmed','Commitment (SSO): CO nomination submitted in FY2028, subject to Command Module completion','Milestone: Command Module FY2027 — confirmed slot','Commitment (Member): maintain performance, complete Command Module FY2027','Ledger entry created: re-contract terms and SSO commitment recorded'],
+      sigs:[0,1,2,3]
+    }
+  },
+  contested: {
+    label:'Contested posting',
+    tier:'Tier 3',
+    seats:[true,true,true,true],
+    seatNotes:['Objects — posting deviates from agreed career map','Acknowledges unit need · presents conflict','Career map evidence · escalation trigger','Reviews override case · documents decision'],
+    convo:[
+      {seat:0,text:"I have to formally object to this posting. My career map, signed 6 months ago, clearly states HQ Signal Bn as my agreed next posting. Being posted to 3 Div Signals instead is a deviation that I did not agree to and was not consulted on. I am requesting that the Career Pact be honoured."},
+      {seat:1,text:"I have to be transparent — there's an urgent unit requirement at 3 Div Signals that emerged after the Pact was signed. I acknowledge the conflict. The unit need is real, but so is CPT Wong's legitimate expectation from the signed Pact."},
+      {seat:2,text:"The career map shows HQ Signal Bn as the agreed posting. The operational need is genuine, but an override requires formal documentation in the Ledger. I'm recommending: if the override proceeds, CPT Wong is given first priority for HQ Signal Bn at the next posting cycle and the override reason is logged in full."},
+      {seat:3,text:"I've heard both sides. Operational need at 3 Div Signals is pressing and I am overriding the agreed posting for this cycle. However — and this goes in the Ledger — CPT Wong has priority for HQ Signal Bn at Q2 2027 with no competition. This override is logged, documented, and I'm personally accountable for the Q2 2027 commitment. CPT Wong, you have my word in writing."},
+      {seat:0,text:"I note the override and I formally acknowledge the SSO's commitment. I accept this outcome on the condition that the Q2 2027 priority posting is in the Ledger and I can request a review if it is not honoured. I'll proceed to 3 Div Signals."}
+    ],
+    output:{
+      title:'Ledger Entry — Posting Override',
+      rows:['Override documented: HQ Signal Bn posting deferred — operational necessity at 3 Div Signals','Override authorised by: SSO (signed)','Commitment (SSO): HQ Signal Bn priority posting for CPT Wong — Q2 2027, unconditional','Ledger entry created: override rationale, SSO commitment, member acknowledgement','Review trigger: if Q2 2027 posting is not honoured, member has right to formal escalation'],
+      sigs:[0,1,2,3]
     }
   }
+};
 
-  /* ── Section B: switch view ── */
-  function switchView(id, btn) {
-    document.querySelectorAll('.dash').forEach(d => d.classList.remove('active'));
-    document.getElementById('dash-' + id).classList.add('active');
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+let currentScenario = null;
+let convoStep_idx = 0;
+const sigNames = ['Member','Supervisor','Career Manager','SSO / Authority'];
+const sigClass = ['sig-1','sig-2','sig-3','sig-4'];
+
+function selectScenario(id, card) {
+  document.querySelectorAll('.scenario-card').forEach(c=>{ c.classList.remove('sel-scenario'); c.querySelector('.sel-ring').textContent=''; });
+  card.classList.add('sel-scenario');
+  card.querySelector('.sel-ring').textContent='✓';
+  currentScenario = id;
+  const d = scenarioData[id];
+  // Show seats panel
+  const sp = document.getElementById('seats-panel');
+  sp.style.display='block';
+  // Set seats
+  d.seats.forEach((active,i)=>{
+    const el = document.getElementById('seat-'+(i+1));
+    el.className = 'seat-box sb'+(i+1)+' '+(active?'present':'absent');
+    el.querySelector('.seat-role-m').textContent = active ? d.seatNotes[i] : 'Not required for this tier';
+  });
+  document.getElementById('seats-title').textContent = `${d.label} — ${d.tier}`;
+  // Hide convo & output
+  document.getElementById('convo-panel').style.display='none';
+  document.getElementById('output-doc').style.display='none';
+  convoStep_idx=0;
+}
+
+function startConvo() {
+  document.getElementById('convo-panel').style.display='block';
+  document.getElementById('output-doc').style.display='none';
+  const d = scenarioData[currentScenario];
+  document.getElementById('convo-scenario-label').textContent = d.label;
+  convoStep_idx=0;
+  document.getElementById('convo-thread').innerHTML='';
+  renderConvoStep();
+}
+
+function renderConvoStep() {
+  const d = scenarioData[currentScenario];
+  const steps = d.convo;
+  const thread = document.getElementById('convo-thread');
+  thread.innerHTML='';
+  for(let i=0;i<=convoStep_idx && i<steps.length;i++) {
+    const s = steps[i];
+    const seatNames=['Personnel / Member','Supervisor','Career Manager','SSO / Authority'];
+    const seatAbbr=['M','S','CM','SSO'];
+    const div = document.createElement('div');
+    div.className='bubble-row';
+    div.style.animationDelay=(i===convoStep_idx?'0s':'0s');
+    div.innerHTML=`
+      <div class="bubble-av bav-${s.seat+1}">${seatAbbr[s.seat]}</div>
+      <div class="bubble-content">
+        <div class="bubble-name bname-${s.seat+1}">${seatNames[s.seat]}</div>
+        <div class="bubble-text">${s.text}</div>
+      </div>`;
+    thread.appendChild(div);
   }
-
-  /* ── Section C: toggle tier cards ── */
-  function toggleTier(id) {
-    const card = document.getElementById(id);
-    const toggle = document.getElementById(id + '-toggle');
-    const isOpen = card.classList.contains('open');
-    card.classList.toggle('open', !isOpen);
-    toggle.textContent = isOpen ? '▼ Expand' : '▲ Collapse';
+  thread.scrollTop=thread.scrollHeight;
+  const total=steps.length;
+  document.getElementById('convo-progress').textContent=`${Math.min(convoStep_idx+1,total)} / ${total}`;
+  document.getElementById('c-back-btn').style.display=convoStep_idx>0?'inline-flex':'none';
+  const nextBtn=document.getElementById('c-next-btn');
+  if(convoStep_idx>=total-1){
+    nextBtn.textContent='See outcome document →';
+    nextBtn.onclick=showOutput;
+  } else {
+    nextBtn.textContent='Next →';
+    nextBtn.onclick=()=>convoStep(1);
   }
+}
 
-  /* Init */
-  document.getElementById('page-b').style.display = 'none';
-  document.getElementById('page-c').style.display = 'none';
+function convoStep(dir) {
+  const d=scenarioData[currentScenario];
+  convoStep_idx=Math.max(0,Math.min(convoStep_idx+dir,d.convo.length-1));
+  renderConvoStep();
+}
+
+function showOutput() {
+  const d=scenarioData[currentScenario];
+  const o=d.output;
+  document.getElementById('output-doc').style.display='block';
+  document.getElementById('output-doc-title').textContent=o.title;
+  document.getElementById('output-rows').innerHTML=o.rows.map(r=>`<div class="output-row"><span class="output-check">✓</span><span class="output-label">${r}</span></div>`).join('');
+  document.getElementById('sig-row').innerHTML=o.sigs.map(i=>`<span class="sig-chip ${sigClass[i]}">✓ ${sigNames[i]}</span>`).join('');
+  document.getElementById('output-doc').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function cReset() {
+  currentScenario=null; convoStep_idx=0;
+  document.querySelectorAll('.scenario-card').forEach(c=>{ c.classList.remove('sel-scenario'); c.querySelector('.sel-ring').textContent=''; });
+  document.getElementById('seats-panel').style.display='none';
+  document.getElementById('convo-panel').style.display='none';
+  document.getElementById('output-doc').style.display='none';
+}
 </script>
 </body>
 </html>
