@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Posting Pact — Design Prototype</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green-900: #1C3A0E;
+    --green-800: #27500A;
+    --green-700: #336010;
+    --green-100: #EAF3DE;
+    --green-50:  #F4FAF0;
+    --amber-100: #FEF3C7;
+    --amber-700: #B45309;
+    --amber-900: #78350F;
+    --red-100:   #FEE2E2;
+    --red-700:   #B91C1C;
+    --red-900:   #7F1D1D;
+    --blue-100:  #DBEAFE;
+    --blue-700:  #1D4ED8;
+    --blue-900:  #1E3A8A;
+    --gray-50:   #F9FAFB;
+    --gray-100:  #F3F4F6;
+    --gray-200:  #E5E7EB;
+    --gray-300:  #D1D5DB;
+    --gray-400:  #9CA3AF;
+    --gray-500:  #6B7280;
+    --gray-700:  #374151;
+    --gray-900:  #111827;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.1);
+  }
+  html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; color: var(--gray-900); background: var(--gray-50); }
+
+  /* ── Layout ── */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 240px; flex-shrink: 0;
+    background: var(--green-900);
+    display: flex; flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+  }
+  .sidebar-brand {
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .sidebar-brand-tag {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); margin-bottom: 4px;
+  }
+  .sidebar-brand-title {
+    font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3;
+  }
+  .sidebar-brand-sub {
+    font-size: 11px; color: rgba(255,255,255,.45); margin-top: 3px;
+  }
+  .sidebar-nav { padding: 14px 12px; flex: 1; }
+  .nav-section-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+    color: rgba(255,255,255,.35); padding: 10px 8px 6px; margin-top: 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: var(--radius-sm);
+    cursor: pointer; transition: background .15s;
+    color: rgba(255,255,255,.7); font-size: 13px; font-weight: 500;
+    border: none; background: transparent; width: 100%; text-align: left;
+  }
+  .nav-item:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .nav-item.active { background: rgba(255,255,255,.15); color: #fff; }
+  .nav-item .nav-letter {
+    width: 24px; height: 24px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .nav-item.active .nav-letter, .nav-item:hover .nav-letter { opacity: 1; }
+  .nl-a { background: var(--green-100); color: var(--green-800); }
+  .nl-b { background: var(--amber-100); color: var(--amber-900); }
+  .nl-c { background: var(--red-100); color: var(--red-900); }
+  .sidebar-footer {
+    padding: 14px 16px; border-top: 1px solid rgba(255,255,255,.1);
+    font-size: 11px; color: rgba(255,255,255,.3); line-height: 1.6;
+  }
+
+  /* ── Main content ── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar {
+    height: 54px; flex-shrink: 0;
+    background: #fff; border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+  }
+  .topbar-breadcrumb { font-size: 13px; color: var(--gray-500); }
+  .topbar-breadcrumb strong { color: var(--gray-900); font-weight: 600; }
+  .topbar-badge {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 999px; background: var(--green-100); color: var(--green-800);
+  }
+  .content { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+  /* ── Section header ── */
+  .section-header { margin-bottom: 24px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--green-800); background: var(--green-100); padding: 4px 10px; border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .section-title { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+  .section-desc { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 680px; }
+
+  /* ── Cards ── */
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg); padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 14px; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── PAGE: A ── */
+  #page-a { display: block; }
+  #page-b, #page-c { display: none; }
+
+  .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .comp-card {
+    border: 1.5px solid var(--gray-200); border-radius: var(--radius-md);
+    padding: 16px; cursor: pointer; transition: all .18s;
+    background: #fff; position: relative; user-select: none;
+  }
+  .comp-card:hover { border-color: var(--green-700); box-shadow: var(--shadow-sm); }
+  .comp-card.selected { border-color: var(--green-800); background: var(--green-50); }
+  .comp-card .check {
+    position: absolute; top: 12px; right: 12px;
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1.5px solid var(--gray-300); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; transition: all .15s;
+  }
+  .comp-card.selected .check { background: var(--green-800); border-color: var(--green-800); color: #fff; }
+  .comp-icon { font-size: 24px; margin-bottom: 10px; }
+  .comp-name { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+  .comp-sub { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+  .comp-body { font-size: 12px; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px; }
+  .comp-pill {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .pill-mvp { background: var(--green-100); color: var(--green-800); }
+  .pill-opt { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+  .pill-later { background: var(--amber-100); color: var(--amber-900); }
+
+  .summary-panel {
+    background: var(--green-50); border: 1px solid var(--green-100); border-radius: var(--radius-md);
+    padding: 16px 20px;
+  }
+  .summary-panel h4 { font-size: 13px; font-weight: 600; color: var(--green-800); margin-bottom: 10px; }
+  .summary-list { display: flex; flex-wrap: wrap; gap: 8px; min-height: 28px; }
+  .summary-chip {
+    font-size: 12px; font-weight: 500; padding: 4px 12px;
+    border-radius: 999px; background: #fff; border: 1px solid var(--green-700); color: var(--green-800);
+  }
+  .summary-empty { font-size: 12px; color: var(--gray-400); font-style: italic; align-self: center; }
+
+  /* ── PAGE: B ── */
+  .view-toggle {
+    display: flex; gap: 0; border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+    overflow: hidden; width: fit-content; margin-bottom: 22px;
+  }
+  .view-btn {
+    padding: 9px 22px; font-size: 13px; font-weight: 500; cursor: pointer;
+    border: none; background: var(--gray-100); color: var(--gray-500);
+    transition: all .15s; display: flex; align-items: center; gap: 7px;
+  }
+  .view-btn.active { background: #fff; color: var(--gray-900); box-shadow: var(--shadow-sm); }
+  .view-btn .vb-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .dash { display: none; }
+  .dash.active { display: block; }
+
+  .dash-topbar {
+    padding: 12px 20px; border-radius: var(--radius-md) var(--radius-md) 0 0;
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 0;
+  }
+  .dash-topbar-hr { background: var(--green-900); }
+  .dash-topbar-pers { background: var(--blue-900); }
+  .dash-title { font-size: 15px; font-weight: 600; color: #fff; }
+  .dash-badge {
+    font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+  }
+  .badge-hr { background: var(--amber-100); color: var(--amber-900); }
+  .badge-pers { background: var(--green-100); color: var(--green-800); }
+
+  .dash-body {
+    border: 1px solid var(--gray-200); border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 20px; background: #fff;
+    margin-bottom: 16px;
+  }
+  .profile-row {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--gray-100);
+  }
+  .avatar {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; flex-shrink: 0;
+  }
+  .av-hr { background: var(--green-800); color: #fff; }
+  .av-pers { background: var(--green-100); color: var(--green-800); }
+  .profile-name { font-size: 16px; font-weight: 600; color: var(--gray-900); }
+  .profile-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+  .metric-grid { display: grid; gap: 12px; margin-bottom: 16px; }
+  .mg-3 { grid-template-columns: repeat(3, 1fr); }
+  .mg-2 { grid-template-columns: repeat(2, 1fr); }
+  .m-card { padding: 14px; border-radius: var(--radius-sm); }
+  .m-label { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+  .m-value { font-size: 24px; font-weight: 700; line-height: 1.1; margin-bottom: 2px; }
+  .m-sub { font-size: 11px; }
+  .mc-green { background: var(--green-100); }
+  .mc-green .m-label, .mc-green .m-value { color: var(--green-800); }
+  .mc-green .m-sub { color: var(--green-700); }
+  .mc-amber { background: var(--amber-100); }
+  .mc-amber .m-label, .mc-amber .m-value { color: var(--amber-900); }
+  .mc-amber .m-sub { color: var(--amber-700); }
+  .mc-red { background: var(--red-100); }
+  .mc-red .m-label, .mc-red .m-value { color: var(--red-900); }
+  .mc-red .m-sub { color: var(--red-700); }
+  .mc-blue { background: var(--blue-100); }
+  .mc-blue .m-label, .mc-blue .m-value { color: var(--blue-900); }
+  .mc-blue .m-sub { color: var(--blue-700); }
+  .mc-gray { background: var(--gray-100); }
+  .mc-gray .m-label { color: var(--gray-500); }
+  .mc-gray .m-value { color: var(--gray-900); }
+  .mc-gray .m-sub { color: var(--gray-500); }
+
+  .sens-tag {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 9px; font-weight: 700; padding: 1px 5px;
+    border-radius: 3px; background: var(--red-100); color: var(--red-700);
+    vertical-align: middle;
+  }
+
+  .prog-section { margin-bottom: 16px; }
+  .prog-section-label { font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; }
+  .prog-row { margin-bottom: 9px; }
+  .prog-label-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .prog-label { font-size: 12px; color: var(--gray-600); }
+  .prog-val { font-size: 12px; font-weight: 600; color: var(--gray-900); }
+  .prog-bar { height: 6px; background: var(--gray-100); border-radius: 999px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 999px; }
+  .pf-g { background: var(--green-800); }
+  .pf-a { background: #D97706; }
+  .pf-b { background: #2563EB; }
+
+  .stars-box { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px; }
+  .stars-title { font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; }
+  .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .star-icon { font-size: 16px; width: 24px; }
+  .star-label { color: var(--gray-700); flex: 1; }
+  .star-rating { color: var(--green-800); font-size: 13px; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .data-table th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--gray-50); color: var(--gray-500); border-bottom: 1px solid var(--gray-200); }
+  .data-table td { padding: 9px 10px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .locked-cell { display: flex; align-items: center; gap: 5px; color: var(--gray-400); font-size: 12px; }
+
+  .dash-action-bar { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid var(--gray-100); }
+  .btn-primary { padding: 8px 18px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--green-800); color: #fff; cursor: pointer; }
+  .btn-primary:hover { background: var(--green-700); }
+  .btn-secondary { padding: 8px 18px; font-size: 13px; font-weight: 500; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); background: #fff; color: var(--gray-700); cursor: pointer; }
+  .btn-secondary:hover { background: var(--gray-50); }
+
+  .tier-note {
+    background: var(--amber-100); border-left: 3px solid #D97706; border-radius: var(--radius-sm);
+    padding: 12px 16px; font-size: 12px; color: var(--amber-900); line-height: 1.6; margin-bottom: 16px;
+  }
+
+  /* ── PAGE: C ── */
+  .seat-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .seat-chip {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 999px; border: 1.5px solid transparent;
+  }
+  .sc1 { background: var(--green-100); color: var(--green-800); border-color: var(--green-800); }
+  .sc2 { background: var(--blue-100); color: var(--blue-900); border-color: var(--blue-700); }
+  .sc3 { background: var(--amber-100); color: var(--amber-900); border-color: #D97706; }
+  .sc4 { background: var(--red-100); color: var(--red-900); border-color: var(--red-700); }
+
+  .tier-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .tier-card {
+    border: 1.5px solid var(--gray-200); border-radius: var(--radius-lg);
+    overflow: hidden; background: #fff; transition: border-color .15s;
+    cursor: pointer;
+  }
+  .tier-card:hover { border-color: var(--gray-300); }
+  .tier-card.open { border-color: var(--gray-400); box-shadow: var(--shadow-md); }
+  .tier-card-head {
+    display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+    border-bottom: 1px solid transparent; transition: border-color .15s;
+  }
+  .tier-card.open .tier-card-head { border-bottom-color: var(--gray-200); }
+  .t-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
+  .tb1 { background: var(--green-100); color: var(--green-800); }
+  .tb2 { background: var(--amber-100); color: var(--amber-900); }
+  .tb3 { background: var(--red-100); color: var(--red-900); }
+  .tier-head-info { flex: 1; }
+  .tier-title-text { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+  .tier-sub-text { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .tier-toggle { font-size: 12px; color: var(--gray-400); padding: 4px 10px; border-radius: var(--radius-sm); background: var(--gray-100); font-weight: 500; }
+  .tier-body { padding: 20px; display: none; }
+  .tier-card.open .tier-body { display: block; }
+
+  .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .seat-box { border-radius: var(--radius-sm); padding: 12px 10px; text-align: center; transition: opacity .2s; }
+  .seat-box.present { border: 1.5px solid; }
+  .seat-box.absent { opacity: 0.28; background: var(--gray-50); border: 1.5px dashed var(--gray-200); }
+  .sbox-1.present { background: var(--green-100); border-color: var(--green-800); }
+  .sbox-2.present { background: var(--blue-100); border-color: var(--blue-700); }
+  .sbox-3.present { background: var(--amber-100); border-color: #D97706; }
+  .sbox-4.present { background: var(--red-100); border-color: var(--red-700); }
+  .seat-icon-lg { font-size: 22px; margin-bottom: 6px; }
+  .seat-name-text { font-size: 11px; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
+  .sbox-1 .seat-name-text { color: var(--green-800); }
+  .sbox-2 .seat-name-text { color: var(--blue-900); }
+  .sbox-3 .seat-name-text { color: var(--amber-900); }
+  .sbox-4 .seat-name-text { color: var(--red-900); }
+  .absent .seat-name-text { color: var(--gray-400); }
+  .seat-contrib-text { font-size: 11px; line-height: 1.4; margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(0,0,0,.07); }
+  .sbox-1 .seat-contrib-text { color: #27500A; }
+  .sbox-2 .seat-contrib-text { color: var(--blue-900); }
+  .sbox-3 .seat-contrib-text { color: var(--amber-900); }
+  .sbox-4 .seat-contrib-text { color: var(--red-900); }
+
+  .outcome-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .outcome-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--gray-600); }
+  .out-check { color: var(--green-800); font-weight: 700; }
+  .doc-pill {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11px;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--gray-200);
+    background: var(--gray-50); color: var(--gray-600); margin-bottom: 12px;
+  }
+  .tier-note-inline {
+    background: var(--amber-100); border-left: 3px solid #D97706; border-radius: var(--radius-sm);
+    padding: 10px 14px; font-size: 12px; color: var(--amber-900); line-height: 1.6;
+  }
+
+  .trg-section { }
+  .trg-label { font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 10px; }
+  .trg-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .trg-table th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--gray-50); color: var(--gray-500); border-bottom: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200); }
+  .trg-table td { padding: 9px 10px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); vertical-align: middle; }
+  .trg-table tr:last-child td { border-bottom: none; }
+  .trg-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .trg-table tr:hover td { background: var(--gray-50); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .comp-grid { grid-template-columns: repeat(2, 1fr); }
+    .seat-grid { grid-template-columns: repeat(2, 1fr); }
+    .metric-grid.mg-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 650px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .seat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-tag">Design prototype</div>
+      <div class="sidebar-brand-title">The Posting Pact</div>
+      <div class="sidebar-brand-sub">RSAF Career Management</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Refinements</div>
+      <button class="nav-item active" onclick="navigate('a', this)">
+        <span class="nav-letter nl-a">A</span>
+        Career Twin
+      </button>
+      <button class="nav-item" onclick="navigate('b', this)">
+        <span class="nav-letter nl-b">B</span>
+        Poach Value
+      </button>
+      <button class="nav-item" onclick="navigate('c', this)">
+        <span class="nav-letter nl-c">C</span>
+        Four-Seat Structure
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      Discussion prototype · June 2026<br>
+      CVF Council — ACLM CPI Project
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-breadcrumb">The Posting Pact &rsaquo; <strong id="topbar-section">Career Twin</strong></div>
+      <span class="topbar-badge">Prototype</span>
+    </div>
+    <div class="content">
+
+      <!-- ═══════════════════════════════════════════
+           PAGE A — Career Twin
+           ═══════════════════════════════════════════ -->
+      <div id="page-a">
+        <div class="section-header">
+          <div class="section-tag">Section A · Career Twin</div>
+          <div class="section-title">What should the Career Twin include?</div>
+          <div class="section-desc">Career Twin is the pre-conversation tool — members explore and war-game their own paths before the four-seat Pact. Select the components you want to include. Click to toggle.</div>
+        </div>
+
+        <div class="comp-grid" id="comp-grid">
+
+          <div class="comp-card selected" onclick="toggleComp(this, 'Path Explorer')" data-name="Path Explorer">
+            <div class="check">✓</div>
+            <div class="comp-icon">🗺️</div>
+            <div class="comp-name">Path Explorer</div>
+            <div class="comp-sub">See where your choices lead</div>
+            <div class="comp-body">A branching map of realistic career paths from the member's current position. Pick a course, posting, or vocation and see the 3–5 year progression — built on historical career-path data.</div>
+            <span class="comp-pill pill-mvp">MVP</span>
+          </div>
+
+          <div class="comp-card selected" onclick="toggleComp(this, 'Prep Brief Generator')" data-name="Prep Brief Generator">
+            <div class="check">✓</div>
+            <div class="comp-icon">📋</div>
+            <div class="comp-name">Prep Brief Generator</div>
+            <div class="comp-sub">Auto-draft for all four seats</div>
+            <div class="comp-body">After exploring paths, the Twin auto-drafts a short prep brief — aspirations, explored paths, top questions — sent to all four conversation seats before the Pact meeting. Replaces blank-sheet prep.</div>
+            <span class="comp-pill pill-mvp">MVP</span>
+          </div>
+
+          <div class="comp-card selected" onclick="toggleComp(this, 'Peer Benchmark')" data-name="Peer Benchmark">
+            <div class="check">✓</div>
+            <div class="comp-icon">📊</div>
+            <div class="comp-name">Peer Benchmark</div>
+            <div class="comp-sub">How common is this path?</div>
+            <div class="comp-body">For each path explored, shows how many people with similar profiles took this route — and what happened to them. Grounds aspiration in real precedent, prevents both under-ambition and fantasy plans.</div>
+            <span class="comp-pill pill-mvp">MVP</span>
+          </div>
+
+          <div class="comp-card" onclick="toggleComp(this, 'Gap Advisor')" data-name="Gap Advisor">
+            <div class="check"></div>
+            <div class="comp-icon">✅</div>
+            <div class="comp-name">Gap Advisor</div>
+            <div class="comp-sub">What you need to get there</div>
+            <div class="comp-body">For a chosen target path, shows what qualifications, courses, or postings are required to unlock it — and which the member already has. Turns aspirations into an actionable checklist.</div>
+            <span class="comp-pill pill-opt">Optional</span>
+          </div>
+
+          <div class="comp-card" onclick="toggleComp(this, 'What-if Simulator')" data-name="What-if Simulator">
+            <div class="check"></div>
+            <div class="comp-icon">⚖️</div>
+            <div class="comp-name">What-if Simulator</div>
+            <div class="comp-sub">Play out a specific decision</div>
+            <div class="comp-body">Pick a specific fork — "what if I take this posting vs. that one?" — and see both outcomes side by side: readiness implications, next likely posting, time to promotion band.</div>
+            <span class="comp-pill pill-opt">Optional</span>
+          </div>
+
+          <div class="comp-card" onclick="toggleComp(this, 'AI Path Generator')" data-name="AI Path Generator">
+            <div class="check"></div>
+            <div class="comp-icon">🤖</div>
+            <div class="comp-name">AI Path Generator</div>
+            <div class="comp-sub">Suggest non-obvious routes</div>
+            <div class="comp-body">AI layer that surfaces unconventional cross-vocation paths the member wouldn't have thought to explore — cross-silo possibilities based on transferable skills. Upgrade after MVP data layer is proven.</div>
+            <span class="comp-pill pill-later">Later</span>
+          </div>
+
+        </div>
+
+        <div class="summary-panel">
+          <h4>Selected components</h4>
+          <div class="summary-list" id="summary-list">
+            <span class="summary-chip">Path Explorer</span>
+            <span class="summary-chip">Prep Brief Generator</span>
+            <span class="summary-chip">Peer Benchmark</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════
+           PAGE B — Poach Value
+           ═══════════════════════════════════════════ -->
+      <div id="page-b">
+        <div class="section-header">
+          <div class="section-tag" style="background:var(--amber-100);color:var(--amber-900);">Section B · Poach Value</div>
+          <div class="section-title">Tiered information by user type</div>
+          <div class="section-desc">HR Practitioners and Commanders see full sensitive data to support personnel management decisions. RSAF personnel see a softer points/score system for self-awareness — no ROI or market $ figures.</div>
+        </div>
+
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="switchView('hr', this)">
+            <span class="vb-dot" style="background:#27500A"></span>
+            HR / Commander view
+          </button>
+          <button class="view-btn" onclick="switchView('pers', this)">
+            <span class="vb-dot" style="background:#1D4ED8"></span>
+            Personnel view
+          </button>
+        </div>
+
+        <!-- HR / Commander -->
+        <div class="dash active" id="dash-hr">
+          <div class="dash-topbar dash-topbar-hr">
+            <div class="dash-title">Poach Value · Profile Analysis</div>
+            <span class="dash-badge badge-hr">HR Practitioner / Commander</span>
+          </div>
+          <div class="dash-body">
+            <div class="profile-row">
+              <div class="avatar av-hr">WJ</div>
+              <div>
+                <div class="profile-name">CPT Wong Jia Ming</div>
+                <div class="profile-sub">Signals · 8 yr service · Current: OC Comms, 3 SIR</div>
+              </div>
+            </div>
+
+            <div class="metric-grid mg-3">
+              <div class="m-card mc-green">
+                <div class="m-label">Job Fit Score</div>
+                <div class="m-value">84%</div>
+                <div class="m-sub">Target role match</div>
+              </div>
+              <div class="m-card mc-amber">
+                <div class="m-label">Retention Risk</div>
+                <div class="m-value">High</div>
+                <div class="m-sub">Within 12 months</div>
+              </div>
+              <div class="m-card mc-red">
+                <div class="m-label">Replacement Cost <span class="sens-tag">🔒 Sensitive</span></div>
+                <div class="m-value">$220K</div>
+                <div class="m-sub">Full replacement est.</div>
+              </div>
+            </div>
+
+            <div class="metric-grid mg-2">
+              <div class="m-card mc-blue">
+                <div class="m-label">RSAF Investment ROI <span class="sens-tag">🔒 Sensitive</span></div>
+                <div class="m-value">3.4×</div>
+                <div class="m-sub">vs. fresh recruit cohort</div>
+              </div>
+              <div class="m-card mc-gray">
+                <div class="m-label">Market Value (Civil) <span class="sens-tag">🔒 Sensitive</span></div>
+                <div class="m-value">$95K</div>
+                <div class="m-sub">Comparable role, p.a.</div>
+              </div>
+            </div>
+
+            <div class="prog-section">
+              <div class="prog-section-label">Job Fit Breakdown</div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Technical competency</span><span class="prog-val">91%</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-g" style="width:91%"></div></div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Leadership readiness</span><span class="prog-val">78%</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-g" style="width:78%"></div></div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Unit fit (cultural)</span><span class="prog-val">70%</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-a" style="width:70%"></div></div>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Course assignment</td><td>Advanced Comms Systems (Q3 2026) — closes 9% fit gap</td></tr>
+                <tr><td>Next posting</td><td>HQ Signal Bn — aligns aspiration, high mission value</td></tr>
+                <tr><td>Retention lever</td><td>Career conversation due (overdue by 4 months)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="dash-action-bar">
+              <button class="btn-primary">Schedule Career Pact</button>
+              <button class="btn-secondary">Download PDF brief</button>
+            </div>
+          </div>
+
+          <div class="tier-note">
+            <strong>Sensitive data policy:</strong> Fields marked 🔒 are visible to HR Practitioners and Commanders only. These figures support retention and posting decisions. They are not surfaced to the member in their personal view to avoid transactional framing of the career relationship.
+          </div>
+        </div>
+
+        <!-- Personnel -->
+        <div class="dash" id="dash-pers">
+          <div class="dash-topbar dash-topbar-pers">
+            <div class="dash-title">My Career Health</div>
+            <span class="dash-badge badge-pers">Personnel</span>
+          </div>
+          <div class="dash-body">
+            <div class="profile-row">
+              <div class="avatar av-pers">WJ</div>
+              <div>
+                <div class="profile-name">CPT Wong Jia Ming</div>
+                <div class="profile-sub">Signals · 8 yr service</div>
+              </div>
+            </div>
+
+            <div class="metric-grid mg-2">
+              <div class="m-card mc-green" style="text-align:center;">
+                <div class="m-label">Career Score</div>
+                <div class="m-value" style="font-size:36px;">78</div>
+                <div class="m-sub">out of 100</div>
+              </div>
+              <div class="m-card mc-gray">
+                <div class="m-label">Growth Potential</div>
+                <div class="m-value" style="font-size:24px;">High</div>
+                <div class="m-sub">Based on current trajectory</div>
+              </div>
+            </div>
+
+            <div class="stars-box">
+              <div class="stars-title">What your score reflects</div>
+              <div class="star-row"><span class="star-icon">⚡</span><span class="star-label">Technical skills</span><span class="star-rating">★★★★☆</span></div>
+              <div class="star-row"><span class="star-icon">🎯</span><span class="star-label">Role readiness</span><span class="star-rating">★★★★☆</span></div>
+              <div class="star-row"><span class="star-icon">🌱</span><span class="star-label">Growth momentum</span><span class="star-rating">★★★☆☆</span></div>
+              <div class="star-row"><span class="star-icon">🤝</span><span class="star-label">Team contribution</span><span class="star-rating">★★★★☆</span></div>
+            </div>
+
+            <div class="prog-section">
+              <div class="prog-section-label">Suggested next steps</div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Complete Advanced Comms course</span><span class="prog-val">+8 pts</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-b" style="width:65%"></div></div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Update career map aspirations</span><span class="prog-val">+5 pts</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-b" style="width:45%"></div></div>
+              </div>
+              <div class="prog-row">
+                <div class="prog-label-row"><span class="prog-label">Schedule Career Pact conversation</span><span class="prog-val">+3 pts</span></div>
+                <div class="prog-bar"><div class="prog-fill pf-a" style="width:30%"></div></div>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead><tr><th>Information</th><th>Available to you</th></tr></thead>
+              <tbody>
+                <tr><td>Your career score</td><td>✓ Always visible</td></tr>
+                <tr><td>Growth potential</td><td>✓ Always visible</td></tr>
+                <tr><td>Suggested next steps</td><td>✓ Always visible</td></tr>
+                <tr><td>Job fit % (vs. specific role)</td><td><span class="locked-cell">🔒 Shared during Career Pact conversation</span></td></tr>
+                <tr><td>Replacement / market value</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
+              </tbody>
+            </table>
+
+            <div class="dash-action-bar">
+              <button class="btn-primary">Request Career Pact</button>
+              <button class="btn-secondary">Explore career paths</button>
+            </div>
+          </div>
+
+          <div class="tier-note">
+            <strong>Design rationale:</strong> Personnel see growth signals in points and stars — same underlying data, expressed as development language, not dollar figures. This keeps the career conversation human-centred rather than transactional. Sensitive figures like ROI and replacement cost are reserved for HR decision-making.
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════
+           PAGE C — Four-Seat Structure
+           ═══════════════════════════════════════════ -->
+      <div id="page-c">
+        <div class="section-header">
+          <div class="section-tag" style="background:var(--red-100);color:var(--red-900);">Section C · Four-Seat Structure</div>
+          <div class="section-title">Tiered involvement — not every conversation needs all four seats</div>
+          <div class="section-desc">Roles defined: <strong>Personnel/Member</strong> — aspirations &amp; commitments · <strong>Supervisor</strong> — support given · <strong>Career Manager</strong> — realistic options, best commitment · <strong>SSO/Authority</strong> — sign off. Click a tier to expand.</div>
+        </div>
+
+        <div class="seat-legend">
+          <div class="seat-chip sc1">🟢 Seat 1: Personnel / Member</div>
+          <div class="seat-chip sc2">🔵 Seat 2: Supervisor</div>
+          <div class="seat-chip sc3">🟡 Seat 3: Career Manager</div>
+          <div class="seat-chip sc4">🔴 Seat 4: SSO / Endorsing Authority</div>
+        </div>
+
+        <div class="tier-cards">
+
+          <!-- Tier 1 -->
+          <div class="tier-card open" id="tc1" onclick="toggleTier('tc1')">
+            <div class="tier-card-head">
+              <span class="t-badge tb1">Tier 1 · Routine</span>
+              <div class="tier-head-info">
+                <div class="tier-title-text">Career check-in</div>
+                <div class="tier-sub-text">Annual review · Career map update</div>
+              </div>
+              <span class="tier-toggle" id="tc1-toggle">▲ Collapse</span>
+            </div>
+            <div class="tier-body" id="tc1-body">
+              <div class="seat-grid">
+                <div class="seat-box sbox-1 present">
+                  <div class="seat-icon-lg">🟢</div>
+                  <div class="seat-name-text">Personnel / Member</div>
+                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
+                </div>
+                <div class="seat-box sbox-2 absent">
+                  <div class="seat-icon-lg">—</div>
+                  <div class="seat-name-text">Supervisor</div>
+                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required</div>
+                </div>
+                <div class="seat-box sbox-3 present">
+                  <div class="seat-icon-lg">🟡</div>
+                  <div class="seat-name-text">Career Manager</div>
+                  <div class="seat-contrib-text">Realistic options · update career map</div>
+                </div>
+                <div class="seat-box sbox-4 absent">
+                  <div class="seat-icon-lg">—</div>
+                  <div class="seat-name-text">SSO / Authority</div>
+                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required</div>
+                </div>
+              </div>
+              <div class="outcome-row">
+                <div class="outcome-item"><span class="out-check">✓</span> Updated career map</div>
+                <div class="outcome-item"><span class="out-check">✓</span> Next milestones logged</div>
+                <div class="outcome-item" style="color:var(--amber-700)">→ Escalates to Tier 2 if posting is imminent</div>
+              </div>
+              <div class="doc-pill">📄 Career map update (signed: Member + CM)</div>
+            </div>
+          </div>
+
+          <!-- Tier 2 -->
+          <div class="tier-card" id="tc2" onclick="toggleTier('tc2')">
+            <div class="tier-card-head">
+              <span class="t-badge tb2">Tier 2 · Posting</span>
+              <div class="tier-head-info">
+                <div class="tier-title-text">Career Pact conversation</div>
+                <div class="tier-sub-text">Posting cycle · Voluntary posting request</div>
+              </div>
+              <span class="tier-toggle" id="tc2-toggle">▼ Expand</span>
+            </div>
+            <div class="tier-body" id="tc2-body">
+              <div class="seat-grid">
+                <div class="seat-box sbox-1 present">
+                  <div class="seat-icon-lg">🟢</div>
+                  <div class="seat-name-text">Personnel / Member</div>
+                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
+                </div>
+                <div class="seat-box sbox-2 present">
+                  <div class="seat-icon-lg">🔵</div>
+                  <div class="seat-name-text">Supervisor</div>
+                  <div class="seat-contrib-text">Support given · unit readiness input</div>
+                </div>
+                <div class="seat-box sbox-3 present">
+                  <div class="seat-icon-lg">🟡</div>
+                  <div class="seat-name-text">Career Manager</div>
+                  <div class="seat-contrib-text">Realistic options · best commitment</div>
+                </div>
+                <div class="seat-box sbox-4 absent">
+                  <div class="seat-icon-lg">—</div>
+                  <div class="seat-name-text">SSO / Authority</div>
+                  <div class="seat-contrib-text" style="color:var(--gray-300)">Not required unless escalated</div>
+                </div>
+              </div>
+              <div class="outcome-row">
+                <div class="outcome-item"><span class="out-check">✓</span> Posting shortlist agreed</div>
+                <div class="outcome-item"><span class="out-check">✓</span> Support commitments logged</div>
+                <div class="outcome-item" style="color:var(--amber-700)">→ Escalates to Tier 3 if contested or re-contract</div>
+              </div>
+              <div class="doc-pill">📄 Career Pact (signed: Member + Supervisor + CM)</div>
+              <div class="tier-note-inline">The SSO is briefed on outcomes but does not need to be in the room for a standard posting. Their absence keeps the conversation authentic — people speak more freely when the approving authority is not present.</div>
+            </div>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="tier-card" id="tc3" onclick="toggleTier('tc3')">
+            <div class="tier-card-head">
+              <span class="t-badge tb3">Tier 3 · Full Pact</span>
+              <div class="tier-head-info">
+                <div class="tier-title-text">Full four-seat Career Pact</div>
+                <div class="tier-sub-text">Re-contract · Major vocation change · Contested posting · High-value retention</div>
+              </div>
+              <span class="tier-toggle" id="tc3-toggle">▼ Expand</span>
+            </div>
+            <div class="tier-body" id="tc3-body">
+              <div class="seat-grid">
+                <div class="seat-box sbox-1 present">
+                  <div class="seat-icon-lg">🟢</div>
+                  <div class="seat-name-text">Personnel / Member</div>
+                  <div class="seat-contrib-text">Aspirations + commitments stated</div>
+                </div>
+                <div class="seat-box sbox-2 present">
+                  <div class="seat-icon-lg">🔵</div>
+                  <div class="seat-name-text">Supervisor</div>
+                  <div class="seat-contrib-text">Support given · advocacy or flag</div>
+                </div>
+                <div class="seat-box sbox-3 present">
+                  <div class="seat-icon-lg">🟡</div>
+                  <div class="seat-name-text">Career Manager</div>
+                  <div class="seat-contrib-text">Options + recommended commitment</div>
+                </div>
+                <div class="seat-box sbox-4 present">
+                  <div class="seat-icon-lg">🔴</div>
+                  <div class="seat-name-text">SSO / Authority</div>
+                  <div class="seat-contrib-text">Endorses or signs off · holds veto</div>
+                </div>
+              </div>
+              <div class="outcome-row">
+                <div class="outcome-item"><span class="out-check">✓</span> Binding pact signed by all 4</div>
+                <div class="outcome-item"><span class="out-check">✓</span> Override documented if SSO overrules</div>
+                <div class="outcome-item"><span class="out-check">✓</span> Ledger entry created</div>
+              </div>
+              <div class="doc-pill">📄 Full Career Pact + Ledger entry (all 4 signatures)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trigger table -->
+        <div class="trg-section card">
+          <div class="trg-label">Trigger → Tier mapping</div>
+          <table class="trg-table">
+            <thead>
+              <tr><th>Event trigger</th><th>Tier</th><th>Seats required</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Annual career map review</td>
+                <td><span class="trg-badge tb1">Tier 1</span></td>
+                <td>Member + Career Manager</td>
+              </tr>
+              <tr>
+                <td>Standard posting cycle</td>
+                <td><span class="trg-badge tb2">Tier 2</span></td>
+                <td>Member + Supervisor + Career Manager</td>
+              </tr>
+              <tr>
+                <td>Voluntary posting request</td>
+                <td><span class="trg-badge tb2">Tier 2</span></td>
+                <td>Member + Supervisor + Career Manager</td>
+              </tr>
+              <tr>
+                <td>Contested posting / appeal</td>
+                <td><span class="trg-badge tb3">Tier 3</span></td>
+                <td>All 4 seats</td>
+              </tr>
+              <tr>
+                <td>Re-contract decision</td>
+                <td><span class="trg-badge tb3">Tier 3</span></td>
+                <td>All 4 seats</td>
+              </tr>
+              <tr>
+                <td>Vocation change / major pivot</td>
+                <td><span class="trg-badge tb3">Tier 3</span></td>
+                <td>All 4 seats</td>
+              </tr>
+              <tr>
+                <td>High-retention-risk flag (Poach Value)</td>
+                <td><span class="trg-badge tb3">Tier 3</span></td>
+                <td>All 4 seats — fast-track scheduling</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /page-c -->
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  /* ── Navigation ── */
+  const pages = ['a','b','c'];
+  const labels = { a: 'Career Twin', b: 'Poach Value', c: 'Four-Seat Structure' };
+
+  function navigate(id, btn) {
+    pages.forEach(p => document.getElementById('page-' + p).style.display = 'none');
+    document.getElementById('page-' + id).style.display = 'block';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('topbar-section').textContent = labels[id];
+  }
+
+  /* ── Section A: toggle components ── */
+  function toggleComp(card, name) {
+    card.classList.toggle('selected');
+    card.querySelector('.check').textContent = card.classList.contains('selected') ? '✓' : '';
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const selected = Array.from(document.querySelectorAll('.comp-card.selected')).map(c => c.dataset.name);
+    const list = document.getElementById('summary-list');
+    if (selected.length === 0) {
+      list.innerHTML = '<span class="summary-empty">No components selected yet</span>';
+    } else {
+      list.innerHTML = selected.map(n => `<span class="summary-chip">${n}</span>`).join('');
+    }
+  }
+
+  /* ── Section B: switch view ── */
+  function switchView(id, btn) {
+    document.querySelectorAll('.dash').forEach(d => d.classList.remove('active'));
+    document.getElementById('dash-' + id).classList.add('active');
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* ── Section C: toggle tier cards ── */
+  function toggleTier(id) {
+    const card = document.getElementById(id);
+    const toggle = document.getElementById(id + '-toggle');
+    const isOpen = card.classList.contains('open');
+    card.classList.toggle('open', !isOpen);
+    toggle.textContent = isOpen ? '▼ Expand' : '▲ Collapse';
+  }
+
+  /* Init */
+  document.getElementById('page-b').style.display = 'none';
+  document.getElementById('page-c').style.display = 'none';
+</script>
+</body>
+</html>
