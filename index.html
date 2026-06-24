@@ -390,6 +390,106 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .pb-field{margin-bottom:12px;}
 .pb-field-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g800);margin-bottom:4px;}
 .pb-field-val{font-size:13px;color:var(--gray700);line-height:1.65;background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-sm);padding:8px 12px;}
+
+/* ══ Mobile Responsive ══ */
+@media (max-width: 768px) {
+  /* Stack: sidebar becomes bottom nav */
+  .app{flex-direction:column-reverse;height:100vh;height:100dvh;}
+
+  /* Sidebar → slim bottom nav */
+  .sidebar{width:100%;height:auto;flex-direction:row;overflow-x:auto;overflow-y:hidden;flex-shrink:0;}
+  .sb-brand,.sb-footer,.sb-group-label{display:none;}
+  .sb-nav{display:flex;flex-direction:row;padding:4px 8px;gap:0;flex:1;justify-content:space-around;align-items:stretch;}
+  .nav-btn{flex-direction:column;gap:2px;padding:6px 10px;font-size:10px;align-items:center;justify-content:center;flex:1;text-align:center;border-radius:8px;}
+  .nav-letter{width:26px;height:26px;font-size:9px;}
+
+  /* Main area */
+  .main{flex:1;overflow:hidden;min-height:0;}
+  .topbar{height:44px;padding:0 14px;}
+  .topbar-right{display:none;}
+  .tb-crumb,.tb-badge{font-size:12px;}
+  .content{padding:12px 12px 80px;}
+
+  /* Typography */
+  .section-title{font-size:17px;}
+  .section-desc{font-size:12px;}
+
+  /* Profile card */
+  .profile-card{padding:12px;gap:10px;flex-wrap:wrap;}
+  .profile-name{font-size:14px;}
+
+  /* Path grid: 2 columns */
+  .path-grid{grid-template-columns:1fr 1fr;gap:8px;}
+
+  /* Two-col: stack */
+  .two-col{grid-template-columns:1fr;}
+
+  /* Timeline: horizontal scroll */
+  .timeline-row{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tl-step{min-width:140px;}
+  .tl-arrow{display:none;}
+
+  /* Section A mode toggle */
+  .a-mode-toggle{width:100%;}
+  .a-mode-btn{flex:1;text-align:center;padding:8px 10px;}
+
+  /* Component gallery: 2 cols */
+  .comp-gallery{grid-template-columns:repeat(2,1fr);gap:8px;}
+
+  /* Bmark chart: narrower label */
+  .bmark-label{width:130px;font-size:11px;}
+
+  /* What-if: stack */
+  .wi-selectors{grid-template-columns:1fr;gap:8px;}
+  .wi-vs{text-align:center;padding:2px 0;}
+  .wi-cols{grid-template-columns:1fr;}
+
+  /* Section B role selector: 2×2 */
+  .role-selector{grid-template-columns:repeat(2,1fr);}
+
+  /* Metric grids */
+  .mg-3,.mg-4{grid-template-columns:repeat(2,1fr);}
+
+  /* Dash actions: wrap */
+  .dash-actions{flex-wrap:wrap;}
+  .dash-actions .btn{flex:1;min-width:120px;justify-content:center;}
+
+  /* Dash body */
+  .dash-body{padding:14px;}
+
+  /* Tables: allow overflow */
+  .dtable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .dtable{font-size:11px;}
+  .dtable th,.dtable td{padding:7px 8px;}
+
+  /* Scenario grid: 2 cols */
+  .scenario-grid{grid-template-columns:1fr 1fr;gap:8px;}
+
+  /* Seats: 2×2 */
+  .seat-row{grid-template-columns:repeat(2,1fr);}
+
+  /* Conversation */
+  .convo-panel,.seats-panel{padding:14px;}
+  .bubble-text{font-size:12px;padding:8px 12px;}
+
+  /* C nav */
+  .c-nav{flex-wrap:wrap;gap:8px;}
+  .c-nav-right{flex:1;}
+  .c-nav-right .btn{width:100%;justify-content:center;}
+
+  /* Step nav */
+  .step-nav{flex-wrap:wrap;gap:8px;}
+  .stepper{overflow-x:auto;padding-bottom:4px;}
+}
+
+@media (max-width: 420px) {
+  .path-grid{grid-template-columns:1fr;}
+  .scenario-grid{grid-template-columns:1fr;}
+  .comp-gallery{grid-template-columns:1fr;}
+  .mg-2{grid-template-columns:1fr;}
+  .bmark-label{width:100px;font-size:11px;}
+  .bmark-pct{width:30px;font-size:12px;}
+}
 </style>
 </head>
 <body>
@@ -876,7 +976,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Update career map aspirations</span><span class="prog-val">+5 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:45%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Schedule Career Pact conversation</span><span class="prog-val">+3 pts</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:30%"></div></div></div>
         </div>
-        <table class="dtable">
+        <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Information</th><th>Visible to you</th></tr></thead>
           <tbody>
             <tr><td>Career score &amp; growth potential</td><td>✓ Always</td></tr>
@@ -885,7 +985,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
             <tr><td>Retention risk level</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
             <tr><td>Replacement cost / market value</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="dash-actions">
           <button class="btn btn-primary" style="background:var(--b700);">Request Career Pact</button>
           <button class="btn btn-secondary">Explore career paths</button>
@@ -933,7 +1033,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Flight leadership gap</span><span class="prog-val">Medium</span></div><div class="prog-bar"><div class="prog-fill pf-p" style="width:55%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">EW handover time required</span><span class="prog-val">3 months</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:40%"></div></div></div>
         </div>
-        <table class="dtable">
+        <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Information</th><th>Visible to you</th></tr></thead>
           <tbody>
             <tr><td>Readiness level &amp; posting urgency</td><td>✓ Always</td></tr>
@@ -942,7 +1042,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
             <tr><td>Job fit score (vs. specific role)</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
             <tr><td>Market value / ROI figures</td><td><span class="locked-cell">🔒 HR / Commander only</span></td></tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="dash-actions">
           <button class="btn btn-primary" style="background:var(--p700);">Submit support input</button>
           <button class="btn btn-secondary">Request 3-month EW handover plan</button>
@@ -996,14 +1096,14 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Leadership readiness</span><span class="prog-val">82%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:82%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Ground coordination experience</span><span class="prog-val">65%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:65%"></div></div></div>
         </div>
-        <table class="dtable">
+        <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
           <tbody>
             <tr><td>Course assignment</td><td>Mission Commander Course (Aug 2026) — critical gate before ground tour</td></tr>
             <tr><td>Next posting</td><td>Air Ops Division, RSAF HQ — 87% fit, leverages WSO operational expertise</td></tr>
             <tr><td>Priority action</td><td>Career Pact conversation overdue by 3 months — schedule now</td></tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="dash-actions">
           <button class="btn btn-primary">Schedule Career Pact</button>
           <button class="btn btn-secondary">Download PDF brief</button>
