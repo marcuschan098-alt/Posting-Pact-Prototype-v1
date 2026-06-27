@@ -298,10 +298,18 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 /* Output doc */
 .output-doc{display:none;background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:16px;}
 .output-doc-title{font-size:13px;font-weight:600;color:var(--g800);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
-.output-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--g100);font-size:12px;}
+.output-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--g100);font-size:12px;}
 .output-row:last-child{border-bottom:none;}
-.output-check{color:var(--g800);font-weight:700;}
-.output-label{color:var(--gray700);}
+.output-check{color:var(--g800);font-weight:700;flex-shrink:0;line-height:1.5;}
+.output-label{color:var(--gray700);line-height:1.5;}
+.output-section{margin-top:14px;}
+.output-section:first-child{margin-top:0;}
+.output-section-heading{font-size:11px;font-weight:700;color:var(--g800);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid var(--g100);}
+.output-section-sub{font-size:10.5px;font-weight:500;color:var(--gray500);text-transform:none;letter-spacing:0;margin-left:6px;}
+.output-section.os-aspirations .output-section-heading{color:var(--b900);}
+.output-section.os-process .output-section-heading{color:var(--g800);}
+.output-section.os-conditional .output-section-heading{color:var(--a900);}
+.output-section.os-repact .output-section-heading{color:var(--r900);}
 .sig-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 .sig-chip{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:500;border:1px solid;}
 .sig-1{background:var(--g100);border-color:var(--g800);color:var(--g800);}
@@ -490,6 +498,78 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   .bmark-label{width:100px;font-size:11px;}
   .bmark-pct{width:30px;font-size:12px;}
 }
+
+/* ══ Print: Career Pact / Pact Record output ══ */
+.print-only{display:none;}
+.output-actions{margin-top:18px;padding-top:14px;border-top:1px solid var(--g100);display:flex;gap:8px;flex-wrap:wrap;}
+.btn-print{background:#fff;color:var(--g800);border:1px solid var(--g600);padding:8px 16px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.btn-print:hover{background:var(--g50);}
+
+@media print {
+  @page { size: A4; margin: 18mm 16mm; }
+  html, body { background:#fff !important; color:#111 !important; }
+  /* Hide app chrome */
+  .sidebar, .topbar, .reset-link, .c-nav-right, .convo-progress,
+  .scenario-grid, .seats-panel, .convo-panel, .output-actions,
+  .conversation-nav, #scenario-picker-wrap, #convo-panel { display:none !important; }
+  /* Strip layout */
+  .app, .main, .content { display:block !important; padding:0 !important; margin:0 !important; max-width:none !important; width:100% !important; }
+  /* Only print the output document */
+  body * { visibility:hidden; }
+  .output-doc, .output-doc * { visibility:visible; }
+  .output-doc { position:absolute; left:0; top:0; width:100%;
+    display:block !important; background:#fff !important; border:none !important;
+    padding:0 !important; margin:0 !important; box-shadow:none !important; }
+  .output-actions { display:none !important; }
+  /* Show print-only blocks */
+  .print-only { display:block !important; }
+  /* Print header */
+  .print-header { border-bottom:2px solid #1C3A0E; padding-bottom:10px; margin-bottom:16px; }
+  .print-brand { font-size:11px; font-weight:700; color:#1C3A0E; letter-spacing:.12em; text-transform:uppercase; }
+  .print-title { font-size:20px; font-weight:700; color:#111; margin-top:4px; }
+  .print-meta { font-size:10px; color:#555; margin-top:6px; }
+  /* Member profile strip */
+  .print-profile { display:grid; grid-template-columns:1fr 1fr; gap:6px 18px;
+    background:#F4FAF0; border:1px solid #EAF3DE; border-radius:6px;
+    padding:10px 14px; margin-bottom:16px; font-size:10.5px; }
+  .print-profile .pp-row { display:flex; gap:6px; }
+  .print-profile .pp-k { color:#555; font-weight:600; min-width:90px; }
+  .print-profile .pp-v { color:#111; }
+  /* Output title and rows when printing */
+  .output-doc-title { font-size:13px !important; color:#111 !important; margin-bottom:10px !important; }
+  .output-row { font-size:11px !important; padding:6px 0 !important; color:#111 !important;
+    border-bottom:1px solid #E5E7EB !important; page-break-inside:avoid; align-items:flex-start !important; }
+  .output-check { color:#1C3A0E !important; }
+  .output-label { color:#111 !important; }
+  .output-section { margin-top:14px !important; page-break-inside:avoid; }
+  .output-section:first-child { margin-top:0 !important; }
+  .output-section-heading { font-size:10.5px !important; font-weight:700 !important; color:#111 !important;
+    text-transform:uppercase !important; letter-spacing:.06em !important;
+    margin-bottom:4px !important; padding-bottom:3px !important;
+    border-bottom:1px solid #D1D5DB !important; }
+  .output-section-sub { font-size:10px !important; font-weight:500 !important; color:#555 !important;
+    text-transform:none !important; letter-spacing:0 !important; margin-left:6px !important; }
+  .output-section.os-aspirations .output-section-heading { color:#0B3E78 !important; }
+  .output-section.os-process .output-section-heading { color:#1C3A0E !important; }
+  .output-section.os-conditional .output-section-heading { color:#7A4A00 !important; }
+  .output-section.os-repact .output-section-heading { color:#7F1D1D !important; }
+  /* Signatures — block form for printing */
+  .sig-row { display:none !important; }
+  .sig-chip { display:none !important; }
+  /* Hide the screen-only "Signed by" mini-label and emoji */
+  .signed-by-label { display:none !important; }
+  .screen-only-icon { display:none !important; }
+  .print-sig-block { display:block !important; margin-top:18px; page-break-inside:avoid; }
+  .print-sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px 28px; margin-top:6px; }
+  .print-sig-cell { font-size:10px; }
+  .print-sig-line { border-bottom:1px solid #111; height:30px; margin-bottom:4px; }
+  .print-sig-role { font-weight:700; color:#111; }
+  .print-sig-name { color:#555; }
+  /* Footer disclaimer */
+  .print-footer { margin-top:22px; padding-top:10px; border-top:1px solid #D1D5DB;
+    font-size:9px; color:#555; line-height:1.5; }
+  .print-footer .pf-strong { color:#111; font-weight:600; }
+}
 </style>
 </head>
 <body>
@@ -514,7 +594,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <span class="nav-letter nl-c">C</span> Four-Seat Pact
     </button>
   </div>
-  <div class="sb-footer">ACLM CPI · CVF Council · June 2026<br>Discussion prototype — not live system</div>
+  <div class="sb-footer">ACLM CPI · CVF Council · June 2026<br>Discussion prototype — not live system<br>Figures &amp; scenarios are illustrative.</div>
 </nav>
 
 <!-- Main -->
@@ -606,14 +686,14 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
             <div class="demo-panel-title">🗺️ Path Explorer</div>
             <span class="demo-panel-pill cg-mvp">MVP</span>
           </div>
-          <div style="font-size:13px;color:var(--gray600);line-height:1.65;margin-bottom:16px;">Path Explorer is the core of the Career Twin simulation. As a WSO(FTR), your career spans Command, Staff, and Instructional positions — plus capability development in partnership with DSTA. Pick any path to see where it leads in 2 and 5 years, who else took it, and what you still need to get there.</div>
+          <div style="font-size:13px;color:var(--gray600);line-height:1.65;margin-bottom:16px;">Path Explorer is the core of the Career Twin simulation. As a WSO(FTR), your career typically spans the three RSAF tracks — Command, Staff, and Instructor — with Capability Development as a fourth option, which may include DSTA attachments. Pick any path to see where it leads in 2 and 5 years, who else took it, and what you still need to get there.</div>
           <div style="background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:16px;">
             <div style="font-size:12px;font-weight:600;color:var(--g800);margin-bottom:10px;">Available paths for CPT Tan Wei Xiang (WSO Fighter)</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">✈️ Operational Flying Track <span style="float:right;color:var(--g800);font-weight:600;">35%</span></div>
-              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🏛️ Air Ops Staff (RSAF HQ) <span style="float:right;color:var(--g800);font-weight:600;">28%</span></div>
-              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🔧 Capability Dev (DSTA) <span style="float:right;color:var(--g800);font-weight:600;">20%</span></div>
-              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🎓 WSO Instructor (AFTC) <span style="float:right;color:var(--g800);font-weight:600;">12%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">✈️ Command Track <span style="float:right;color:var(--g800);font-weight:600;">35%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🏛️ Staff Track <span style="float:right;color:var(--g800);font-weight:600;">28%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🔧 Capability Development Track <span style="float:right;color:var(--g800);font-weight:600;">20%</span></div>
+              <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🎓 Instructor Track <span style="float:right;color:var(--g800);font-weight:600;">17%</span></div>
             </div>
           </div>
           <button class="btn btn-primary" onclick="aMode('sim')">▶ Go to Path Simulation →</button>
@@ -638,10 +718,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </div>
           <div style="font-size:13px;color:var(--gray600);margin-bottom:16px;">After exploring paths, the Career Twin auto-drafts a prep brief and sends it to all four seats before the Pact meeting. Everyone arrives prepared — no more blank-sheet conversations.</div>
           <div class="pb-field"><div class="pb-field-label">Member</div><div class="pb-field-val">CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Squadron, Paya Lebar Air Base · 7 years service</div></div>
-          <div class="pb-field"><div class="pb-field-label">Stated aspiration</div><div class="pb-field-val">Wants to remain on the operational flying track — targeting Mission Commander qualification by 2028, followed by OC Flying at a Fighter Squadron by 2031. Prefers Air Ops Division as ground tour posting to maintain mission relevance.</div></div>
-          <div class="pb-field"><div class="pb-field-label">Paths explored in Career Twin</div><div class="pb-field-val" id="pb-explored">Operational Flying Track · Air Ops Staff Track</div></div>
-          <div class="pb-field"><div class="pb-field-label">Key questions for the conversation</div><div class="pb-field-val">1. When is the next Mission Commander Course scheduled — can it run before the Q4 2026 ground tour?&nbsp; 2. Is Air Ops Division confirmed as the ground tour posting?&nbsp; 3. What is the realistic timeline from Mission Commander to OC Flying?</div></div>
-          <div class="pb-field"><div class="pb-field-label">Gaps to discuss</div><div class="pb-field-val">Missing: Mission Commander Course, Senior WSO Certification. Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.</div></div>
+          <div class="pb-field"><div class="pb-field-label">Stated aspiration</div><div class="pb-field-val">Wants to remain on the Command Track — targeting Fighter Weapons Instructor Course (FWIC) graduation by FY2028, followed by CO of a Fighter Squadron by FY2033. Prefers Air Plans Department as ground tour posting to maintain mission relevance.</div></div>
+          <div class="pb-field"><div class="pb-field-label">Paths explored in Career Twin</div><div class="pb-field-val" id="pb-explored">Command Track · Staff Track</div></div>
+          <div class="pb-field"><div class="pb-field-label">Key questions for the conversation</div><div class="pb-field-val">1. When is the next FWIC slot scheduled — can it run before the Q4 2026 ground tour?&nbsp; 2. Is Air Plans Department confirmed as the ground tour posting?&nbsp; 3. What is the realistic timeline from FWIC to CO of a Fighter Squadron?</div></div>
+          <div class="pb-field"><div class="pb-field-label">Gaps to discuss</div><div class="pb-field-val">Missing: Fighter Weapons Instructor Course (FWIC), Lead WSO qualification. Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.</div></div>
           <div style="display:flex;gap:8px;margin-top:4px;align-items:center;">
             <button class="btn btn-primary" style="font-size:12px;padding:7px 14px;">✓ Send to all seats</button>
             <span style="font-size:11px;color:var(--gray400);">Will be sent to: Member · Supervisor · Career Manager · SSO</span>
@@ -656,10 +736,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </div>
           <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Select a target path to see exactly what you still need. Click any item to toggle its status — track what you've completed, what's in progress, and what's still missing.</div>
           <select class="ga-path-sel" onchange="renderGapAdvisor(this.value)" id="ga-path-select">
-            <option value="command">✈️ Operational Flying Track</option>
-            <option value="staff">🏛️ Air Ops Staff Track</option>
-            <option value="tech">🔧 Capability Dev (DSTA)</option>
-            <option value="cross">🎓 WSO Instructor (AFTC)</option>
+            <option value="command">✈️ Command Track</option>
+            <option value="staff">🏛️ Staff Track</option>
+            <option value="tech">🔧 Capability Development Track</option>
+            <option value="cross">🎓 Instructor Track</option>
           </select>
           <div id="ga-items"></div>
           <div class="ga-score-bar">
@@ -677,17 +757,17 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div style="font-size:13px;color:var(--gray600);margin-bottom:14px;">Pick any two paths and see them side-by-side. Compare timelines, peer benchmarks, readiness gaps, and promotion outlook to make the trade-offs visible before the Pact conversation.</div>
           <div class="wi-selectors">
             <select class="wi-select" id="wi-path-a" onchange="renderWhatsIf()">
-              <option value="command">✈️ Operational Flying Track</option>
-              <option value="staff">🏛️ Air Ops Staff Track</option>
-              <option value="tech">🔧 Capability Dev (DSTA)</option>
-              <option value="cross">🎓 WSO Instructor (AFTC)</option>
+              <option value="command">✈️ Command Track</option>
+              <option value="staff">🏛️ Staff Track</option>
+              <option value="tech">🔧 Capability Development Track</option>
+              <option value="cross">🎓 Instructor Track</option>
             </select>
             <div class="wi-vs">vs.</div>
             <select class="wi-select" id="wi-path-b" onchange="renderWhatsIf()">
-              <option value="staff">🏛️ Air Ops Staff Track</option>
-              <option value="command">✈️ Operational Flying Track</option>
-              <option value="tech">🔧 Capability Dev (DSTA)</option>
-              <option value="cross">🎓 WSO Instructor (AFTC)</option>
+              <option value="staff">🏛️ Staff Track</option>
+              <option value="command">✈️ Command Track</option>
+              <option value="tech">🔧 Capability Development Track</option>
+              <option value="cross">🎓 Instructor Track</option>
             </select>
           </div>
           <div class="wi-cols" id="wi-cols"></div>
@@ -762,11 +842,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Aspiration (stated)</div>
-            <div style="font-size:13px;color:var(--gray900);">Wants to stay on the operational flying track — targeting Mission Commander qualification by 2028, followed by OC Flying at a Fighter Squadron</div>
+            <div style="font-size:13px;color:var(--gray900);">Wants to stay on the Command Track — targeting Fighter Weapons Instructor Course (FWIC) graduation by FY2028, followed by CO of a Fighter Squadron by FY2033</div>
           </div>
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Last career conversation</div>
-            <div style="font-size:13px;color:var(--r700);font-weight:600;">3 months overdue</div>
+            <div style="font-size:13px;color:var(--r700);font-weight:600;">No Career Pact on file</div>
           </div>
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Upcoming trigger</div>
@@ -788,33 +868,33 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div class="path-card" onclick="selectPath('command',this)" data-path="command">
           <div class="sel-ring"></div>
           <div class="path-icon">✈️</div>
-          <div class="path-name">Operational Flying Track</div>
-          <div class="path-sub">Senior WSO → Mission Commander → OC Flying</div>
+          <div class="path-name">Command Track</div>
+          <div class="path-sub">Lead WSO → FWIC → Flight Cdr → CO of Fighter Squadron</div>
           <div class="path-benchmark"><strong>35%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('staff',this)" data-path="staff">
           <div class="sel-ring"></div>
           <div class="path-icon">🏛️</div>
-          <div class="path-name">Air Ops Staff Track</div>
-          <div class="path-sub">RSAF HQ Air Operations Division → Joint Staff</div>
+          <div class="path-name">Staff Track</div>
+          <div class="path-sub">HQ RSAF Air Plans Department → Joint Staff</div>
           <div class="path-benchmark"><strong>28%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('tech',this)" data-path="tech">
           <div class="sel-ring"></div>
           <div class="path-icon">🔧</div>
-          <div class="path-name">Capability Development</div>
-          <div class="path-sub">DSTA Weapons Systems Programme Officer</div>
+          <div class="path-name">Capability Development Track</div>
+          <div class="path-sub">Air Plans Dept / Capability Branch · may include DSTA attachment</div>
           <div class="path-benchmark"><strong>20%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('cross',this)" data-path="cross">
           <div class="sel-ring"></div>
           <div class="path-icon">🎓</div>
-          <div class="path-name">WSO Instructor Track</div>
+          <div class="path-name">Instructor Track</div>
           <div class="path-sub">Air Force Training Command (AFTC) → Chief Instructor</div>
-          <div class="path-benchmark"><strong>12%</strong>&nbsp;of similar profiles took this route</div>
+          <div class="path-benchmark"><strong>17%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
       </div>
@@ -972,7 +1052,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         </div>
         <div class="prog-section">
           <div class="prog-section-title">Suggested next steps</div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Complete Mission Commander Course (Aug 2026)</span><span class="prog-val">+10 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:70%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Complete FWIC (FY2027)</span><span class="prog-val">+10 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:70%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Update career map aspirations</span><span class="prog-val">+5 pts</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:45%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Schedule Career Pact conversation</span><span class="prog-val">+3 pts</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:30%"></div></div></div>
         </div>
@@ -1017,8 +1097,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </div>
           <div class="m-card mc-a">
             <div class="m-label">Career Pact Status</div>
-            <div class="m-value" style="font-size:16px;">Overdue</div>
-            <div class="m-sub">3 months past due</div>
+            <div class="m-value" style="font-size:16px;">Not on file</div>
+            <div class="m-sub">No Pact on file</div>
           </div>
         </div>
         <div class="stars-box">
@@ -1065,17 +1145,17 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="m-card mc-g">
             <div class="m-label">Job Fit Score</div>
             <div class="m-value">87%</div>
-            <div class="m-sub">Air Ops Division match</div>
+            <div class="m-sub">Air Plans Department match</div>
           </div>
           <div class="m-card mc-a">
             <div class="m-label">Retention Risk</div>
             <div class="m-value">High</div>
-            <div class="m-sub">Re-contract decision due</div>
+            <div class="m-sub">SAVER milestone (age 31 bonus)</div>
           </div>
           <div class="m-card mc-r">
             <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
-            <div class="m-value">$420K</div>
-            <div class="m-sub">Incl. overseas flying trg</div>
+            <div class="m-value">≈$420K</div>
+            <div class="m-sub">Illustrative · incl. overseas flying trg</div>
           </div>
         </div>
         <div class="metric-grid mg-2">
@@ -1086,12 +1166,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </div>
           <div class="m-card mc-gray">
             <div class="m-label">Civil Market Value <span class="sens-badge">🔒</span></div>
-            <div class="m-value">$130K</div>
-            <div class="m-sub">Defence sector p.a.</div>
+            <div class="m-value">~$100–160K</div>
+            <div class="m-sub">Illustrative · defence sector p.a.</div>
           </div>
         </div>
         <div class="prog-section">
-          <div class="prog-section-title">Job fit breakdown (Air Ops Division)</div>
+          <div class="prog-section-title">Job fit breakdown (Air Plans Department)</div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Mission systems proficiency</span><span class="prog-val">94%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:94%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Leadership readiness</span><span class="prog-val">82%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:82%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Ground coordination experience</span><span class="prog-val">65%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:65%"></div></div></div>
@@ -1099,9 +1179,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
           <tbody>
-            <tr><td>Course assignment</td><td>Mission Commander Course (Aug 2026) — critical gate before ground tour</td></tr>
-            <tr><td>Next posting</td><td>Air Ops Division, RSAF HQ — 87% fit, leverages WSO operational expertise</td></tr>
-            <tr><td>Priority action</td><td>Career Pact conversation overdue by 3 months — schedule now</td></tr>
+            <tr><td>Course assignment</td><td>FWIC (FY2027) — critical gate before ground tour</td></tr>
+            <tr><td>Next posting</td><td>Air Plans Department, HQ RSAF — 87% fit, leverages WSO operational expertise</td></tr>
+            <tr><td>Priority action</td><td>No Career Pact on file — schedule first conversation</td></tr>
           </tbody>
         </table></div>
         <div class="dash-actions">
@@ -1127,7 +1207,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div class="metric-grid mg-2">
           <div class="m-card mc-g">
             <div class="m-label">Best-fit posting</div>
-            <div class="m-value" style="font-size:16px;">Air Ops Division</div>
+            <div class="m-value" style="font-size:16px;">Air Plans Dept</div>
             <div class="m-sub">87% fit · leverages WSO expertise</div>
           </div>
           <div class="m-card mc-a">
@@ -1139,8 +1219,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div class="metric-grid mg-3">
           <div class="m-card mc-r">
             <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
-            <div class="m-value">$420K</div>
-            <div class="m-sub">If lost to attrition</div>
+            <div class="m-value">≈$420K</div>
+            <div class="m-sub">Illustrative · if lost to attrition</div>
           </div>
           <div class="m-card mc-b">
             <div class="m-label">Mission readiness impact</div>
@@ -1150,19 +1230,19 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="m-card mc-gray">
             <div class="m-label">Aspiration alignment</div>
             <div class="m-value">Good</div>
-            <div class="m-sub">Operational Flying Track</div>
+            <div class="m-sub">Command Track</div>
           </div>
         </div>
         <div class="prog-section">
           <div class="prog-section-title">Posting options ranked by fit</div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Air Ops Division, RSAF HQ (recommended)</span><span class="prog-val">87%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:87%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Capability Dev / DSTA attachment</span><span class="prog-val">74%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:74%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Air Plans Department, HQ RSAF (recommended)</span><span class="prog-val">87%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:87%"></div></div></div>
+          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Capability Branch / DSTA attachment</span><span class="prog-val">74%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:74%"></div></div></div>
           <div class="prog-row"><div class="prog-lrow"><span class="prog-label">AFTC WSO Instructor (lower fit)</span><span class="prog-val">61%</span></div><div class="prog-bar"><div class="prog-fill" style="width:61%;background:var(--gray400);"></div></div></div>
         </div>
         <div class="dash-actions">
-          <button class="btn btn-primary" style="background:var(--gray900);">Approve Air Ops Division posting</button>
+          <button class="btn btn-primary" style="background:var(--gray900);">Approve Air Plans Department posting</button>
           <button class="btn btn-secondary">Override with documentation</button>
-          <button class="btn btn-ghost">Schedule Tier 3 Pact first</button>
+          <button class="btn btn-ghost">Schedule 4-seat Pact first</button>
         </div>
         <div class="access-note">Commander posting authority is not constrained by this tool. All sensitive data supports your decision — the career map is input to your decision, not a veto. Any override is logged in the Ledger.</div>
       </div>
@@ -1188,28 +1268,28 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div class="scenario-icon">📅</div>
         <div class="scenario-name">Annual career map review</div>
         <div class="scenario-sub">Routine check-in — no posting imminent</div>
-        <span class="scenario-tier-badge stb-1">Tier 1 · 2 seats</span>
+        <span class="scenario-tier-badge stb-1">2-seat Pact</span>
       </div>
       <div class="scenario-card" onclick="selectScenario('posting',this)">
         <div class="sel-ring"></div>
         <div class="scenario-icon">📦</div>
         <div class="scenario-name">Standard posting cycle</div>
         <div class="scenario-sub">Q4 posting — member going to a new unit</div>
-        <span class="scenario-tier-badge stb-2">Tier 2 · 3 seats</span>
+        <span class="scenario-tier-badge stb-2">3-seat Pact</span>
       </div>
       <div class="scenario-card" onclick="selectScenario('recontract',this)">
         <div class="sel-ring"></div>
         <div class="scenario-icon">📝</div>
-        <div class="scenario-name">Re-contract decision</div>
-        <div class="scenario-sub">Member deciding whether to sign on again</div>
-        <span class="scenario-tier-badge stb-3">Tier 3 · all 4 seats</span>
+        <div class="scenario-name">Career continuation milestone</div>
+        <div class="scenario-sub">Locking in senior path at a key inflection point</div>
+        <span class="scenario-tier-badge stb-3">4-seat Pact</span>
       </div>
       <div class="scenario-card" onclick="selectScenario('contested',this)">
         <div class="sel-ring"></div>
         <div class="scenario-icon">⚠️</div>
         <div class="scenario-name">Contested posting</div>
         <div class="scenario-sub">Member objects — posting deviates from career map</div>
-        <span class="scenario-tier-badge stb-3">Tier 3 · all 4 seats</span>
+        <span class="scenario-tier-badge stb-3">4-seat Pact</span>
       </div>
     </div>
 
@@ -1262,10 +1342,50 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 
     <!-- Output doc -->
     <div class="output-doc" id="output-doc">
-      <div class="output-doc-title">📄 <span id="output-doc-title">Document produced</span></div>
+      <!-- Print-only header (visible only when printing) -->
+      <div class="print-only print-header">
+        <div class="print-brand">The Posting Pact · Republic of Singapore Air Force</div>
+        <div class="print-title" id="print-title">Career Pact</div>
+        <div class="print-meta">
+          <span id="print-tier">—</span> ·
+          <span id="print-scenario">—</span> ·
+          Issued <span id="print-date">—</span>
+        </div>
+      </div>
+
+      <!-- Print-only member profile strip -->
+      <div class="print-only print-profile">
+        <div class="pp-row"><span class="pp-k">Member:</span><span class="pp-v">CPT Tan Wei Xiang</span></div>
+        <div class="pp-row"><span class="pp-k">Vocation:</span><span class="pp-v">Weapons System Officer (Fighter)</span></div>
+        <div class="pp-row"><span class="pp-k">Rank band:</span><span class="pp-v">CPT (MAJ-select)</span></div>
+        <div class="pp-row"><span class="pp-k">Unit:</span><span class="pp-v">F-15SG Squadron, PLAB</span></div>
+        <div class="pp-row"><span class="pp-k">Service:</span><span class="pp-v">7 years</span></div>
+        <div class="pp-row"><span class="pp-k">Career score:</span><span class="pp-v">82 / 100</span></div>
+      </div>
+
+      <div class="output-doc-title"><span class="screen-only-icon">📄</span> <span id="output-doc-title">Document produced</span></div>
       <div id="output-rows"></div>
-      <div style="margin-top:12px;font-size:11px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Signed by</div>
+      <div class="signed-by-label" style="margin-top:12px;font-size:11px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Signed by</div>
       <div class="sig-row" id="sig-row"></div>
+
+      <!-- Print-only signature block with signing lines -->
+      <div class="print-only print-sig-block">
+        <div style="font-size:11px;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:.08em;">Signatures</div>
+        <div class="print-sig-grid" id="print-sig-grid"></div>
+      </div>
+
+      <!-- Print-only footer disclaimer -->
+      <div class="print-only print-footer">
+        <span class="pf-strong">A Career Pact is a co-created commitment, not an absolute contract.</span>
+        Entries are recorded in three firmness levels. <span class="pf-strong">Aspirations noted</span> capture the member's stated direction and are not promises. <span class="pf-strong">Process commitments</span> are actions each seat controls and will do (e.g., schedule a slot, surface a nomination, support a handover). <span class="pf-strong">Conditional outcomes</span> — such as the specific posting, course slot, or appointment — remain subject to operational needs, vacancy, board outcomes, and force-development priorities at the time. If reality diverges from this document, the four seats reconvene and re-pact — silence is not an option.
+        <br><br>
+        <span class="pf-strong">Pact Record reference:</span> <span id="print-ref">—</span> · The Posting Pact prototype · All figures, postings, courses, and scenarios are illustrative for demonstration. Vocation, track, and unit references reflect publicly available RSAF information.
+      </div>
+
+      <!-- On-screen actions -->
+      <div class="output-actions">
+        <button class="btn-print" onclick="printPact()">🖨 Print / Save as PDF</button>
+      </div>
     </div>
 
   </div>
@@ -1297,11 +1417,11 @@ function showDemo(id, card) {
 
 /* Peer Benchmark */
 const bmarkData = [
-  {label:'✈️ Operational Flying Track',pct:35,color:'#27500A'},
-  {label:'🏛️ Air Ops Staff (RSAF HQ)',pct:28,color:'#1D4ED8'},
-  {label:'🔧 Capability Dev (DSTA)',pct:20,color:'#D97706'},
-  {label:'🎓 WSO Instructor (AFTC)',pct:12,color:'#6D28D9'},
-  {label:'🔀 Inter-service exchange / other',pct:5,color:'#9CA3AF'}
+  {label:'✈️ Command Track',pct:35,color:'#27500A'},
+  {label:'🏛️ Staff Track',pct:28,color:'#1D4ED8'},
+  {label:'🔧 Capability Development Track',pct:20,color:'#D97706'},
+  {label:'🎓 Instructor Track',pct:17,color:'#6D28D9'},
+  {label:'🔀 Inter-service exchange / other',pct:0,color:'#9CA3AF'}
 ];
 function renderBmarkChart() {
   const el = document.getElementById('bmark-chart');
@@ -1319,22 +1439,22 @@ function renderBmarkChart() {
 /* Gap Advisor */
 const gapData = {
   command:[
-    {label:'Mission Commander Course',status:'missing',impact:'Critical gate — squadron recommendation required'},
-    {label:'Senior WSO Certification',status:'missing',impact:'Required before Flight Commander posting eligible'},
+    {label:'Fighter Weapons Instructor Course (FWIC)',status:'missing',impact:'Critical gate — squadron recommendation and operational currency required'},
+    {label:'Lead WSO qualification',status:'missing',impact:'Required before Flight Commander posting eligible'},
     {label:'Advanced Weapons Employment Course (Phase 2)',status:'partial',impact:'Phase 1 done — Phase 2 pending scheduling'},
     {label:'Electronic Warfare Specialist qualification',status:'done',impact:'Completed FY2024 — current'},
     {label:'Annual SAF Proficiency Check',status:'done',impact:'Current — valid until Dec 2026'}
   ],
   staff:[
-    {label:'Advanced Staff Course (ASC)',status:'missing',impact:'Mandatory for RSAF HQ staff posting'},
+    {label:'Goh Keng Swee Command & Staff College (CSC)',status:'missing',impact:'Pinnacle staff course — gate to MAJ-level HQ appointments'},
     {label:'Joint Operations attachment (JOPS)',status:'partial',impact:'1 exercise completed — full attachment outstanding'},
-    {label:'Air Operations Planning Module',status:'missing',impact:'Recommended before Air Ops Division posting'},
+    {label:'Air Operations Planning Module',status:'missing',impact:'Recommended before Air Plans Department posting'},
     {label:'Air Force Policy & Strategy course',status:'done',impact:'Completed FY2023'}
   ],
   tech:[
-    {label:'Programme Management Professional (PMP) certification',status:'missing',impact:'DSTA partnership role requirement'},
-    {label:'DSTA attachment (min 3 months)',status:'missing',impact:'Pre-requisite for Programme Officer posting'},
-    {label:'Systems Integration certification',status:'missing',impact:'Required for Weapons Programme Officer role'},
+    {label:'Programme Management Professional (PMP) certification',status:'missing',impact:'Capability role requirement'},
+    {label:'DSTA attachment (min 3 months)',status:'missing',impact:'Pre-requisite for Capability Officer posting with DSTA secondment'},
+    {label:'Systems Integration certification',status:'missing',impact:'Required for Weapons Capability Officer role'},
     {label:'Technical documentation qualification',status:'partial',impact:'In progress — exam pending'}
   ],
   cross:[
@@ -1378,10 +1498,10 @@ function updateGaScore(path) {
 
 /* What-if Simulator */
 const wiData = {
-  command:{name:'Operational Flying Track',icon:'✈️',bench:'35%',timeline:'CPT (WSO) → MAJ (Senior WSO / Flight Cdr) → LTC (OC Flying)',timeframe:'~6–8 yrs to LTC',gaps:'2 missing, 1 partial',risk:'Medium',outcome:'Highest operational prestige, strong RSAF retention incentive'},
-  staff:{name:'Air Ops Staff Track',icon:'🏛️',bench:'28%',timeline:'CPT → MAJ Staff Officer (Air Ops Div) → LTC Senior SO',timeframe:'~5–7 yrs to LTC',gaps:'2 missing, 1 partial',risk:'Low',outcome:'Broad RSAF exposure, mission-relevant ground tour'},
-  tech:{name:'Capability Dev (DSTA)',icon:'🔧',bench:'20%',timeline:'CPT → MAJ Programme Officer (DSTA) → LTC Programme Director',timeframe:'~6–9 yrs to LTC',gaps:'3 missing, 1 partial',risk:'Medium',outcome:'Highest post-SAF market value, aerospace & defence industry ready'},
-  cross:{name:'WSO Instructor (AFTC)',icon:'🎓',bench:'12%',timeline:'CPT → MAJ WSO Instructor (AFTC) → LTC Chief Flying Instructor',timeframe:'~6–8 yrs to LTC',gaps:'4 missing',risk:'Medium-High',outcome:'Force generation impact, command at AFTC, shapes next generation'}
+  command:{name:'Command Track',icon:'✈️',bench:'35%',timeline:'CPT (WSO) → MAJ (Lead WSO / Flight Cdr) → LTC (CO Fighter Sqn)',timeframe:'~8–10 yrs to LTC command',gaps:'2 missing, 1 partial',risk:'Medium',outcome:'Highest operational prestige, strong RSAF retention incentive'},
+  staff:{name:'Staff Track',icon:'🏛️',bench:'28%',timeline:'CPT → MAJ Staff Officer (HQ RSAF / MINDEF) → LTC Branch Head',timeframe:'~6–8 yrs to LTC',gaps:'2 missing, 1 partial',risk:'Low',outcome:'Broad institutional exposure, mission-relevant ground tour'},
+  tech:{name:'Capability Development Track',icon:'🔧',bench:'20%',timeline:'CPT → MAJ Capability Officer (Air Plans / DSTA attach) → LTC Programme Lead',timeframe:'~7–9 yrs to LTC',gaps:'3 missing, 1 partial',risk:'Medium',outcome:'High post-SAF market value, aerospace & defence sector ready (illustrative)'},
+  cross:{name:'Instructor Track',icon:'🎓',bench:'17%',timeline:'CPT → MAJ WSO Instructor (AFTC) → LTC Chief Flying Instructor',timeframe:'~7–9 yrs to LTC',gaps:'4 missing',risk:'Medium-High',outcome:'Force generation impact, command at AFTC, shapes next generation'}
 };
 function renderWhatsIf() {
   const a = document.getElementById('wi-path-a').value;
@@ -1444,68 +1564,68 @@ const pathData = {
   command: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
-      {year:'2028',role:'MAJ · Senior WSO / Flight Cdr',unit:'Fighter Squadron'},
-      {year:'2031',role:'LTC · OC Flying',unit:'Fighter Wing'}
+      {year:'FY2028',role:'MAJ · Lead WSO / Flight Cdr',unit:'Fighter Squadron'},
+      {year:'FY2033',role:'LTC · CO of Fighter Squadron',unit:'Fighter Wing'}
     ],
     gaps:[
-      {label:'Mission Commander Course',status:'missing',impact:'Critical gate — squadron recommendation required'},
-      {label:'Senior WSO Certification',status:'missing',impact:'Required before Flight Commander posting eligible'},
+      {label:'Fighter Weapons Instructor Course (FWIC)',status:'missing',impact:'Critical gate — squadron recommendation required'},
+      {label:'Lead WSO qualification',status:'missing',impact:'Required before Flight Commander posting eligible'},
       {label:'Advanced Weapons Employment Course (Phase 2)',status:'partial',impact:'Phase 1 completed — Phase 2 TBC'},
       {label:'Electronic Warfare Specialist qualification',status:'done',impact:'Completed FY2024'}
     ],
     benchmark:35,
-    benchSub:'of WSO(FTR)s with similar profiles progressed to Senior WSO within 3 years.',
-    benchNote:'Most sought-after path. Mission Commander qualification is the key gate — requires squadron recommendation and operational currency. Only about 1 in 3 who aim for it reach LTC OC Flying level.',
-    insight:'Your 950 flying hours and Electronic Warfare Specialist certification are strong assets for this track. The missing Mission Commander Course is the critical bottleneck — this should be the first conversation point with your Career Manager.',
-    aspiration:'Wants to remain on the operational flying track — targeting Mission Commander qualification by 2028, followed by OC Flying at a Fighter Squadron by 2031.',
-    questions:'1. When is the next Mission Commander Course — can it run before the Q4 2026 ground tour? 2. Is Senior WSO Certification a pre-requisite or can both qualifications run concurrently? 3. What is the realistic timeline from Mission Commander to OC Flying eligibility?',
-    gaps_brief:'Missing: Mission Commander Course, Senior WSO Certification. Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.'
+    benchSub:'of WSO(FTR)s with similar profiles progressed to Lead WSO within 3 years.',
+    benchNote:'Most sought-after path. FWIC qualification is the key gate — requires squadron recommendation and operational currency. Only about 1 in 3 who aim for it reach LTC CO of Fighter Squadron level.',
+    insight:'Your 950 flying hours and Electronic Warfare Specialist certification are strong assets for this track. The missing FWIC is the critical bottleneck — this should be the first conversation point with your Career Manager.',
+    aspiration:'Wants to stay on the Command Track — targeting FWIC by FY2028, followed by CO of a Fighter Squadron by FY2033.',
+    questions:'1. When is the next FWIC — can it run before the Q4 2026 ground tour? 2. Is Lead WSO qualification a pre-requisite or can both qualifications run concurrently? 3. What is the realistic timeline from FWIC to CO of Fighter Squadron eligibility?',
+    gaps_brief:'Missing: FWIC, Lead WSO qualification. Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.'
   },
   staff: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
-      {year:'2028',role:'MAJ · Staff Officer',unit:'Air Operations Division, RSAF HQ'},
-      {year:'2031',role:'LTC · Senior Staff Officer',unit:'RSAF HQ / Joint Staff'}
+      {year:'FY2028',role:'MAJ · Staff Officer',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2033',role:'LTC · Senior Staff Officer',unit:'HQ RSAF / Joint Staff'}
     ],
     gaps:[
-      {label:'Advanced Staff Course (ASC)',status:'missing',impact:'Mandatory for RSAF HQ staff posting'},
+      {label:'Goh Keng Swee Command & Staff College (CSC)',status:'missing',impact:'Pinnacle staff course — gate to MAJ-level HQ appointments'},
       {label:'Joint Operations attachment (JOPS)',status:'partial',impact:'1 exercise completed — full attachment outstanding'},
-      {label:'Air Operations Planning Module',status:'missing',impact:'Recommended before Air Ops Division posting'},
+      {label:'Air Operations Planning Module',status:'missing',impact:'Recommended before Air Plans Department posting'},
       {label:'Air Force Policy & Strategy course',status:'done',impact:'Completed FY2023'}
     ],
     benchmark:28,
-    benchSub:'of WSO(FTR)s with similar profiles who chose the staff track reached Senior SO within 3 years.',
-    benchNote:'Second most common ground tour path. Air Ops Division leverages WSO operational experience in a planning context — better than a generic admin posting. Note: flying currency is typically lost within 18 months of a full HQ tour.',
-    insight:'A staff tour at Air Ops Division is the best way to stay mission-relevant during your mandatory ground tour. It positions you well for a return to flying at MAJ level — but consider carefully if you want to maintain flying currency.',
-    aspiration:'Open to Air Ops Staff Track as the ground tour posting that best leverages WSO experience in a planning context. Wants to return to flying at MAJ level after the staff tour.',
-    questions:'1. Which role at Air Ops Division best leverages WSO(FTR) experience? 2. Is it possible to maintain partial flying currency during a HQ staff tour? 3. Can this staff tour lead back to an operational flying role at MAJ level?',
-    gaps_brief:'Missing: Advanced Staff Course, Air Operations Planning Module. Joint Operations attachment partially completed (1 exercise done).'
+    benchSub:'of WSO(FTR)s with similar profiles who chose the Staff Track reached Senior SO within 3 years.',
+    benchNote:'Second most common ground tour path. Air Plans Department leverages WSO operational experience in a planning context — better than a generic admin posting. Note: flying currency is typically lost within 18 months of a full HQ tour.',
+    insight:'A staff tour at Air Plans Department is the best way to stay mission-relevant during your mandatory ground tour. It positions you well for a return to flying at MAJ level — but consider carefully if you want to maintain flying currency.',
+    aspiration:'Open to the Staff Track as the ground tour posting that best leverages WSO experience in a planning context. Wants to return to flying at MAJ level after the staff tour.',
+    questions:'1. Which role at Air Plans Department best leverages WSO(FTR) experience? 2. Is it possible to maintain partial flying currency during a HQ staff tour? 3. Can this staff tour lead back to an operational flying role at MAJ level?',
+    gaps_brief:'Missing: Goh Keng Swee CSC, Air Operations Planning Module. Joint Operations attachment partially completed (1 exercise done).'
   },
   tech: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
-      {year:'2028',role:'MAJ · Weapons Systems Programme Officer',unit:'DSTA (RSAF partnership)'},
-      {year:'2031',role:'LTC · Programme Director',unit:'Weapons Systems Division, DSTA'}
+      {year:'FY2028',role:'MAJ · Capability Officer',unit:'Air Plans Dept / Capability Branch — may include DSTA attachment'},
+      {year:'FY2033',role:'LTC · Senior Capability Officer',unit:'Capability Branch, HQ RSAF'}
     ],
     gaps:[
-      {label:'Programme Management Professional (PMP) certification',status:'missing',impact:'DSTA partnership role requirement'},
-      {label:'DSTA attachment (min 3 months)',status:'missing',impact:'Pre-requisite for Programme Officer posting'},
-      {label:'Systems Integration certification',status:'missing',impact:'Required for Weapons Programme Officer role'},
+      {label:'Programme Management Professional (PMP) certification',status:'missing',impact:'Capability role requirement'},
+      {label:'DSTA attachment (min 3 months)',status:'missing',impact:'Pre-requisite for Capability Officer posting with DSTA secondment'},
+      {label:'Systems Integration certification',status:'missing',impact:'Required for Weapons Capability Officer role'},
       {label:'Technical documentation qualification',status:'partial',impact:'In progress — exam pending'}
     ],
     benchmark:20,
-    benchSub:'of WSO(FTR)s followed the capability development track at the MAJ level.',
-    benchNote:'Niche but growing. WSOs with hands-on F-15SG weapons and mission systems experience are rare in the DSTA weapons programme space — most programme officers have never operated the systems they manage. Highest post-SAF market value of all four tracks.',
-    insight:'Your cockpit-level F-15SG avionics and weapons employment experience is directly applicable in DSTA capability development. ST Aerospace, Lockheed Martin, and defence contractors actively recruit from this track. Consider it seriously if you want the broadest post-SAF options.',
-    aspiration:'Interested in capability development as a path to apply WSO expertise beyond the cockpit. Open to a DSTA partnership posting that combines operational understanding with weapons systems programme work.',
-    questions:'1. Is a DSTA partnership posting available for a CPT WSO(FTR) now? 2. What is the Programme Management course schedule? 3. Does a capability development tour close the door on a return to operational flying at MAJ level?',
+    benchSub:'of WSO(FTR)s followed the Capability Development Track at the MAJ level.',
+    benchNote:'Niche but growing. WSOs with hands-on F-15SG weapons and mission systems experience are rare in the capability development space — most capability officers have never operated the systems they help acquire. Strong post-SAF market value.',
+    insight:'Your cockpit-level F-15SG avionics and weapons employment experience is directly applicable in capability development. ST Engineering, Lockheed Martin, and defence contractors actively recruit from this track. Consider it seriously if you want the broadest post-SAF options.',
+    aspiration:'Interested in capability development as a path to apply WSO expertise beyond the cockpit. Open to a Capability Branch posting that combines operational understanding with weapons systems work — potentially including a DSTA attachment.',
+    questions:'1. Is a Capability Branch posting with DSTA attachment available for a CPT WSO(FTR) now? 2. What is the Programme Management course schedule? 3. Does a capability development tour close the door on a return to operational flying at MAJ level?',
     gaps_brief:'Missing: PMP certification, DSTA attachment, Systems Integration certification. Technical documentation qualification in progress.'
   },
   cross: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
-      {year:'2028',role:'MAJ · Qualified WSO Instructor',unit:'Air Force Training Command (AFTC)'},
-      {year:'2031',role:'LTC · Chief Flying Instructor',unit:'AFTC / Deputy OC Flying'}
+      {year:'FY2028',role:'MAJ · Qualified WSO Instructor',unit:'Air Force Training Command (AFTC)'},
+      {year:'FY2033',role:'LTC · Chief Flying Instructor',unit:'AFTC'}
     ],
     gaps:[
       {label:'WSO Instructor Course (WSOI)',status:'missing',impact:'Mandatory — cannot instruct without this qualification'},
@@ -1513,11 +1633,11 @@ const pathData = {
       {label:'Instructor flying currency standard',status:'missing',impact:'Different standard from operational flying requirement'},
       {label:'Pedagogy & adult learning course',status:'missing',impact:'AFTC mandatory requirement for all instructors'}
     ],
-    benchmark:12,
+    benchmark:17,
     benchSub:'of WSO(FTR)s with similar profiles voluntarily chose the Instructor Track at AFTC.',
-    benchNote:'Least commonly chosen by high performers but critically needed. WSO Instructors directly shape force generation capacity — the quality of the next cohort depends on them. Carries a different form of prestige and opens command at AFTC. This path requires a Tier 3 Career Pact if it involves a formal vocation change endorsement.',
+    benchNote:'Less commonly chosen by high performers but critically needed. WSO Instructors directly shape force generation capacity — the quality of the next cohort depends on them. Carries a different form of prestige and opens command at AFTC. This path requires a 4-seat Career Pact if it involves a formal vocation change endorsement.',
     insight:'WSO Instructors are critically needed but rarely chosen. If shaping the next generation of WSO(FTR)s matters to you, this deserves serious consideration. Discuss whether the Instructor Track can include a return to operational flying currency between postings.',
-    aspiration:'Willing to consider the Instructor Track if it leads to a command appointment at AFTC and keeps options open for periodic operational flying. Wants to understand promotion comparability vs. the Operational Flying Track.',
+    aspiration:'Willing to consider the Instructor Track if it leads to a command appointment at AFTC and keeps options open for periodic operational flying. Wants to understand promotion comparability vs. the Command Track.',
     questions:'1. Is the Instructor Track compatible with periodic operational currency — e.g., 1 operational tour per 2 years? 2. What is the typical time from Qualified WSO Instructor to Chief Instructor? 3. Are there command appointments at AFTC above Chief Instructor?',
     gaps_brief:'Missing: WSO Instructor Course (WSOI), Check WSO certification, Instructor currency standard, Pedagogy course. Significant requalification required before becoming a qualified instructor.'
   }
@@ -1575,7 +1695,7 @@ function renderOutcome() {
 function renderBrief() {
   const d = pathData[selectedPath];
   document.getElementById('brief-aspiration').textContent = d.aspiration;
-  const pnames = { command:'Operational Flying Track', staff:'Air Ops Staff Track', tech:'Capability Dev (DSTA)', cross:'WSO Instructor (AFTC)' };
+  const pnames = { command:'Command Track', staff:'Staff Track', tech:'Capability Development Track', cross:'Instructor Track' };
   document.getElementById('brief-paths-chips').innerHTML = exploredPaths.map(p=>`<span class="brief-chip">${pnames[p]}</span>`).join('');
   document.getElementById('brief-questions').textContent = d.questions;
   document.getElementById('brief-gaps').textContent = d.gaps_brief;
@@ -1601,72 +1721,153 @@ function selectRole(role, card) {
 const scenarioData = {
   annual: {
     label:'Annual career map review',
-    tier:'Tier 1',
+    tier:'2-seat Pact',
     seats:[true,false,true,false],
     seatNotes:['Aspirations & commitments stated','Not required for routine review','Realistic options · update career map','Not required'],
     convo:[
-      {seat:0,text:"I want to stay on the Operational Flying Track. My aspiration is Mission Commander by 2028 and OC Flying by 2031. The thing I'm worried about is the mandatory ground tour — I don't want it to break my flying currency or push back the Mission Commander Course. Can we talk about how to sequence this?"},
-      {seat:2,text:"That's a very valid concern. The good news is your profile is strong — 950 flying hours, EW Specialist qualification, MAJ-select band. I can register you for the Mission Commander Course in August 2026, before the ground tour kicks in at Q4. If you complete it before departing, flying currency is maintained and the gate is cleared. I'd recommend Air Ops Division as the ground tour to stay operationally relevant."},
-      {seat:0,text:"Mission Commander Course in August 2026 — I can commit to that. And Air Ops Division makes sense. I'd like those milestones locked into my career map so this doesn't drift."},
-      {seat:2,text:"Done. Updated career map: primary track Operational Flying, Mission Commander Course August 2026, ground tour Air Ops Division Q4 2026, return to flying at MAJ level targeting 2028. Next check-in in six months. I'll mark this complete."}
+      {seat:0,text:"I'd like to stay on the Command Track as my stated direction. My aspiration is FWIC around FY2028 and CO of a Fighter Squadron by FY2033 — I know neither is guaranteed, but I want it in the career map. What I'm trying to avoid is the mandatory ground tour breaking my flying currency or pushing back the FWIC window. Can we agree on the sequencing?"},
+      {seat:2,text:"Useful framing. Your profile is strong — 950 flying hours, EW Specialist qualification, MAJ-select band. Course slots and postings depend on the FY board outcomes and demand at the time, but here's what I can commit to control: I'll surface you for the FY2027 FWIC cycle so the slot is considered before the ground tour kicks in, and I'll flag Air Plans Department as a high-fit ground tour for the FY2026 board. The board, not this room, makes the call."},
+      {seat:0,text:"That's fair. I'd like FY2027 FWIC and an Air Plans Department ground tour recorded as my aspiration, and the surfacing actions recorded as your process commitment. I'll do my part on currency and performance band."},
+      {seat:2,text:"Done. I'll log this as a 2-seat Pact: aspirations noted, process commitments on my side and yours, and the actual course slot and posting flagged as conditional on board outcomes. Re-pact in six months — or sooner if the FWIC FY2027 slot can't be secured."}
     ],
     output:{
       title:'Career Map Update',
-      rows:['Career map confirmed: Operational Flying Track as primary aspiration','Milestone: Mission Commander Course — August 2026 (before ground tour)','Ground tour posting: Air Ops Division, RSAF HQ — Q4 2026','Aspiration: OC Flying at Fighter Wing by FY2031','Next review scheduled: December 2026'],
+      aspirations:[
+        'Member: Command Track as stated direction.',
+        'Member: FWIC targeted FY2027 (pre-ground-tour); ground tour at Air Plans Department, HQ RSAF.',
+        'Member: CO of a Fighter Squadron by FY2033 (long-range aspiration).'
+      ],
+      process:[
+        'Career Manager: surface CPT Tan for the FY2027 FWIC slating cycle ≥ 6 months ahead and flag blockers.',
+        'Career Manager: nominate Air Plans Department, HQ RSAF as preferred ground tour at the FY2026 posting board.',
+        'Member: maintain flying currency, EW Specialist qualification, and performance band through the review window.'
+      ],
+      conditional:[
+        'FY2027 FWIC slot — subject to course availability and board outcome, not guaranteed by this document.',
+        'Air Plans Department, HQ RSAF posting Q4 2026 — subject to FY2026 board, unit demand, and force-development priorities.'
+      ],
+      repact:[
+        'If the FY2027 FWIC slot is not secured at the slating cycle.',
+        'If the Q4 2026 ground tour assignment differs materially from Air Plans Department.',
+        'Routine: six-month career map review (December 2026).'
+      ],
       sigs:[0,2]
     }
   },
   posting: {
     label:'Ground tour posting — Q4 2026',
-    tier:'Tier 2',
+    tier:'3-seat Pact',
     seats:[true,true,true,false],
     seatNotes:['Aspirations & commitments stated','Support given · unit readiness input','Realistic options · best commitment','Briefed on outcome — not required in room'],
     convo:[
-      {seat:0,text:"I'm posted out in Q4. I've accepted that, and Air Ops Division at RSAF HQ is my preferred ground tour — it keeps me close to air operations and leverages my WSO background. My concern is the EW coverage gap I'll leave in the squadron. I want to ensure there's a proper handover before I go."},
-      {seat:1,text:"CPT Tan is currently our only Electronic Warfare Specialist. That's a real gap. I support his posting to Air Ops Division — it's the right career move — but I need a minimum three-month handover to transfer EW duties and brief the replacement officer. I formally endorse the Air Ops Division posting on that condition."},
-      {seat:2,text:"Air Ops Division is confirmed at 87% job fit — the best match for CPT Tan's profile. Recommended sequence: Mission Commander Course August 2026, EW handover completed by end-October, posting effective 1 November 2026. I'll prepare the Career Pact for signatures."},
-      {seat:0,text:"I commit to completing Mission Commander Course in August and supporting a full three-month EW handover. Air Ops Division effective 1 November — that's my commitment."},
-      {seat:1,text:"Confirmed. I'll have the handover plan and replacement officer nomination to CM by end of July. Signed."}
+      {seat:0,text:"My ground tour is coming in Q4. Air Plans Department at HQ RSAF is my stated preference — it keeps me close to air operations and uses my WSO background. What I want to commit to from my side is a clean EW handover before I leave so I don't leave the squadron exposed."},
+      {seat:1,text:"CPT Tan is currently our only Electronic Warfare Specialist — that's a real coverage gap. I can commit to two process pieces: I'll submit the squadron's unit-readiness input to the CM by end of July with a three-month handover plan, and I'll nominate a replacement officer to begin shadowing in August. I support the Air Plans Department direction; the actual posting decision sits with the board."},
+      {seat:2,text:"Air Plans Department scores 87% job-fit — the strongest match in his profile. I'll table that as the recommended option to the Q4 2026 posting board with the squadron's handover plan attached. Final posting is subject to the board, but I can commit that the recommendation goes in and that I'll surface any deviation back to this group before it's finalised."},
+      {seat:0,text:"That works. I'll commit to completing the EW handover during August–October and keeping my FY2027 FWIC currency intact. If the board posts me somewhere other than Air Plans Department, I want a re-pact before it's confirmed."},
+      {seat:1,text:"Agreed. Handover plan and replacement nomination to CM by end of July. Signed as a 3-seat Pact."}
     ],
     output:{
       title:'Career Pact — Ground Tour Posting Q4 2026',
-      rows:['Posting confirmed: Air Ops Division, RSAF HQ — effective 1 November 2026','Commitment (Member): Mission Commander Course completed August 2026','Commitment (Supervisor): EW handover plan and replacement officer nominated by July 2026','Handover period: August – October 2026 (3 months)','Next Pact review: 90 days post-posting'],
+      aspirations:[
+        'Member: Air Plans Department, HQ RSAF as preferred Q4 2026 ground tour.',
+        'Member: FWIC FY2027 currency maintained through the handover and tour.'
+      ],
+      process:[
+        'Supervisor: submit squadron unit-readiness input and three-month EW handover plan to CM by end July 2026.',
+        'Supervisor: nominate replacement EW officer to begin shadowing August 2026.',
+        'Career Manager: table Air Plans Department as recommended posting to the Q4 2026 posting board with the handover plan attached.',
+        'Career Manager: surface any board deviation back to this group before posting orders are finalised.',
+        'Member: complete EW handover August–October 2026; maintain flying currency and FWIC FY2027 readiness.'
+      ],
+      conditional:[
+        'Posting to Air Plans Department, HQ RSAF effective 1 November 2026 — subject to Q4 2026 posting board, vacancy, and operational priorities.',
+        'FY2027 FWIC slating — subject to course availability and board.'
+      ],
+      repact:[
+        'If the Q4 2026 board posts the member to a unit other than Air Plans Department.',
+        'If replacement EW officer is not in place by start of October 2026.',
+        'Routine: 90-day post-posting Pact review.'
+      ],
       sigs:[0,1,2]
     }
   },
   recontract: {
-    label:'Re-contract decision',
-    tier:'Tier 3',
+    label:'Career continuation milestone',
+    tier:'4-seat Pact',
     seats:[true,true,true,true],
-    seatNotes:['Aspirations & commitments stated','Support given · retention advocacy','Realistic options · career roadmap','Endorses re-contract terms · sign off'],
+    seatNotes:['Aspirations & commitments stated','Support given · retention advocacy','Realistic options · career roadmap','Endorses senior milestones · sign off'],
     convo:[
-      {seat:0,text:"I'm at the re-contract decision point. I'll sign on for another five years — but only if I can see a credible, committed path to Mission Commander in FY2028 and OC Flying in FY2031. RSAF has invested over $420,000 training me. I want to give that back. But I need to see the plan in writing."},
-      {seat:1,text:"I want to formally advocate for CPT Tan's retention. He's one of the strongest WSO(FTR)s in the squadron — 950 hours, EW qualified, consistently high-performing. The investment case is clear. Mission Commander by 2028 and OC Flying by 2031 is entirely achievable and I will personally support him through both."},
-      {seat:2,text:"Based on his profile — career score 82, EW Specialist, MAJ-select band — the Operational Flying Track to OC Flying by FY2031 is realistic. I recommend a five-year re-contract with Mission Commander Course FY2028 confirmed and OC Flying nomination submitted in the FY2031 cycle. I can commit that in writing."},
-      {seat:3,text:"I endorse the re-contract terms. Mission Commander FY2028 is confirmed — I'll personally submit the OC Flying nomination for FY2031 if Mission Commander is completed on schedule. That commitment goes into the Pact and the Ledger. This is exactly the kind of officer RSAF needs to retain. Signed."},
-      {seat:0,text:"I accept those terms. Five-year re-contract. I commit to Mission Commander FY2028 and maintaining flying currency and performance standards throughout. Thank you — this is the conversation I needed."}
+      {seat:0,text:"I'm at a key inflection point — the next SAVER milestone is coming up and I'm weighing a senior path with RSAF against external options. I want to stay on the Command Track. I'm not asking anyone to guarantee FWIC FY2028 or CO of a Fighter Squadron by FY2033 — I know those depend on the board. What I want is the path recorded as my aspiration, and concrete process commitments from each of you on what you'll actually do to support it."},
+      {seat:1,text:"I'll commit to what's mine to control. When the FY2033 CO board opens, I'll provide a strong squadron recommendation in writing. Between now and then, I'll keep CPT Tan in flying-intensive roles where possible and protect his currency. The board makes the appointment; my job is to make sure they see a credible file."},
+      {seat:2,text:"From the CM seat I'll commit to: surfacing CPT Tan for the FY2028 FWIC slating cycle at least six months ahead and escalating blockers, and reviewing his file for the FY2033 CO of Fighter Squadron board subject to vacancy and operational fit. I'll also surface any material shift in the CO pipeline back to this group rather than let the career map drift quietly."},
+      {seat:3,text:"I'll record the senior milestones as endorsed aspirations and commit to consider his file for the FY2033 CO board if he completes FWIC on schedule and maintains performance. The actual appointment remains the board's call — not a personal guarantee. That distinction is going in the Pact Record so we don't promise more than the system delivers."},
+      {seat:0,text:"That's the conversation I needed. I commit to FWIC FY2028 readiness, maintaining flying currency, EW qualifications, and performance band. Aspirations on paper, process commitments from each seat, and the outcome conditional on the boards. I'll sign that."}
     ],
     output:{
-      title:'Full Career Pact — Re-contract',
-      rows:['Re-contract: 5-year term confirmed','Commitment (SSO): OC Flying nomination submitted FY2031, subject to Mission Commander completion','Milestone: Mission Commander Course FY2028 — confirmed slot','Commitment (Member): maintain flying currency and performance standards','Training investment acknowledged: $420K+ — RSAF retention priority','Ledger entry created: re-contract terms, SSO commitment, and milestones recorded'],
+      title:'Full Career Pact — Career Continuation Milestone',
+      aspirations:[
+        'Member: Command Track — stated direction.',
+        'Member: FWIC FY2028 as stated milestone.',
+        'Member: CO of a Fighter Squadron by FY2033 as long-range aspiration.'
+      ],
+      process:[
+        'Career Manager: surface CPT Tan for the FY2028 FWIC slating cycle ≥ 6 months ahead and escalate blockers.',
+        'Career Manager: review file for the FY2033 CO of Fighter Squadron board, subject to vacancy and operational fit.',
+        'Career Manager: surface material shifts in the CO pipeline back to this group rather than let the map drift.',
+        'Supervisor: provide a written squadron recommendation when the FY2033 CO nomination opens.',
+        'Supervisor: protect flying-intensive roles and currency for CPT Tan where possible.',
+        'SSO / Authority: consider the file for the FY2033 CO board if FWIC is completed on schedule and performance is maintained.',
+        'Member: maintain flying currency, EW Specialist qualification, performance band, and FWIC FY2028 readiness.'
+      ],
+      conditional:[
+        'FY2028 FWIC slot — subject to course availability and board outcome, not guaranteed by this document.',
+        'CO of a Fighter Squadron appointment in FY2033 — subject to board outcome, vacancy, force-development priorities, and member profile at the time. NOT a personal guarantee.',
+        'Training investment context: ≈$420K (illustrative) — informs retention priority, not appointment.'
+      ],
+      repact:[
+        'If FWIC slating slips > 12 months from FY2028.',
+        'If the CO of Fighter Squadron pipeline shifts materially (numbers, timing, or fit criteria).',
+        'If the member profile changes (performance band drop, currency gap, qualification change).',
+        'Routine: annual review against this Pact.'
+      ],
       sigs:[0,1,2,3]
     }
   },
   contested: {
     label:'Contested posting',
-    tier:'Tier 3',
+    tier:'4-seat Pact',
     seats:[true,true,true,true],
     seatNotes:['Objects — posting deviates from agreed career map','Acknowledges unit need · presents conflict','Career map evidence · escalation trigger','Reviews override case · documents decision'],
     convo:[
-      {seat:0,text:"I have to formally object to this posting. My signed career map, agreed six months ago, clearly states Air Ops Division as my ground tour. I am now being posted to an admin logistics role instead. That is a material deviation from what was committed, and it will derail the Mission Commander Course timing we agreed. I am requesting the Career Pact be honoured."},
-      {seat:1,text:"I have to be transparent. There was an urgent manpower gap that emerged after CPT Tan's Pact was signed. The logistics posting was raised at short notice. I acknowledge the conflict — CPT Tan has a legitimate expectation and I support his objection. The unit need is real, but so is his signed career map."},
-      {seat:2,text:"The career map evidence is clear — Air Ops Division was the agreed posting. An override is operationally permissible but it requires full documentation in the Ledger and a concrete commitment to CPT Tan. If the override proceeds, I am recommending: Air Ops Division priority posting in Q2 2027 — unconditional — and flying currency maintenance activities during the interim admin posting."},
-      {seat:3,text:"I've reviewed the case. The operational need is genuine and I am authorising the override for this cycle only. However — and this goes in the Ledger — CPT Tan has an unconditional priority for Air Ops Division at Q2 2027. I am personally accountable for that commitment. Flying currency maintenance will be facilitated during the admin posting. CPT Tan, you have my word in writing."},
-      {seat:0,text:"I note the override and formally acknowledge the SSO's commitment. I accept this outcome — on the condition that the Q2 2027 Air Ops Division posting is in the Ledger and that flying currency is actively supported. I'll proceed to the logistics posting and hold the SSO to this commitment."}
+      {seat:0,text:"I have to formally object. My signed career map, agreed six months ago, recorded Air Plans Department as my aspiration and the CM's process commitment was to table it as recommended at the board. I'm now being posted to an admin logistics role instead. That's a material deviation, and it'll knock my FWIC FY2027 readiness off course. Under our re-pact triggers, I'm asking for this conversation before it's finalised."},
+      {seat:1,text:"I have to be transparent. An urgent manpower gap surfaced after the Pact was signed, and the logistics requirement came up at short notice. I acknowledge the conflict — the member has a legitimate expectation that the agreed process was followed. The unit need is real, but so is the signed Pact, and the right move is to re-pact, not to override quietly."},
+      {seat:2,text:"For the record, the previous Pact captured Air Plans Department as the aspiration and my process commitment was to table it to the board, which I did. The deviation is the board outcome, not the process. If the override proceeds, I'd commit to two process pieces going forward: prioritising CPT Tan's file for the Q2 2027 posting cycle for return to Air Plans Department, and arranging interim flying currency activities to protect FWIC FY2027 readiness."},
+      {seat:3,text:"Reviewed the case. Operational need is genuine and I authorise the override for this cycle only — documented in the Pact Record with rationale. I'll commit, on the SSO seat, to consider CPT Tan as a priority case for Air Plans Department at the Q2 2027 posting board if performance and currency hold. The actual posting outcome remains the board's call — I'm committing to the process, not pre-empting the board."},
+      {seat:0,text:"I accept the override on those terms — process commitments on Q2 2027 prioritisation and interim flying currency, with the outcome still conditional on the board. I want the override rationale and the new process commitments in the Pact Record. I'll proceed to the admin posting on that basis."}
     ],
     output:{
-      title:'Ledger Entry — Posting Override',
-      rows:['Override documented: Air Ops Division posting deferred — operational necessity','Override authorised by: SSO (signed)','Commitment (SSO): Air Ops Division priority posting for CPT Tan — Q2 2027, unconditional','Flying currency maintenance to be facilitated during admin posting period','Ledger entry created: override rationale, SSO commitment, member acknowledgement','Review trigger: if Q2 2027 posting is not honoured, CPT Tan has right to formal escalation'],
+      title:'Pact Record Entry — Posting Override',
+      aspirations:[
+        'Member: Air Plans Department, HQ RSAF as ground tour aspiration (carried forward from prior Pact).',
+        'Member: FWIC FY2027 readiness preserved through the interim posting.'
+      ],
+      process:[
+        'SSO / Authority: authorise override for this posting cycle only, with rationale recorded in the Pact Record.',
+        'SSO / Authority: review the override at the Q2 2027 posting board with the member as a priority case for Air Plans Department.',
+        'Career Manager: surface CPT Tan\u2019s file as a priority case to the Q2 2027 posting board.',
+        'Career Manager: arrange interim flying-currency activities during the admin posting to protect FWIC FY2027 readiness.',
+        'Supervisor: document the unit-need rationale that drove the deviation in the Pact Record.',
+        'Member: complete the admin posting in good order and maintain currency activities as arranged.'
+      ],
+      conditional:[
+        'Q2 2027 posting to Air Plans Department, HQ RSAF — subject to Q2 2027 posting board, vacancy, member performance and currency, not guaranteed by this document.',
+        'FY2027 FWIC slating — subject to course availability and board.'
+      ],
+      repact:[
+        'If the Q2 2027 board does not return the member to Air Plans Department or an equivalent high-fit ground tour.',
+        'If interim flying-currency arrangements are not in place within 60 days of the admin posting.',
+        'If a further override is proposed against this Pact — formal escalation by the member is triggered.'
+      ],
       sigs:[0,1,2,3]
     }
   }
@@ -1754,9 +1955,56 @@ function showOutput() {
   const o=d.output;
   document.getElementById('output-doc').style.display='block';
   document.getElementById('output-doc-title').textContent=o.title;
-  document.getElementById('output-rows').innerHTML=o.rows.map(r=>`<div class="output-row"><span class="output-check">✓</span><span class="output-label">${r}</span></div>`).join('');
+  // Render the three-tier output structure: aspirations / process / conditional / repact
+  const renderSection = (cls, heading, sub, items) => {
+    if (!items || !items.length) return '';
+    const rows = items.map(r=>`<div class="output-row"><span class="output-check">✓</span><span class="output-label">${r}</span></div>`).join('');
+    return `<div class="output-section ${cls}">
+      <div class="output-section-heading">${heading}<span class="output-section-sub">${sub}</span></div>
+      ${rows}
+    </div>`;
+  };
+  document.getElementById('output-rows').innerHTML =
+    renderSection('os-aspirations','Aspirations noted','stated direction — not promises', o.aspirations) +
+    renderSection('os-process','Process commitments','what each seat will do', o.process) +
+    renderSection('os-conditional','Conditional outcomes','subject to operational needs, boards, vacancy', o.conditional) +
+    renderSection('os-repact','Re-pact triggers','reconvene the seats rather than let reality drift', o.repact);
   document.getElementById('sig-row').innerHTML=o.sigs.map(i=>`<span class="sig-chip ${sigClass[i]}">✓ ${sigNames[i]}</span>`).join('');
+
+  // Populate print-only fields
+  document.getElementById('print-title').textContent = o.title;
+  document.getElementById('print-tier').textContent = d.tier;
+  document.getElementById('print-scenario').textContent = d.label;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-SG',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('print-date').textContent = dateStr;
+  // Pact Record reference: PR-<scenario>-<YYYYMMDD>-<HHMM>
+  const pad = n=>String(n).padStart(2,'0');
+  const refMap = { annual:'ANNUAL', posting:'POSTING', recontract:'CONTINUATION', contested:'CONTESTED' };
+  const refKey = refMap[currentScenario] || currentScenario.toUpperCase();
+  const ref = `PR-${refKey}-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+  document.getElementById('print-ref').textContent = ref;
+  // Signature lines for printing
+  document.getElementById('print-sig-grid').innerHTML = o.sigs.map(i=>`
+    <div class="print-sig-cell">
+      <div class="print-sig-line"></div>
+      <div class="print-sig-role">${sigNames[i]}</div>
+      <div class="print-sig-name">${i===0 ? 'CPT Tan Wei Xiang' : 'Name & date'}</div>
+    </div>`).join('');
+
   document.getElementById('output-doc').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function printPact() {
+  // Set a friendly document title so the saved-PDF default filename is useful
+  const prevTitle = document.title;
+  const d = scenarioData[currentScenario];
+  if (d) {
+    const safe = d.output.title.replace(/[^a-z0-9\- ]/gi,'').trim().replace(/\s+/g,'_');
+    document.title = `PostingPact_${safe}_CPT_Tan_Wei_Xiang`;
+  }
+  window.print();
+  setTimeout(()=>{ document.title = prevTitle; }, 1000);
 }
 
 function cReset() {
