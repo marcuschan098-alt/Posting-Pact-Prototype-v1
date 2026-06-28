@@ -624,7 +624,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     </div>
     <div class="persona-switch" id="persona-switch" role="tablist" aria-label="Persona">
       <button class="persona-btn active" data-persona="tan" onclick="switchPersona('tan')" role="tab" aria-selected="true"><span class="pb-rank">CPT Tan</span><span class="pb-name">· WSO MAJ-select</span></button>
-      <button class="persona-btn" data-persona="lee" onclick="switchPersona('lee')" role="tab" aria-selected="false"><span class="pb-rank">MAJ Lee</span><span class="pb-name">· post-CSC SO</span></button>
+      <button class="persona-btn" data-persona="lee" onclick="switchPersona('lee')" role="tab" aria-selected="false"><span class="pb-rank">MAJ Lee</span><span class="pb-name">· at CSC</span></button>
       <button class="persona-btn" data-persona="kumar" onclick="switchPersona('kumar')" role="tab" aria-selected="false"><span class="pb-rank">LTC Kumar</span><span class="pb-name">· post-CO</span></button>
     </div>
     <span class="tb-badge" id="tb-mode">Explore your career paths</span>
@@ -1585,7 +1585,7 @@ const pathData_tan = {
   staff: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
-      {year:'FY2028',role:'MAJ · Staff Officer',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2028',role:'MAJ · Staff Officer',unit:'GKS Command & Staff College (closing out)'},
       {year:'FY2033',role:'LTC · Senior Staff Officer',unit:'HQ RSAF / Joint Staff'}
     ],
     gaps:[
@@ -1645,33 +1645,34 @@ const pathData_tan = {
   }
 };
 
-/* ── MAJ Lee Jia Hao — post-CSC SO, pre-Branch Head, pre-CO ── */
+/* ── MAJ Lee Jia Hao — at GKS CSC, FY2027 post-CSC posting board ── */
 const pathData_lee = {
   command: {
     timeline:[
-      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
-      {year:'FY2028',role:'MAJ · Senior SO / MAJ-2IC',unit:'HQ RSAF or Fighter Wing'},
-      {year:'FY2030',role:'MAJ · pre-CO appointment / Branch Head',unit:'Fighter Wing or HQ RSAF'},
+      {year:'Now',role:'MAJ · at GKS CSC (closing out)',unit:'GKS Command & Staff College'},
+      {year:'FY2027',role:'MAJ · Dy CO, F-15SG Sqn (Command-track slate)',unit:'F-15SG Sqn (PLAB or Tengah AB)'},
+      {year:'FY2030',role:'MAJ · 2nd generic MAJ appointment',unit:'HQ RSAF or operational unit'},
       {year:'FY2032',role:'LTC · CO Fighter Squadron',unit:'149 Sqn or 142 Sqn (Tengah AB post-2030)'}
     ],
     gaps:[
-      {label:'CO board file readiness',status:'partial',impact:'CSC done; performance band must hold through MAJ tour'},
-      {label:'Senior SO / MAJ-2IC tour',status:'missing',impact:'Pre-CO grooming appointment required ahead of FY2032 board'},
-      {label:'GKS Command & Staff College (CSC)',status:'done',impact:'Completed FY2024 — CO prerequisite cleared'},
-      {label:'Pre-CSC operational appointment (Flight Cdr / OC)',status:'done',impact:'Completed pre-CSC — operational command credibility on file'}
+      {label:'CO board file readiness',status:'partial',impact:'CSC closing out; performance band must hold through MAJ tour'},
+      {label:'GKS Command & Staff College (CSC)',status:'done',impact:'Closing out — CSC credential on file for FY2027 slate'},
+      {label:'Pre-CSC operational appointment (Flight Cdr / OC)',status:'done',impact:'Completed pre-CSC — operational command credibility on file'},
+      {label:'FY2027 post-CSC slate decision',status:'open',impact:'Four parallel options live: Dy CO / Senior SO / CO direct / Br Hd'}
     ],
     benchmark:42,
     benchSub:'of post-CSC WSO(FTR) MAJs progressed to CO Fighter Sqn within 5 years.',
-    benchNote:'Lee is in the strongest part of the CO pipeline — post-CSC and inside the typical 3–5 year window. Flight Cdr / OC tour was completed pre-CSC, so the open question is which post-CSC sequence (second SO, MAJ-2IC, or Branch Head) best positions him for the FY2032 board.',
-    insight:'MAJ Lee is post-CSC, so the CO prerequisite is cleared. The conversation is no longer "can he get to CO" but "which post-CSC sequence — second SO, MAJ-2IC, or Branch Head — best positions the file for the FY2032 board."',
-    aspiration:'Targeting CO of a Fighter Squadron at the FY2032 board. Wants the post-CSC sequence to position him cleanly for the CO board, with options across HQ deepening, MAJ-2IC, or a Branch Head tour as the file-shaping next step.',
-    questions:'1. What is the realistic post-Air-Plans slate at MAJ level — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward? 2. Is a pre-CO grooming appointment (MAJ-2IC or Branch Head) expected before the FY2032 CO board? 3. How does the second MAJ tour shape the CO board file vs. a third HQ tour?',
-    gaps_brief:'CSC: done. Pre-CSC Flight Cdr/OC: done. Senior SO / MAJ-2IC: missing. CO board file: dependent on next 3 years of performance.'
+    benchNote:'Lee is post-CSC and inside the typical CO window. The FY2027 board surfaces four parallel slates (Dy CO / Senior SO / CO direct / Br Hd). For the CO Fighter Sqn line, Dy CO is the strongest Command-track entry; CO direct is a real option for exceptional files when the pipeline opens.',
+    insight:'Post-CSC, all four slates are live and parallel — not sequential. The conversation is "which FY2027 slate gives the cleanest CO board file at FY2032." Dy CO is the standard Command-track route; CO direct is possible if file and pipeline align.',
+    aspiration:'Targeting CO Fighter Sqn at the FY2032 board. Preferred FY2027 slate is Dy CO, F-15SG Sqn; CO direct acknowledged as an outside chance for exceptional file + pipeline opening.',
+    questions:'1. Across the four FY2027 slates, which carries the strongest endorsement from Grp Cdr (SSO) and approval from HAO (SSSO)? 2. Is direct-to-CO realistically open this cycle given pipeline pressure? 3. What does the 2nd MAJ tour (between FY2027 and FY2032) need to look like to keep the CO board file sharp?',
+    gaps_brief:'CSC: closing out. Pre-CSC Flight Cdr/OC: done. FY2027 slate decision: open (4 parallel options).'
   },
   staff: {
     timeline:[
-      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
-      {year:'FY2029',role:'MAJ · Branch Head OR Dep Dept Head (LTC-grade pull-forward)',unit:'HQ RSAF / MINDEF / Joint Staff'},
+      {year:'Now',role:'MAJ · at GKS CSC (closing out)',unit:'GKS Command & Staff College'},
+      {year:'FY2027',role:'MAJ · Senior SO, HQ RSAF (Staff-track slate)',unit:'HQ RSAF Branch / Dept'},
+      {year:'FY2030',role:'LTC · Br Hd / Dep Dept Head',unit:'HQ RSAF / MINDEF / Joint Staff'},
       {year:'FY2033',role:'COL · Department Head',unit:'HQ RSAF or MINDEF (e.g. Hd Air Plans, Hd Air Intel)'}
     ],
     gaps:[
@@ -1690,8 +1691,8 @@ const pathData_lee = {
   },
   tech: {
     timeline:[
-      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
-      {year:'FY2028',role:'MAJ · Senior Capability SO',unit:'Air Warfare Centre / Capability Branch / DSTA secondment'},
+      {year:'Now',role:'MAJ · at GKS CSC (closing out)',unit:'GKS Command & Staff College'},
+      {year:'FY2027',role:'MAJ · Senior Capability SO',unit:'Air Warfare Centre / Capability Branch / DSTA secondment'},
       {year:'FY2033',role:'LTC · CO of AWC unit',unit:'Air Warfare Centre'}
     ],
     gaps:[
@@ -1709,8 +1710,8 @@ const pathData_lee = {
   },
   cross: {
     timeline:[
-      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
-      {year:'FY2028',role:'MAJ · Secondment or Cross-Service tour',unit:'MHA / MFA / PMO secondment OR DIS / Joint Staff at MINDEF'},
+      {year:'Now',role:'MAJ · at GKS CSC (closing out)',unit:'GKS Command & Staff College'},
+      {year:'FY2027',role:'MAJ · Secondment or Cross-Service tour',unit:'MHA / MFA / PMO secondment OR DIS / Joint Staff at MINDEF'},
       {year:'FY2033',role:'LTC · Branch Head OR Dep Dept Head (cross-domain credential)',unit:'HQ RSAF / MINDEF / DIS'}
     ],
     gaps:[
@@ -2088,42 +2089,41 @@ const scenarioData_tan = {
   }
 };
 
-/* ── MAJ Lee Jia Hao — Annual career map review (post-CSC reset) ── */
+/* ── MAJ Lee Jia Hao — Section C scenarios (at-CSC, FY2027 board) ── */
 const scenarioData_lee = {
   annual: {
-    label:'Annual career map review (post-CSC reset)',
+    label:'Annual career map review (in-course at CSC, pre-board)',
     tier:'2-seat Pact',
     seats:[true,false,true,false],
     seatNotes:['Aspirations & commitments stated','Not required for routine review','Realistic options · update career map','Not required'],
     convo:[
-      {seat:0,text:"Post-CSC, I want to reset the career map. My stated direction is unchanged — CO of a Fighter Squadron at the FY2032 board, with Dept Head at COL (FY2033) via Branch Head or Dep Dept Head as a parallel destination. What I want to nail down today is the post-CSC sequence — second SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward. I’m not asking anyone to guarantee CO Fighter Sqn — I’m asking that the path to a credible CO board file is on paper."},
-      {seat:2,text:"Useful framing. CSC done, performance band intact, pre-CSC Flight Cdr / OC tour on file, and a clean staff tour in progress — the file looks strong on both lines. Two things I can commit to from the CM seat: I’ll scope the realistic post-Air-Plans slate (Senior SO at HQ vs. MAJ-2IC at Fighter Wing vs. Branch Head pull-forward) within 60 days, and I’ll keep both the CO line and the Dept Head line visible in the slating discussion. What I can’t pre-empt is the FY2027 board demand."},
-      {seat:0,text:"That works. I’d like CO Fighter Sqn at FY2032 as the primary aspiration with Dept Head at COL (FY2033) recorded as the parallel destination — not as a fallback. Process commitments on board file quality and any pre-CO grooming appointment if slated."},
-      {seat:2,text:"Done. Logging this as a 2-seat Pact: aspirations on CO Fighter Sqn (primary) and Dept Head at COL (parallel), process commitments on both sides, and the post-Air-Plans MAJ slate flagged as conditional on FY2026/27 board demand. Re-pact in twelve months — or sooner if the slate forces a directional choice."}
+      {seat:0,text:"Course is closing out and the FY2027 posting board is approaching. I want to use this review to re-state direction before the slate Pact. My primary line is unchanged — CO Fighter Sqn at the FY2032 board — with Dept Head at COL (FY2033) tracked as a parallel COL destination, not a fallback. The slate decision itself I want held as its own 3-seat Pact closer to the board; today I just want the map current."},
+      {seat:2,text:"Useful. CSC closing out, pre-CSC Flight Cdr / OC tour on file, performance band strong. From the CM seat I can commit to: keeping both the CO line and the Dept Head line visible going into the FY2027 board; and scheduling the FY2027 slate Pact (3-seat with Grp Cdr / SSO) ahead of the slating window. What I can't pre-empt is which of the four slates lands — that's the board's call."},
+      {seat:0,text:"That works. I'd like CO Fighter Sqn at FY2032 as the primary aspiration with Dept Head at COL (FY2033) recorded as the parallel destination — not as a fallback. Process commitment to convene the FY2027 slate Pact ahead of the slating window."},
+      {seat:2,text:"Logging as a 2-seat Pact: aspirations on CO Fighter Sqn (primary) and Dept Head at COL (parallel); commitment to convene the FY2027 slate Pact (3-seat with Grp Cdr / SSO) before the slating window opens. Re-pact in twelve months — or sooner if the slate Pact surfaces a directional drift."}
     ],
     output:{
-      title:'Career Map Update — Post-CSC Reset',
+      title:'Career Map Update — In-Course at CSC, Pre-Board',
       aspirations:[
         'Member: CO of a Fighter Squadron at the FY2032 board (primary aspiration).',
-        'Member: Dept Head at the FY2033 COL board via Branch Head or Dep Dept Head as the LTC feeder (parallel COL destination, not fallback).',
-        'Member: post-Air-Plans MAJ appointment that shapes the CO board file — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward (sequencing to be scoped).'
+        'Member: Dept Head at the FY2033 COL board via Br Hd or Dep Dept Head as the LTC feeder (parallel COL destination, not fallback).',
+        'Member: FY2027 slate Pact (3-seat with Grp Cdr / SSO) to be convened before the slating window opens.'
       ],
       process:[
-        'Career Manager: scope the realistic post-Air-Plans MAJ slate (Senior SO / MAJ-2IC / Branch Head) within 60 days.',
-        'Career Manager: keep both the CO Fighter Sqn line and the Dept Head line visible in slating discussions; surface any directional drift back to this Pact.',
-        'Member: maintain performance band and CSC-graduate file quality through the remainder of the Air Plans tour.',
-        'Member: complete the slate consultation with CM within 90 days of slating window opening.'
+        'Career Manager: schedule the FY2027 slate Pact (3-seat) ahead of the slating window.',
+        'Career Manager: keep both the CO Fighter Sqn line and the Dept Head line visible going into the FY2027 board; surface any directional drift back to this Pact.',
+        'Member: maintain performance band and CSC-graduate file quality through course closeout.',
+        'Member: prepare slate preference order for the FY2027 Pact.'
       ],
       conditional:[
-        'Post-Air-Plans MAJ slate — subject to FY2026/27 posting board, unit demand, and force-development priorities.',
-        'Pre-CO grooming appointment (MAJ-2IC or Branch Head pull-forward) sequencing relative to FY2032 CO board — subject to FY board demand and member file at the time.',
+        'FY2027 post-CSC slate (Dy CO / Senior SO / CO direct / Br Hd) — subject to FY2027 posting board, unit demand, and force-development priorities.',
         'CO Fighter Sqn appointment at FY2032 — subject to board outcome, vacancy, force-development priorities. NOT a personal guarantee.',
         'Dept Head appointment at FY2033 — subject to COL board outcome, vacancy, and member profile at the time. NOT a personal guarantee.'
       ],
       repact:[
-        'If the post-Air-Plans MAJ slate forces a directional choice between the CO line and the Dept Head line.',
-        'If a pre-CO grooming appointment is offered or denied at the FY2029/30 slating cycle.',
+        'When the FY2027 slate Pact is convened (3-seat with Grp Cdr / SSO).',
         'If performance band changes materially.',
+        'If a directional drift between CO and Dept Head lines surfaces at the slate Pact.',
         'Routine: annual review (June 2027).'
       ],
       sigs:[0,2]
@@ -2131,44 +2131,48 @@ const scenarioData_lee = {
   },
 
   posting: {
-    label:'Posting cycle — post-CSC MAJ options',
+    label:'FY2027 post-CSC posting board — 4-slate decision',
     tier:'3-seat Pact',
     seats:[true,true,true,false],
-    seatNotes:['Aspirations & commitments stated','Supervisor input on next slate','Realistic options · sequence next tour','Not required for routine posting'],
+    seatNotes:['Slate preferences stated','Grp Cdr (SSO) endorsement read','CM slate scoping · all 4 options','HAO (SSSO) approval — pending destination inputs'],
     convo:[
-      {seat:0,text:"The Air Plans tour is closing out in about nine months. I want to use this Pact to lock in which post-CSC sequence best shapes the CO board file at FY2032. The options I see are: Senior SO at HQ RSAF (deepen policy), MAJ-2IC at a Fighter Wing (pre-CO grooming line), Branch Head pull-forward (LTC-feeder credential), or a single secondment / DIS tour (cross-domain broadening). I want the trade-offs on paper before the slating board, not after."},
-      {seat:1,text:"From the Supervisor seat, my read is the MAJ-2IC at Fighter Wing is the strongest signal for the FY2032 CO board — pre-CO grooming on file, currency on the line, and a Wing endorsement. The Branch Head pull-forward looks attractive on paper but it tilts the file towards Dept Head, which we’re also tracking as a parallel destination. A Senior SO deepening tour at HQ doesn’t add a lot relative to what he already has from Air Plans."},
-      {seat:2,text:"Agree on the MAJ-2IC read for the CO line. From the CM seat: the FY2027 MAJ-2IC slate is visible for one Fighter Wing — I can scope feasibility against Lee’s file within 60 days. The Branch Head pull-forward is genuinely available at MAJ level only for talent-tagged officers; that’s on the table but it strongly shapes the trajectory towards Dept Head. The secondment / DIS option is genuinely once-in-career — better to time it later (post-pre-CO grooming) if we choose it. Senior SO at HQ — I’d agree it’s the weakest of the four for his file."},
-      {seat:0,text:"That clears it. I’d like MAJ-2IC at Fighter Wing as the primary preferred slate, Branch Head pull-forward recorded as the parallel option that explicitly tilts towards Dept Head, secondment / DIS deferred to post-pre-CO grooming, and Senior SO at HQ deprioritised. Process commitments — performance band, currency refresh ahead of MAJ-2IC, and a written acknowledgement that picking Branch Head pull-forward reframes the primary aspiration."},
-      {seat:1,text:"I’ll provide a written Wing recommendation in support of MAJ-2IC at the FY2027 slating cycle. If the slate doesn’t materialise, I’d back Branch Head as the next preference but flag explicitly that this is a directional change."},
-      {seat:2,text:"Logged as a 3-seat Pact. Primary aspiration MAJ-2IC Fighter Wing FY2027, Branch Head pull-forward as parallel-with-directional-change, secondment/DIS deferred, Senior SO HQ deprioritised. Currency refresh as a process commitment, Wing recommendation as a process commitment from the Supervisor seat. Re-pact triggers around slate availability and any directional change."}
+      {seat:0,text:"Course is closing out. I want to use this Pact to lock my preference order across the four FY2027 slate options. My target line is CO Fighter Sqn at FY2032 — so Dy CO, F-15SG Sqn is my preferred MAJ slate, with direct-to-CO acknowledged as an outside chance. I want Senior SO and Br Hd recorded as the staff-track alternatives, and the parallel destination — Dept Head COL FY2033 via Br Hd — visible on the same file. None of these are sequential; they're four parallel options and I want preference order on paper before the board sits."},
+      {seat:1,text:"From the endorsing seat (Grp Cdr / SSO): file is competitive. Pre-CSC Flight Cdr / OC tour on record, currency intact, performance band strong, CSC closing out cleanly. I can endorse Dy CO cleanly — that's the natural Command-track entry. CO direct I can endorse as a stretch with caveats — exceptional file, pipeline-dependent. Senior SO at HQ RSAF is a clean staff alternative I can endorse cleanly. Br Hd endorsement is conditional — the receiving Dept Head's would-accept input matters more than mine for that one."},
+      {seat:2,text:"From the CM seat: I'll surface the four-slate landscape at the FY2027 posting board. Dy CO slate visibility is high — typically 1-2 vacancies for WSO Fighter MAJs each cycle. CO direct is genuinely possible for exceptional files but pipeline-dependent; this cycle the WSO(FTR) CO line has one named opening, so it's an outside chance not a baseline. Senior SO at HQ RSAF is broadly available. Br Hd requires destination Dept Head sign-off — I can scope receiving-unit reads on all four within 60 days. HAO (SSSO) approval follows once those destination inputs land."},
+      {seat:0,text:"That clears it. Preference order: Dy CO primary, CO direct stretch, Senior SO clean alternative, Br Hd as the parallel-destination signal toward Dept Head COL. I commit to currency refresh ahead of Dy CO if slated, to maintaining performance band, and to a written acknowledgement at slate confirmation if Br Hd is what lands (formal directional reframe toward Dept Head line)."},
+      {seat:1,text:"I'll submit SSO endorsement covering all four slates with my read attached. Dy CO and Senior SO endorsed cleanly; CO direct endorsed with stretch caveat; Br Hd endorsed conditional on destination input. HAO (SSSO) approval will follow once destination-side reads are in."},
+      {seat:2,text:"Logged as a 3-seat Pact. Preference order: Dy CO primary · CO direct stretch · Senior SO alternative · Br Hd parallel-destination. SSO endorsement read attached for all four. Destination-side reads to be scoped within 60 days. Re-pact triggers: board outcome (any slate), direct-to-CO opening unexpectedly, destination-side rejection for Br Hd, or directional reframe if Br Hd lands."}
     ],
     output:{
-      title:'Posting Cycle Pact — Post-CSC MAJ Sequence',
+      title:'FY2027 Slate Pact — Post-CSC 4-Option Decision',
       aspirations:[
-        'Member: MAJ-2IC at a Fighter Wing in FY2027 as the primary preferred slate (CO board file shaping).',
-        'Member: Branch Head pull-forward (LTC-grade) recorded as parallel option — explicitly tilts trajectory towards Dept Head at COL (FY2033).',
-        'Member: secondment or DIS / Joint Staff tour deferred to post-pre-CO grooming (FY2030 or later).',
-        'Member: Senior SO at HQ deprioritised for this slate.'
+        'Member: Dy CO, F-15SG Sqn (Command · MAJ) — preferred FY2027 slate, strongest Command-track entry for CO Fighter Sqn FY2032 file.',
+        'Member: CO direct, F-15SG Sqn (Command · LTC) — outside-chance preference, acknowledged as exceptional-file and pipeline-dependent.',
+        'Member: Senior SO, HQ RSAF (Staff · MAJ) — clean staff-track alternative.',
+        'Member: Br Hd, HQ RSAF (Staff · LTC) — parallel-destination option pointing to Dept Head COL FY2033 line; formal directional reframe if slated.'
       ],
       process:[
-        'Career Manager: scope FY2027 MAJ-2IC Fighter Wing slate feasibility against the member file within 60 days.',
-        'Career Manager: keep Branch Head pull-forward visible as parallel option; flag any directional drift back to this Pact.',
-        'Supervisor (Wing): provide a written Wing recommendation in support of MAJ-2IC at the FY2027 slating cycle.',
-        'Member: maintain performance band and complete a currency-refresh block ahead of MAJ-2IC if slated.',
-        'Member: written acknowledgement at the time of slate confirmation if Branch Head pull-forward is chosen — formal directional change.'
+        'Career Manager: scope destination-side "would-accept" reads on all four slates within 60 days (receiving Sqn CO for Dy CO; Cdr ACC for CO direct; Hd of receiving Branch for Senior SO; Dept Head of receiving Dept for Br Hd).',
+        'Supervisor (Grp Cdr / SSO): submit SSO endorsement covering all four slates with attached read (Dy CO clean · CO direct with stretch caveat · Senior SO clean · Br Hd conditional on destination input).',
+        'Approving authority (HAO / SSSO): approve final slate selection once destination-side reads are in.',
+        'Member: maintain performance band through CSC closeout and into the receiving appointment.',
+        'Member: complete a currency-refresh block ahead of Dy CO if that slate lands.',
+        'Member: written acknowledgement at slate confirmation if Br Hd lands — formal directional reframe to Dept Head COL line.'
       ],
       conditional:[
-        'FY2027 MAJ-2IC Fighter Wing slate — subject to FY2026 posting board, Wing demand, and force-development priorities.',
-        'Branch Head pull-forward availability — gated to talent-tagged officers; not guaranteed.',
-        'Currency-refresh block — subject to operations tempo and Wing capacity.',
-        'Picking Branch Head pull-forward formally reframes the primary aspiration to Dept Head at COL — recorded as conditional decision point.'
+        'All four FY2027 slates — subject to FY2027 posting board, unit demand, and force-development priorities.',
+        'Dy CO, F-15SG Sqn — subject to receiving Sqn CO would-accept input + Grp Cdr endorsement + HAO approval.',
+        'CO direct, F-15SG Sqn — subject to Cdr ACC would-accept input + exceptional file confirmation + pipeline opening.',
+        'Senior SO, HQ RSAF — subject to receiving Branch Head would-accept input.',
+        'Br Hd, HQ RSAF — subject to destination Dept Head would-accept input + performance-band confirmation.',
+        'None of the four is a personal guarantee. Picking Br Hd formally reframes the primary aspiration line.'
       ],
       repact:[
-        'If the FY2027 MAJ-2IC slate does not materialise — fall to Branch Head pull-forward with formal directional change.',
-        'If Branch Head pull-forward is taken — re-pact the primary aspiration line.',
-        'If Wing recommendation cannot be secured at slating cycle.',
-        'Routine: review at the annual career map review.'
+        'At FY2027 board outcome — any slate lands.',
+        'If direct-to-CO opens unexpectedly ahead of the board.',
+        'If destination-side input rejects a preferred slate (especially Br Hd).',
+        'If Br Hd lands — re-pact primary aspiration to formalise the directional reframe.',
+        'Routine: at the annual career map review.'
       ],
       sigs:[0,1,2]
     }
@@ -2180,10 +2184,10 @@ const scenarioData_lee = {
     seats:[true,false,true,true],
     seatNotes:['Member states financial-decision context','Not required for this conversation','Realistic options · sequencing & timing','Endorses retirement-window framing'],
     convo:[
-      {seat:0,text:"I want to talk about the financial runway, separate from the career file. I’m post-age-34. The last cash SAVER bonus is done. From now to SAVER End Date at age 44, SAVER Account contributions still accrue at 15% — about ten more years of build-up. Then six years between SED and mandatory retirement at 50 with no further SAVER growth. The question I want answered is whether this changes how the career conversation is being run. Does the financial-runway picture make me more conservative, more aggressive, or unchanged on the CO board gamble?"},
-      {seat:2,text:"Fair question, and it’s rarer than it should be that members raise it. From the CM seat, the honest answer is: the financial runway should change posture only at the edges — the appointment ladder is built around contribution to the Service, not around accrual. But there is a real signal in your question. If the CO board doesn’t pan out, the Dept Head line at COL preserves a higher rank-and-salary trajectory through the SED window — that compounds. If CO Fighter Sqn lands, the same logic applies but on the operational ladder. Either way the financial story is better than holding at MAJ through SED."},
+      {seat:0,text:"I want to talk about the financial runway, separate from the career file. I’m post-age-34. The last cash SAVER bonus is done. From now to SAVER End Date at age 44, SAVER Account contributions still accrue at 15% — about ten more years of build-up. Then six years between SED and mandatory retirement at 50 with no further SAVER growth. The question I want answered is whether this changes how the career conversation is being run. Does the financial-runway picture make me more conservative or more aggressive on the FY2027 slate — Dy CO vs. Senior SO vs. the LTC-level Br Hd or CO direct options?"},
+      {seat:2,text:"Fair question, and it’s rarer than it should be that members raise it. From the CM seat, the honest answer is: the financial runway should change posture only at the edges — the slate is built around contribution to the Service and fit, not around accrual. But there is a real signal in your question. If the FY2027 slate puts you on the staff side (Senior SO → Br Hd → Dept Head COL), that line preserves a higher rank-and-salary trajectory through the SED window — that compounds. If it puts you on the command side (Dy CO → CO Fighter Sqn), the same logic applies on the operational ladder. Either way the financial story is better than holding at MAJ through SED."},
       {seat:3,text:"From the SSO seat — agreed. The SED → 50 window is not a SAVER decision point; it is a rank-at-retirement decision point. The career conversation is the financial conversation, just on a different timescale. We should record this as an acknowledged context, not as a financial-decision Pact in its own right."},
-      {seat:0,text:"That’s the answer I needed. I’m not asking for a contract change — I’m asking that the rank-at-retirement implication is visible in how the FY2027 slate is scoped. If Branch Head pull-forward is on offer and it materially strengthens the Dept Head COL trajectory, the financial runway is a tiebreaker, not an override."},
+      {seat:0,text:"That’s the answer I needed. I’m not asking for a contract change — I’m asking that the rank-at-retirement implication is visible in how the FY2027 slate is scoped. If the FY2027 slate puts Br Hd or Dy CO on the table — and one slate materially strengthens the Dept Head COL trajectory or the CO Fighter Sqn line — the financial runway is a tiebreaker, not an override."},
       {seat:2,text:"Logged. I’ll commit to flagging rank-at-retirement implications explicitly when the FY2027 slate options are presented — not as the decision criterion, but as a visible factor."},
       {seat:3,text:"Endorsing this as a 3-seat Pact. Rank-at-retirement implication as a visible factor in slate discussions, not a decision criterion. Member confirms no contract change requested. The Pact captures context, not commitment to a financial outcome."}
     ],
@@ -2216,63 +2220,61 @@ const scenarioData_lee = {
   },
 
   contested: {
-    label:'Contested CO Fighter Sqn board (FY2032)',
+    label:'Contested FY2027 slate — board landed outside top preference',
     tier:'4-seat Pact',
     seats:[true,true,true,true],
-    seatNotes:['Aspirations & objections stated','Wing recommendation · file endorsement','Realistic options · re-sequencing','Board outcome · final endorsement'],
+    seatNotes:['Aspirations & objections stated','Grp Cdr (SSO) endorsement read','CM slate scoping · re-sequencing options','HAO (SSSO) approval · directional reframe acknowledged'],
     convo:[
-      {seat:0,text:"The FY2032 CO Fighter Sqn board outcome doesn’t look like it will land. I have visibility on the slate, and my file is on the second tier — credible, but not the top of the list. I want to use this Pact to do two things before the board sits: one, confirm the file is as strong as it can be; two, agree on what happens if the board outcome is not CO Fighter Sqn. I don’t want a fallback that gets sprung on me at the next slating cycle."},
-      {seat:1,text:"From the Wing seat, the Wing recommendation has been written and it is supportive. Currency band, operational tour history, and command-credibility narrative are all on file. The file is competitive — what we cannot influence is the relative position against the other slated names this cycle. If the board does not land CO this cycle, my recommendation would be to keep the file warm for the FY2033 cycle as a CO board re-take, not to immediately pivot."},
-      {seat:2,text:"From the CM seat: agreed that the file is competitive. What I can commit to is keeping the FY2033 CO Fighter Sqn slate visible as a re-take if the FY2032 board doesn’t land. If we don’t take the re-take — or if it doesn’t materialise — the genuine alternative path is Branch Head or Dep Dept Head at LTC pointing to Dept Head at COL (FY2033 or FY2034). That is a directional reframe, not a fallback — and I want to record it as such, not as something that activates automatically."},
-      {seat:3,text:"From the SSO seat. The board outcome is the board’s call — that is non-negotiable. What I can endorse is the process: a clean FY2032 board file, a clean re-take option at FY2033, and an explicit directional reframe to the Dept Head line if neither lands. The reframe must be a deliberate decision at a future Pact, not an auto-activation."},
-      {seat:0,text:"Agreed. Process: file submitted strongest possible; re-take FY2033 if FY2032 doesn’t land; explicit directional reframe to Dept Head if re-take doesn’t land. I also commit to staying in the line and not making the re-take decision under stress immediately post-board."},
-      {seat:2,text:"Logging as a 4-seat Pact. File quality endorsed by Wing, re-take pathway kept visible by CM, directional reframe option recorded as deliberate-not-automatic by SSO, member commitment to deliberate decision-making post-board. Re-pact at FY2032 board outcome, and again at FY2033 cycle if needed."}
+      {seat:0,text:"The FY2027 board has landed me on Br Hd, HQ RSAF — not Dy CO, which was my primary preference. The slate Pact recorded Br Hd as the parallel-destination option pointing to Dept Head COL, and explicitly flagged it as a formal directional reframe. I want to use this Pact to do two things: confirm the reframe is being made deliberately, not by default; and pin down what staying competitive for the CO Fighter Sqn FY2032 line still looks like — if at all — once I'm on the staff track."},
+      {seat:1,text:"From the endorsing seat (Grp Cdr / SSO): my SSO endorsement covered all four slates. Br Hd was endorsed conditional on the receiving Dept Head's input, which came back positive. The board's selection of Br Hd over Dy CO reflects pipeline and force-development priorities, not a file weakness. Staying competitive for CO Fighter Sqn FY2032 from a Br Hd MAJ tour is hard — not impossible, but the file shifts. My honest read: this is the Dept Head COL line opening up, not a temporary detour."},
+      {seat:2,text:"From the CM seat: agreed with the SSO read. The Br Hd slate strengthens the Dept Head COL FY2033 line materially. Returning to the CO Fighter Sqn FY2032 line from Br Hd would require another operational MAJ tour between Br Hd and the FY2032 board — possible but unusual and pipeline-dependent. The deliberate-reframe option is to acknowledge this slate as the Dept Head line opening; the second option is to seek a follow-on Dy CO tour at the next slating cycle to preserve the CO line. I want both options on paper, not just the easier one."},
+      {seat:3,text:"From the SSSO seat (HAO). I'll approve the Br Hd slate. What I'll record explicitly in the Pact is that this is the directional reframe the FY2027 slate Pact anticipated — not a contested override, not a surprise. The reframe is a deliberate decision made now, with both follow-on options visible. The Dept Head COL FY2033 line is the primary going forward; the CO Fighter Sqn FY2032 line is on paper as an unusual-but-real follow-on path through a second operational tour."},
+      {seat:0,text:"Agreed. Primary aspiration formally reframes from CO Fighter Sqn FY2032 to Dept Head COL FY2033 via the Br Hd → Dep Dept Head feeder line. CO Fighter Sqn FY2032 stays on paper as an unusual follow-on path requiring a second operational MAJ tour. I commit to a deliberate decision at the next slating cycle — not stress-driven, not under board pressure."},
+      {seat:2,text:"Logging as a 4-seat Pact. Directional reframe to Dept Head COL FY2033 formally recorded; SSSO approval confirms the reframe was anticipated by the FY2027 slate Pact. CO Fighter Sqn FY2032 retained as unusual follow-on path (Dy CO at next slating cycle required). Re-pact triggers at the next MAJ slating cycle and at the FY2033 COL board."}
     ],
     output:{
-      title:'Contested CO Board Pact — FY2032',
+      title:'Contested FY2027 Slate Pact — Br Hd Landed, Directional Reframe',
       aspirations:[
-        'Member: CO Fighter Sqn at the FY2032 board — primary aspiration submitted.',
-        'Member: CO Fighter Sqn at the FY2033 board as a re-take if FY2032 does not land.',
-        'Member: Dept Head at COL (FY2033 or FY2034 board) via Branch Head / Dep Dept Head as the deliberate directional reframe if neither CO cycle lands.',
-        'Member: deliberate, not stress-driven, decision-making post-FY2032 board outcome.'
+        'Member: Dept Head at COL FY2033 board — primary aspiration after directional reframe (Br Hd → Dep Dept Head → Dept Head).',
+        'Member: CO Fighter Sqn at FY2032 board — retained on paper as unusual follow-on path requiring a Dy CO tour at the next MAJ slating cycle.',
+        'Member: deliberate, not stress-driven, decision-making at the next slating cycle.'
       ],
       process:[
-        'Supervisor (Wing): written Wing recommendation submitted for FY2032 CO Fighter Sqn board — currency, operational tour history, command-credibility narrative.',
-        'Career Manager: file submission supported for the strongest possible FY2032 case.',
-        'Career Manager: FY2033 CO Fighter Sqn slate kept visible as a re-take pathway if FY2032 does not land.',
-        'Career Manager: Branch Head / Dep Dept Head route to Dept Head at COL kept visible as deliberate directional reframe, not auto-activation.',
-        'SSO / Authority: board process endorsement — clean file, clean re-take option, deliberate reframe decision.',
-        'Member: no decision on the reframe in the 30 days immediately following the FY2032 board outcome; re-pact convened first.'
+        'Supervisor (Grp Cdr / SSO): SSO endorsement record retained — slate Pact anticipated Br Hd as parallel-destination option; reframe is not contested.',
+        'Approving authority (HAO / SSSO): Br Hd slate approval recorded with explicit "anticipated directional reframe" note.',
+        'Career Manager: scope follow-on Dy CO availability at next MAJ slating cycle (FY2029) — feasibility of the CO Fighter Sqn FY2032 line.',
+        'Career Manager: keep Dept Head COL FY2033 line as primary; scope Dep Dept Head feeder availability post-Br Hd.',
+        'Member: no follow-on slate decision in the 30 days immediately post-board; re-pact convened first.',
+        'Member: written acknowledgement of the directional reframe at this Pact.'
       ],
       conditional:[
-        'FY2032 CO Fighter Sqn appointment — subject to board outcome, vacancy, force-development priorities. NOT a personal guarantee.',
-        'FY2033 CO Fighter Sqn re-take slate — subject to FY2033 board slating decision.',
-        'Branch Head / Dep Dept Head slate post-FY2032 — subject to FY2032/33 LTC slating cycle.',
-        'Dept Head appointment at FY2033 or FY2034 — subject to COL board outcome, vacancy, and member profile at the time.',
-        'Directional reframe is a deliberate decision; this Pact does NOT pre-authorise activation.'
+        'Dept Head at COL FY2033 — subject to COL board outcome, vacancy, member profile at the time. NOT a personal guarantee.',
+        'CO Fighter Sqn at FY2032 — subject to a follow-on Dy CO tour landing at FY2029 slating cycle + FY2032 CO board outcome. Possible but unusual after a Br Hd MAJ tour.',
+        'Follow-on Dy CO availability at FY2029 — subject to pipeline, force-development priorities, and member file.',
+        'Directional reframe formalised at this Pact — Dept Head line is now primary.'
       ],
       repact:[
-        'At FY2032 CO Fighter Sqn board outcome — convened within 60 days regardless of result.',
-        'At FY2033 cycle if re-take is on the slate or has been declined.',
-        'If member profile changes materially before either board (performance band, currency).',
-        'If the Branch Head / Dep Dept Head slate forces a directional decision ahead of the FY2033 board.'
+        'At FY2029 MAJ slating cycle — confirms whether the unusual CO follow-on path is live.',
+        'At FY2032 CO Fighter Sqn board outcome (if Dy CO follow-on landed).',
+        'At FY2033 COL board outcome.',
+        'If member profile changes materially (performance band, currency).'
       ],
       sigs:[0,1,2,3]
     }
   },
 
   parallel: {
-    label:'Branch Head as parallel COL destination',
+    label:'Parallel destinations — CO Fighter Sqn ∥ Dept Head COL',
     tier:'4-seat Pact',
     seats:[true,true,true,true],
-    seatNotes:['Member aspiration · parallel destination','Wing input on cross-line credibility','Realistic options · keep both lines warm','SSO endorsement · parallel-not-fallback'],
+    seatNotes:['Member aspiration · parallel destination','Grp Cdr (SSO) input on Command-line endorsement','CM scoping · keep both lines warm','HAO (SSSO) endorsement · parallel-not-fallback'],
     convo:[
-      {seat:0,text:"I want to put Dept Head at COL (FY2033) on paper as a parallel destination to CO Fighter Sqn — not a fallback. The reason for this Pact is that as I move closer to the FY2032 CO board, the natural tendency is to drift towards a single-track narrative. I want both the CO line and the Dept Head line kept warm with explicit process commitments, so that whichever board lands is the result of a genuine choice, not a one-line file."},
-      {seat:1,text:"From the Wing seat — supportive in principle. The risk I see is that the cross-line credibility is real but optical: a MAJ who is genuinely positioned for both is rare. We can support the Wing-side endorsement for the CO line cleanly. The Dept Head line needs an HQ-side narrative we don’t generate — that’s the CM and SSO conversation."},
-      {seat:2,text:"From the CM seat: the way we keep both lines warm in practice is by sequencing the MAJ tours so that the second MAJ appointment doesn’t pin the file to one line prematurely. If MAJ-2IC at Fighter Wing is the slate, that strengthens the CO line and is neutral on the Dept Head line. If Branch Head pull-forward is the slate, that strengthens the Dept Head line and softens the CO line. The Pact then is to scope both at the FY2027 slating cycle and pick the one that genuinely fits — recorded as a deliberate choice, not a default."},
-      {seat:3,text:"From the SSO seat — I can endorse parallel-not-fallback formally. The board paperwork at COL FY2033 will assess Dept Head and other COL destinations on their own merits; we don’t treat Dept Head as a soft landing for officers who didn’t make CO. That distinction needs to be in the Pact Record explicitly so it’s not lost over the next six years."},
-      {seat:0,text:"Agreed. Aspirations: CO Fighter Sqn FY2032 and Dept Head at COL FY2033 as parallel COL destinations. Process: keep both lines warm through the FY2027 slate decision; re-pact at the slate decision if it forces a directional choice; final assessment at the FY2032 CO board and FY2033 COL board on their own merits. I also commit to written acknowledgement that parallel-not-fallback is real, not a polite framing."},
-      {seat:2,text:"Logging as a 4-seat Pact. Parallel destination explicitly endorsed by SSO. CM commits to keeping both lines visible at FY2027 slating. Wing commits to clean CO-line endorsement and acknowledges the Dept Head line is HQ-driven. Member commits to deliberate slate decision-making."}
+      {seat:0,text:"I want to put Dept Head at COL (FY2033) on paper as a parallel destination to CO Fighter Sqn FY2032 — not a fallback. The natural tendency as the FY2027 slate Pact approaches is to drift to a single-track narrative. I want both the CO line and the Dept Head line kept warm by explicit process commitments, so that whichever board lands is the result of a genuine choice, not a default one-line file."},
+      {seat:1,text:"From the endorsing seat (Grp Cdr / SSO) — supportive in principle. The risk: cross-line credibility is real but optical; a MAJ genuinely positioned for both is rare. From my seat, I can endorse the Command-track slates (Dy CO, CO direct) cleanly. The Staff-track Dept Head COL narrative is HQ-driven — the receiving Dept Head's input and the CM's scoping carry that line, not mine. I can flag the parallel framing in my endorsement note so the board sees it."},
+      {seat:2,text:"From the CM seat: the way we keep both lines warm in practice is to sequence the FY2027 slate decision deliberately. Dy CO strengthens the CO line and is neutral on Dept Head. Senior SO is neutral on both. Br Hd strengthens Dept Head and softens CO. CO direct is the outside chance that resolves both questions in one move. The Pact then is to scope all four at FY2027 and pick the one that genuinely fits the parallel framing — recorded as deliberate choice, not default."},
+      {seat:3,text:"From the SSSO seat (HAO) — I can endorse parallel-not-fallback formally. The COL FY2033 board paperwork will assess Dept Head and other COL destinations on their own merits; Dept Head is not a soft landing for officers who didn't make CO. That distinction goes in the Pact Record explicitly so it's not lost over the next six years."},
+      {seat:0,text:"Agreed. Aspirations: CO Fighter Sqn FY2032 and Dept Head COL FY2033 as parallel COL destinations. Process: keep both lines warm through the FY2027 slate Pact; re-pact at the slate Pact if it forces a directional choice; final assessment at the FY2032 CO board and FY2033 COL board on their own merits. I commit to written acknowledgement that parallel-not-fallback is real, not a polite framing."},
+      {seat:2,text:"Logging as a 4-seat Pact. Parallel-not-fallback formally endorsed by HAO (SSSO). CM commits to keeping both lines visible across all four FY2027 slates. Grp Cdr (SSO) commits to clean Command-line endorsement and flags parallel framing in the endorsement note. Member commits to deliberate slate decision-making at the FY2027 Pact."}
     ],
     output:{
       title:'Parallel COL Destination Pact — CO Fighter Sqn ∥ Dept Head',
@@ -2280,27 +2282,27 @@ const scenarioData_lee = {
         'Member: CO Fighter Sqn at the FY2032 board (operational COL line).',
         'Member: Dept Head at the FY2033 COL board (staff COL line) — parallel destination, not fallback.',
         'Both COL destinations treated on their own merits at their respective boards.',
-        'Member: deliberate choice at the FY2027 slate decision — neither line should be pinned by default.'
+        'Member: deliberate choice at the FY2027 slate Pact — neither line should be pinned by default.'
       ],
       process:[
-        'Career Manager: keep both the CO line and the Dept Head line visible at the FY2027 MAJ slating cycle.',
-        'Career Manager: present MAJ-2IC Fighter Wing (CO-strengthening) and Branch Head pull-forward (Dept Head-strengthening) as the directional fork.',
-        'Supervisor (Wing): provide clean Wing recommendation for the CO line at FY2032 board.',
-        'Supervisor (Wing): acknowledge Dept Head line is HQ-driven and not in the Wing recommendation scope.',
-        'SSO / Authority: record parallel-not-fallback framing in the Pact Record; carry it forward in board paperwork as appropriate.',
-        'Member: written acknowledgement at the FY2027 slate decision confirming the directional choice is deliberate.'
+        'Career Manager: keep both the CO line and the Dept Head line visible across all four FY2027 slates (Dy CO / Senior SO / CO direct / Br Hd).',
+        'Career Manager: present the directional read for each slate (Dy CO strengthens CO line · Senior SO neutral · CO direct resolves both · Br Hd strengthens Dept Head line).',
+        'Supervisor (Grp Cdr / SSO): clean endorsement for Command-track slates (Dy CO, CO direct); flag parallel framing in the endorsement note.',
+        'Supervisor (Grp Cdr / SSO): acknowledge Dept Head line narrative is HQ-driven (CM and destination Dept Head carry it).',
+        'Approving authority (HAO / SSSO): record parallel-not-fallback framing in the Pact Record; carry it forward into the FY2033 COL board paperwork.',
+        'Member: written acknowledgement at the FY2027 slate Pact confirming the directional choice is deliberate.'
       ],
       conditional:[
-        'FY2027 MAJ slate (MAJ-2IC vs. Branch Head pull-forward vs. other) — subject to posting board.',
+        'FY2027 slate (Dy CO / Senior SO / CO direct / Br Hd) — subject to posting board.',
         'FY2032 CO Fighter Sqn board outcome — board decision, not guaranteed.',
         'FY2033 Dept Head COL board outcome — board decision, not guaranteed.',
         'Parallel-not-fallback framing — formal in the Pact Record; cannot be unilaterally rescinded.'
       ],
       repact:[
-        'At the FY2027 MAJ slate decision — confirms which line is being strengthened.',
+        'At the FY2027 slate Pact — confirms which line is being strengthened.',
         'If either line is materially softened (performance band, slate non-availability) ahead of board.',
-        'At FY2032 CO board outcome.',
-        'At FY2033 COL board outcome.',
+        'At FY2032 CO Fighter Sqn board outcome.',
+        'At FY2033 Dept Head COL board outcome.',
         'Routine: annual career map review.'
       ],
       sigs:[0,1,2,3]
@@ -2505,28 +2507,28 @@ const personaData = {
     fullName:'MAJ Lee Jia Hao',
     initials:'LJ',
     avatarClass:'av-b',
-    pathExplorerHeading:'Available paths for MAJ Lee Jia Hao (WSO Fighter · post-CSC)',
-    aiGenHeading:'3 non-obvious paths suggested for MAJ Lee Jia Hao (WSO Fighter · post-CSC)',
-    profileSub:'Weapons System Officer (Fighter) · 12 years service · Staff Officer, Air Plans Department, HQ RSAF',
+    pathExplorerHeading:'Available paths for MAJ Lee Jia Hao (WSO Fighter · at CSC, FY2027 board)',
+    aiGenHeading:'3 non-obvious paths suggested for MAJ Lee Jia Hao (WSO Fighter · at CSC, FY2027 board)',
+    profileSub:'Weapons System Officer (Fighter) · 12 years service · currently at GKS Command & Staff College · post-CSC posting board FY2027',
     profileChips:[
-      'MAJ · post-CSC','Career Score 86/100','Pre-Branch Head','Pre-CO board (FY2032)'
+      'MAJ · at CSC','Career Score 86/100','FY2027 posting board','4-slate decision pending'
     ],
     snapAspiration:'CO of a Fighter Squadron at the FY2032 board — with Branch Head / Dep Dept Head → Dept Head at COL (FY2033) tracked as a parallel COL destination, not a fallback',
-    snapLast:{text:'Last Career Pact: June 2024 (post-CSC reset due)', color:'var(--a700)'},
-    snapTrigger:'Annual career map review — post-CSC reset window (mid-tour, no posting imminent)',
-    pbMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · Staff Officer, Air Plans Department, HQ RSAF · 12 years service · post-CSC',
-    pbAspiration:'CO of a Fighter Squadron at the FY2032 board. Post-CSC sequence (Senior SO, MAJ-2IC, or Branch Head as the file-shaping next step) is the open conversation. Branch Head or Dep Dept Head → Dept Head at COL (FY2033) tracked as a parallel destination, not a fallback after a missed CO board. Flight Cdr / OC tour was completed pre-CSC.',
-    pbQuestions:'1. What is the realistic post-Air-Plans MAJ slate — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward?&nbsp; 2. Is a pre-CO grooming appointment expected before the FY2032 CO board?&nbsp; 3. How does the second MAJ tour shape the CO board file vs. the Dept Head trajectory?',
-    pbGaps:'Done: GKS Command & Staff College (CSC); pre-CSC Flight Cdr / OC tour. Partial: Branch Head / Dep Dept Head appointment (talent-tagged); CO board file (performance band must hold). Missing: Senior SO / MAJ-2IC tour at MAJ level; Joint Staff / inter-service exposure.',
-    briefMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · Air Plans Department, HQ RSAF · 12 years service · post-CSC',
+    snapLast:{text:'Last Career Pact: June 2024 (FY2027 slate Pact due)', color:'var(--a700)'},
+    snapTrigger:'FY2027 post-CSC posting board — slate decision Pact due (course closing out at CSC)',
+    pbMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · currently at GKS Command & Staff College · 12 years service · post-CSC posting board FY2027',
+    pbAspiration:'CO of a Fighter Squadron at the FY2032 board (primary line). At the FY2027 post-CSC posting board, four parallel slate options are in play: Dy CO (Command, MAJ), Senior SO (Staff, MAJ), CO direct (Command, LTC — exceptional file only), Br Hd (Staff, LTC — performance-dependent). Dy CO is the preferred Command-track entry; CO direct acknowledged as an outside chance. Dept Head at COL (FY2033) via Br Hd / Dep Dept Head tracked as a parallel COL destination — not a fallback. Flight Cdr / OC tour completed pre-CSC.',
+    pbQuestions:'1. Across the four FY2027 slates (Dy CO / Senior SO / CO direct / Br Hd), which carries the strongest endorsement read from Grp Cdr (SSO) and approval read from HAO (SSSO)?&nbsp; 2. Is direct-to-CO realistically open this cycle given pipeline pressure on WSO(FTR) CO vacancies?&nbsp; 3. If Br Hd is offered, how is the parallel-destination Dept Head COL line formalised — directional change, or genuinely parallel?',
+    pbGaps:'Done: pre-CSC Flight Cdr / OC tour; GKS CSC (closing out). Partial: CO board file (performance band must hold through MAJ tour); cross-domain exposure (Joint Staff / DIS / secondment outstanding). Open: FY2027 slate decision across Dy CO / Senior SO / CO direct / Br Hd — destination-side reads pending.',
+    briefMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · at GKS CSC · 12 years service · post-CSC posting board FY2027',
     pcSub:{
-      command:'Senior SO / MAJ-2IC → pre-CO appointment → CO Fighter Sqn (FY2032)',
+      command:'Dy CO, F-15SG Sqn (FY2027 slate) → 2nd MAJ tour → CO Fighter Sqn (FY2032)',
       staff:'Branch Head / Dep Dept Head (LTC feeder) → Dept Head at COL (FY2033)',
       tech:'AWC / Capability Branch / DSTA secondment → CO of AWC unit',
       cross:'Inter-ministry secondment OR DIS / Joint Staff at MINDEF'
     },
     pcNext:{
-      command:'Next: Senior SO / MAJ-2IC slate FY2028',
+      command:'Next: Dy CO, F-15SG Sqn slate FY2027 (or CO direct if file supports)',
       staff:'Next: Branch Head / Dep Dept Head slate FY2029',
       tech:'Next: Cap-Dev tour FY2028',
       cross:'Next: Secondment / DIS tour FY2028'
@@ -2534,100 +2536,101 @@ const personaData = {
     pcBm:{ command:42, staff:38, tech:18, cross:14 },
     dbPersonnel:{
       name:'MAJ Lee Jia Hao',
-      sub:'WSO (Fighter) · 12 yr service · Staff Officer, Air Plans Dept, HQ RSAF · post-CSC',
+      sub:'WSO (Fighter) · 12 yr service · at GKS CSC · post-CSC posting board FY2027',
       avatarClass:'av-b'
     },
     print:{
       member:'MAJ Lee Jia Hao',
       vocation:'Weapons System Officer (Fighter)',
-      rank:'MAJ (post-CSC, pre-CO)',
-      unit:'Air Plans Department, HQ RSAF',
+      rank:'MAJ (at CSC · post-CSC posting board FY2027)',
+      unit:'GKS Command & Staff College (closing out)',
       service:'12 years',
       score:'86 / 100'
     },
 
     dbSupervisor:{
       name:'MAJ Lee Jia Hao',
-      sub:'WSO (Fighter) · Air Plans Department, HQ RSAF · reports to you',
+      sub:'WSO (Fighter) · at GKS CSC · prospective slate decision · endorsing seat: Grp Cdr (SSO)',
       avatarInitials:'LJ',
-      readiness:'High',
-      readinessSub:'Strong tour delivery; post-CSC',
-      urgencyLabel:'Tour Closeout',
-      urgency:'Q4 2027',
-      urgencySub:'Air Plans tour closes; next slate due',
-      pact:'Annual reset',
-      pactSub:'Last Pact June 2024 · review due',
+      readiness:'Endorsement-ready',
+      readinessSub:'Pre-FY2027 posting board',
+      urgencyLabel:'Posting Board',
+      urgency:'FY2027',
+      urgencySub:'Post-CSC slate — 4 options live',
+      pact:'Pre-board slate',
+      pactSub:'Slate Pact due ahead of board',
       stars:[
-        {icon:'🏛️',lbl:'Policy & staff work quality',rating:'★★★★★'},
-        {icon:'📋',lbl:'Stakeholder engagement (cross-Dept)',rating:'★★★★★'},
-        {icon:'🎯',lbl:'Strategic judgement',rating:'★★★★☆'},
-        {icon:'🤝',lbl:'Team leadership (Branch SOs)',rating:'★★★★☆'}
+        {icon:'🎖️',lbl:'Performance band (across MAJ tours)',rating:'★★★★★'},
+        {icon:'✈️',lbl:'Currency on the line (pre-CSC Flight Cdr/OC)',rating:'★★★★★'},
+        {icon:'🎯',lbl:'CO board file trajectory',rating:'★★★★☆'},
+        {icon:'🤝',lbl:'Cross-domain / Joint exposure',rating:'★★★☆☆'}
       ],
-      progTitle:'HQ Branch impact if posted out',
+      progTitle:'Endorsement read per slate (Grp Cdr · SSO)',
       progRows:[
-        {label:'Air Plans portfolio handover',val:'Medium',pct:60,fill:'pf-p'},
-        {label:'Branch continuity (Lead SO)',val:'Medium',pct:55,fill:'pf-p'},
-        {label:'Handover time required',val:'2 months',pct:35,fill:'pf-b'}
+        {label:'Dy CO, F-15SG Sqn — clean endorsement',val:'Strong',pct:92,fill:'pf-g'},
+        {label:'Senior SO, HQ RSAF — clean staff alternative',val:'Strong',pct:88,fill:'pf-g'},
+        {label:'CO direct, F-15SG Sqn — stretch with caveats',val:'Qualified',pct:81,fill:'pf-a'},
+        {label:'Br Hd, HQ RSAF — dependent on destination input',val:'Conditional',pct:78,fill:'pf-a'}
       ],
-      action1:'Endorse for FY2027 MAJ slate',
-      action2:'Provide written CO-line recommendation'
+      action1:'Submit SSO endorsement for FY2027 slate',
+      action2:'Request destination-side input per slate'
     },
     dbHR:{
       name:'MAJ Lee Jia Hao',
-      sub:'WSO (Fighter) · 12 yr service · post-CSC · Air Plans Department, HQ RSAF',
+      sub:'WSO (Fighter) · 12 yr service · at GKS CSC · post-CSC posting board FY2027',
       avatarInitials:'LJ',
-      fitLabel:'Job Fit Score',
-      fit:'91%',
-      fitSub:'MAJ-2IC, Fighter Wing match',
+      fitLabel:'Top slate fit',
+      fit:'92%',
+      fitSub:'Dy CO, F-15SG Sqn (best of 4 FY2027 slates)',
       risk:'Medium',
-      riskSub:'Post-age-34 SAVER · pre-CO board uncertainty',
+      riskSub:'Open slate · 4 parallel paths live',
       replace:'≈$680K',
       replaceSub:'Illustrative · incl. CSC + 12yr investment',
       roi:'6.8×',
       roiSub:'vs. fresh recruit cohort',
       civil:'~$160–230K',
       civilSub:'Illustrative · defence/aerospace p.a.',
-      progTitle:'Job fit breakdown (MAJ-2IC, Fighter Wing)',
+      progTitle:'Fit % across FY2027 slate options',
       progRows:[
-        {label:'Operational currency & WSO leadership',val:'88%',pct:88,fill:'pf-g'},
-        {label:'CSC credential & staff judgement',val:'95%',pct:95,fill:'pf-g'},
-        {label:'CO board file readiness',val:'72%',pct:72,fill:'pf-a'},
-        {label:'Cross-Dept / Joint exposure',val:'48%',pct:48,fill:'pf-a'}
+        {label:'Dy CO, F-15SG Sqn (Command · MAJ)',val:'92%',pct:92,fill:'pf-g'},
+        {label:'Senior SO, HQ RSAF (Staff · MAJ)',val:'88%',pct:88,fill:'pf-g'},
+        {label:'CO direct, F-15SG Sqn (Command · LTC)',val:'81%',pct:81,fill:'pf-a'},
+        {label:'Br Hd, HQ RSAF (Staff · LTC)',val:'78%',pct:78,fill:'pf-a'}
       ],
       levers:[
-        {lever:'Next slate (FY2027)',action:'MAJ-2IC, Fighter Wing — strongest CO-board signal; alt: Branch Head pull-forward'},
-        {lever:'Pre-CO grooming',action:'Currency refresh + Lead WSO re-qualification block before operational return'},
-        {lever:'Priority action',action:'Schedule annual reset Pact — post-CSC sequence not yet on file'}
+        {lever:'Slate (FY2027)',action:'Four parallel options — member preference + board availability decide; not sequential'},
+        {lever:'Authority chain',action:'Grp Cdr (SSO) endorses · HAO (SSSO) approves · destination authority provides receiving-unit input per slate'},
+        {lever:'Re-pact trigger',action:'If board slates outside top 2 preferences, or if direct-to-CO opens unexpectedly'}
       ],
-      action1:'Schedule annual reset Pact',
+      action1:'Schedule FY2027 slate Pact',
       action2:'Download PDF brief',
-      action3:'Flag pre-CO grooming need'
+      action3:'Flag if direct-to-CO opens'
     },
     dbCommander:{
       name:'MAJ Lee Jia Hao',
-      sub:'WSO (Fighter) · 12 yr service · post-CSC · next MAJ slate due FY2027',
+      sub:'WSO (Fighter) · 12 yr service · at GKS CSC · FY2027 posting board decision',
       avatarInitials:'LJ',
       bestfitLabel:'Best-fit slate',
-      bestfit:'MAJ-2IC Fighter Wing',
-      bestfitSub:'91% fit · CO-board file shaping',
+      bestfit:'Dy CO, F-15SG Sqn',
+      bestfitSub:'92% fit · Command track · High slate likelihood',
       risk:'Medium',
-      riskSub:'CO board uncertainty · pre-board pact recommended',
+      riskSub:'Open FY2027 board · pre-board Pact recommended',
       replace:'≈$680K',
       replaceSub:'Illustrative · if lost to attrition',
       mri:'Medium',
-      mriSub:'HQ Branch handover · 2 months',
+      mriSub:'CSC closing out · clean handover window',
       align:'Strong',
-      alignSub:'Member aspiration: CO Fighter Sqn FY2032',
-      optionsTitle:'FY2027 MAJ slate options ranked by fit',
+      alignSub:'CO line + Dept Head line both surfaced from same board',
+      optionsTitle:'FY2027 slate (4 parallel options · fit % + slate likelihood)',
       options:[
-        {label:'MAJ-2IC, Fighter Wing (recommended · CO-line)',val:'91%',pct:91,fill:'pf-g'},
-        {label:'Branch Head pull-forward (Dept Head line — directional change)',val:'84%',pct:84,fill:'pf-a'},
-        {label:'Senior SO at HQ — policy deepening',val:'72%',pct:72,fill:'pf-a'},
-        {label:'Secondment / DIS tour (defer to post-grooming)',val:'66%',pct:66,fill:'gray'}
+        {label:'Dy CO, F-15SG Sqn · Command · MAJ · Endorser Grp Cdr · Approver HAO · Dest Sqn CO · Likelihood High',val:'92%',pct:92,fill:'pf-g'},
+        {label:'Senior SO, HQ RSAF · Staff · MAJ · Endorser Grp Cdr · Approver HAO · Dest Hd of Branch · Likelihood High',val:'88%',pct:88,fill:'pf-g'},
+        {label:'CO direct, F-15SG Sqn · Command · LTC · Endorser Grp Cdr · Approver HAO · Dest Cdr ACC · Likelihood Lower (exceptional file)',val:'81%',pct:81,fill:'pf-a'},
+        {label:'Br Hd, HQ RSAF · Staff · LTC · Endorser Grp Cdr · Approver HAO · Dest Dept Head · Likelihood Moderate (performance-dependent)',val:'78%',pct:78,fill:'pf-a'}
       ],
-      action1:'Approve MAJ-2IC Fighter Wing slate',
-      action2:'Override with directional change documentation',
-      action3:'Schedule 3-seat Pact first'
+      action1:'Approve FY2027 slate preference order',
+      action2:'Override with documentation',
+      action3:'Schedule 4-seat Pact (slate decision)'
     },
     sectionBNotice:'',
     scenarios:['annual','posting','sed','contested','parallel']
@@ -2643,7 +2646,7 @@ const personaData = {
       'LTC · post-CO','Career Score 91/100','SAF Scholar','Dept Head track · COL FY2033'
     ],
     snapAspiration:'Department Head at the FY2033 COL board via Branch Head or Dep Dept Head as the LTC feeder appointment, with Commander of a named Command as the longer-horizon operational pinnacle (post-Dept Head)',
-    snapLast:{text:'Last Career Pact: pre-CO milestone (Aug 2024)', color:'var(--a700)'},
+    snapLast:{text:'Last Career Pact: pre-CO posting Pact (Aug 2024)', color:'var(--a700)'},
     snapTrigger:'Post-CO handover — senior-officer direction Pact due',
     pbMember:'LTC Kumar Rajan · Weapons System Officer (Fighter) · outgoing CO, 149 Squadron, Tengah AB · 16 years service · SAF Scholar',
     pbAspiration:'Department Head at the FY2033 COL board — the scholar / high-talent post-CO trajectory. Branch Head or Dep Dept Head as the LTC feeder appointment. Commander of a named Command (Air Combat Command / ADOC / APGC / Participation Command) as the longer-horizon operational pinnacle post-Dept Head. Group Commander noted as an alternative path (typical for non-scholars; most likely bypassed). Open to one inter-ministry secondment or cross-service tour (DIS / Joint Staff) during the LTC years if it sharpens the Dept Head file.',
@@ -2686,8 +2689,8 @@ const personaData = {
       urgencyLabel:'CO Handover',
       urgency:'Q1 2027',
       urgencySub:'Post-CO LTC slate due FY2027',
-      pact:'Pre-CO milestone',
-      pactSub:'Senior-direction Pact due',
+      pact:'Post-CO next slate',
+      pactSub:'LTC slate Pact due FY2027 — Br Hd / Dep Dept Head',
       stars:[
         {icon:'⭐',lbl:'CO-level command judgement',rating:'★★★★★'},
         {icon:'✈️',lbl:'Operational delivery (Sqn)',rating:'★★★★★'},
@@ -2697,7 +2700,7 @@ const personaData = {
       progTitle:'Sqn impact post-CO handover',
       progRows:[
         {label:'Incoming CO ready-state',val:'Strong',pct:85,fill:'pf-g'},
-        {label:'Command continuity (Sqn 2IC)',val:'Strong',pct:80,fill:'pf-g'},
+        {label:'Command continuity (Dy CO)',val:'Strong',pct:80,fill:'pf-g'},
         {label:'Handover time complete',val:'On track',pct:90,fill:'pf-b'}
       ],
       action1:'Endorse for FY2027 LTC slate (Br Head / Dep Dept Head)',
@@ -2746,7 +2749,7 @@ const personaData = {
       replace:'≈$1.1M',
       replaceSub:'Illustrative · if lost to attrition',
       mri:'Strong',
-      mriSub:'CO handover on track · Sqn 2IC ready',
+      mriSub:'CO handover on track · Dy CO ready',
       align:'Strong',
       alignSub:'Member aspiration: Dept Head COL FY2033',
       optionsTitle:'FY2027 LTC slate options ranked by fit',
