@@ -51,6 +51,15 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .tb-crumb{font-size:13px;color:var(--gray500);}
 .tb-crumb strong{color:var(--gray900);font-weight:600;}
 .tb-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--g100);color:var(--g800);}
+.persona-switch{display:flex;gap:0;background:var(--gray100);border-radius:999px;padding:3px;border:1px solid var(--gray200);}
+.persona-btn{font-size:11.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:transparent;color:var(--gray500);border:none;cursor:pointer;transition:all .15s;white-space:nowrap;line-height:1.2;}
+.persona-btn:hover{color:var(--gray700);}
+.persona-btn.active{background:#fff;color:var(--g800);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.persona-btn .pb-rank{font-weight:700;}
+.persona-btn .pb-name{font-weight:500;opacity:.85;margin-left:3px;}
+.persona-notice{background:var(--a100);border:1px solid var(--a700);color:var(--a900);border-radius:var(--radius-md);padding:14px 18px;margin:12px 0;font-size:13px;line-height:1.55;}
+.persona-notice strong{color:var(--a900);}
+@media (max-width:760px){.persona-switch{order:2;width:100%;margin-top:6px;}.persona-btn{flex:1;padding:6px 6px;font-size:10.5px;}.persona-btn .pb-name{display:none;}}
 .content{flex:1;overflow-y:auto;padding:26px 30px;}
 
 /* ── Shared ── */
@@ -112,6 +121,16 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .path-card.selected .sel-ring{background:var(--g800);border-color:var(--g800);color:#fff;}
 .path-icon{font-size:26px;margin-bottom:8px;}
 .path-name{font-size:14px;font-weight:600;color:var(--gray900);margin-bottom:3px;}
+.path-next{display:inline-block;font-size:10.5px;font-weight:600;color:var(--g800);background:var(--g50);border:1px solid var(--g600);padding:2px 8px;border-radius:10px;margin-bottom:8px;letter-spacing:.01em;}
+.seat-primer{margin-top:14px;display:flex;flex-direction:column;gap:8px;background:#fafafa;border:1px solid var(--gray200);border-radius:10px;padding:14px 16px;}
+.seat-primer-row{display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.5;color:var(--gray700);}
+.seat-primer-text{flex:1;}
+.seat-primer-text strong{color:var(--gray900);}
+.seat-pill{flex-shrink:0;display:inline-block;font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;letter-spacing:.02em;min-width:78px;text-align:center;}
+.seat-pill.sp-2{background:#e7f5ec;color:#1c6f3b;border:1px solid #b8e0c5;}
+.seat-pill.sp-3{background:#fff4dd;color:#8a5a08;border:1px solid #f0d28e;}
+.seat-pill.sp-4{background:#fce4e4;color:#a02224;border:1px solid #f3b7b8;}
+@media (max-width:760px){.seat-primer-row{flex-direction:column;gap:6px;}.seat-pill{align-self:flex-start;}}
 .path-sub{font-size:12px;color:var(--gray500);margin-bottom:10px;}
 .path-benchmark{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray500);}
 .path-benchmark strong{color:var(--g800);}
@@ -603,6 +622,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="topbar-left">
       <div class="tb-crumb">The Posting Pact &rsaquo; <strong id="tb-section">Career Twin</strong></div>
     </div>
+    <div class="persona-switch" id="persona-switch" role="tablist" aria-label="Persona">
+      <button class="persona-btn active" data-persona="tan" onclick="switchPersona('tan')" role="tab" aria-selected="true"><span class="pb-rank">CPT Tan</span><span class="pb-name">· WSO MAJ-select</span></button>
+      <button class="persona-btn" data-persona="lee" onclick="switchPersona('lee')" role="tab" aria-selected="false"><span class="pb-rank">MAJ Lee</span><span class="pb-name">· post-CSC SO</span></button>
+      <button class="persona-btn" data-persona="kumar" onclick="switchPersona('kumar')" role="tab" aria-selected="false"><span class="pb-rank">LTC Kumar</span><span class="pb-name">· post-CO</span></button>
+    </div>
     <span class="tb-badge" id="tb-mode">Explore your career paths</span>
   </div>
   <div class="content">
@@ -688,7 +712,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </div>
           <div style="font-size:13px;color:var(--gray600);line-height:1.65;margin-bottom:16px;">Path Explorer is the core of the Career Twin simulation. As a WSO(FTR), your career typically spans the three RSAF tracks — Command, Staff, and Instructor — with Capability Development as a fourth option, which may include DSTA attachments. Pick any path to see where it leads in 2 and 5 years, who else took it, and what you still need to get there.</div>
           <div style="background:var(--g50);border:1px solid var(--g100);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:16px;">
-            <div style="font-size:12px;font-weight:600;color:var(--g800);margin-bottom:10px;">Available paths for CPT Tan Wei Xiang (WSO Fighter)</div>
+            <div style="font-size:12px;font-weight:600;color:var(--g800);margin-bottom:10px;" id="path-explorer-heading">Available paths for CPT Tan Wei Xiang (WSO Fighter)</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
               <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">✈️ Command Track <span style="float:right;color:var(--g800);font-weight:600;">35%</span></div>
               <div style="background:#fff;border:1px solid var(--g100);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--gray700);">🏛️ Staff Track <span style="float:right;color:var(--g800);font-weight:600;">28%</span></div>
@@ -717,11 +741,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
             <span class="demo-panel-pill cg-mvp">MVP</span>
           </div>
           <div style="font-size:13px;color:var(--gray600);margin-bottom:16px;">After exploring paths, the Career Twin auto-drafts a prep brief and sends it to all four seats before the Pact meeting. Everyone arrives prepared — no more blank-sheet conversations.</div>
-          <div class="pb-field"><div class="pb-field-label">Member</div><div class="pb-field-val">CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Squadron, Paya Lebar Air Base · 7 years service</div></div>
-          <div class="pb-field"><div class="pb-field-label">Stated aspiration</div><div class="pb-field-val">Wants to remain on the Command Track — targeting Air Force Advanced Course (AFAC, the CPT→MAJ Route-of-Advancement course) in FY2026 or FY2027, GKS Command &amp; Staff College (CSC) ahead of the FY2033 CO board, and CO of a Fighter Squadron — or CO of an Air Warfare Centre unit — by FY2033. Prefers Air Plans Department or Air Warfare Centre as ground tour posting to maintain mission relevance.</div></div>
+          <div class="pb-field"><div class="pb-field-label">Member</div><div class="pb-field-val" id="pb-member">CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Squadron, Paya Lebar Air Base · 7 years service</div></div>
+          <div class="pb-field"><div class="pb-field-label">Stated aspiration</div><div class="pb-field-val" id="pb-aspiration">Wants to remain on the Command Track — targeting Air Force Advanced Course (AFAC, the CPT→MAJ Route-of-Advancement course) in FY2026 or FY2027, GKS Command &amp; Staff College (CSC) ahead of the FY2033 CO board, and CO of a Fighter Squadron — or CO of an Air Warfare Centre unit — by FY2033. Prefers Air Plans Department or Air Warfare Centre as ground tour posting to maintain mission relevance.</div></div>
           <div class="pb-field"><div class="pb-field-label">Paths explored in Career Twin</div><div class="pb-field-val" id="pb-explored">Command Track · Staff Track</div></div>
-          <div class="pb-field"><div class="pb-field-label">Key questions for the conversation</div><div class="pb-field-val">1. Is AFAC FY2026 or FY2027 the realistic slating window — and can it run before the Q4 2026 ground tour?&nbsp; 2. Is Air Plans Department (or an Air Warfare Centre tour) confirmed as the ground tour posting?&nbsp; 3. What is the realistic CSC sequencing ahead of the FY2033 CO board (Fighter Sqn or AWC unit)?</div></div>
-          <div class="pb-field"><div class="pb-field-label">Gaps to discuss</div><div class="pb-field-val">Missing: Air Force Advanced Course (AFAC) — CPT→MAJ ROA; Lead WSO qualification; GKS CSC (prerequisite for CO appointment). Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.</div></div>
+          <div class="pb-field"><div class="pb-field-label">Key questions for the conversation</div><div class="pb-field-val" id="pb-questions">1. Is AFAC FY2026 or FY2027 the realistic slating window — and can it run before the Q4 2026 ground tour?&nbsp; 2. Is Air Plans Department (or an Air Warfare Centre tour) confirmed as the ground tour posting?&nbsp; 3. What is the realistic CSC sequencing ahead of the FY2033 CO board (Fighter Sqn or AWC unit)?</div></div>
+          <div class="pb-field"><div class="pb-field-label">Gaps to discuss</div><div class="pb-field-val" id="pb-gaps">Missing: Air Force Advanced Course (AFAC) — CPT→MAJ ROA; Lead WSO qualification; GKS CSC (prerequisite for CO appointment). Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.</div></div>
           <div style="display:flex;gap:8px;margin-top:4px;align-items:center;">
             <button class="btn btn-primary" style="font-size:12px;padding:7px 14px;">✓ Send to all seats</button>
             <span style="font-size:11px;color:var(--gray400);">Will be sent to: Member · Supervisor · Career Manager · SSO</span>
@@ -786,7 +810,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
             <span>Analysing career profile…</span>
           </div>
           <div class="ai-results" id="ai-results">
-            <div style="font-size:12px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">3 non-obvious paths suggested for CPT Tan Wei Xiang (WSO Fighter)</div>
+            <div style="font-size:12px;font-weight:600;color:var(--gray500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;" id="ai-gen-heading">3 non-obvious paths suggested for CPT Tan Wei Xiang (WSO Fighter)</div>
             <div class="ai-card">
               <div class="ai-card-path">🎯 RSAF–DSTA Weapons Integration Specialist</div>
               <div class="ai-card-why">Your cockpit-level F-15SG mission systems and weapons employment experience is exactly what the DSTA weapons integration team lacks. Most programme officers have never actually employed the weapons they're integrating — your operational background makes you rare and directly effective in this role without retraining.</div>
@@ -824,12 +848,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 
     <!-- Step 1: Profile -->
     <div id="a-s1">
-      <div class="profile-card">
-        <div class="avatar av-g">TW</div>
+      <div class="profile-card" id="profile-card-a">
+        <div class="avatar av-g" id="profile-avatar-a">TW</div>
         <div>
-          <div class="profile-name">CPT Tan Wei Xiang</div>
-          <div class="profile-sub">Weapons System Officer (Fighter) · 7 years service · F-15SG Squadron, Paya Lebar Air Base</div>
-          <div class="profile-chips">
+          <div class="profile-name" id="profile-name-a">CPT Tan Wei Xiang</div>
+          <div class="profile-sub" id="profile-sub-a">Weapons System Officer (Fighter) · 7 years service · F-15SG Squadron, Paya Lebar Air Base</div>
+          <div class="profile-chips" id="profile-chips-a">
             <span class="chip">MAJ-select band</span>
             <span class="chip">Career Score 82/100</span>
             <span class="chip">Flying hours: ~950</span>
@@ -842,15 +866,15 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Aspiration (stated)</div>
-            <div style="font-size:13px;color:var(--gray900);">Wants to stay on the Command Track — AFAC in FY2026/27, CSC ahead of the FY2033 CO board, and CO of a Fighter Squadron or Air Warfare Centre unit by FY2033</div>
+            <div style="font-size:13px;color:var(--gray900);" id="snap-aspiration">Wants to stay on the Command Track — AFAC in FY2026/27, CSC ahead of the FY2033 CO board, and CO of a Fighter Squadron or Air Warfare Centre unit by FY2033</div>
           </div>
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Last career conversation</div>
-            <div style="font-size:13px;color:var(--r700);font-weight:600;">No Career Pact on file</div>
+            <div id="snap-last" style="font-size:13px;color:var(--r700);font-weight:600;">No Career Pact on file</div>
           </div>
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray400);margin-bottom:4px;">Upcoming trigger</div>
-            <div style="font-size:13px;color:var(--gray900);">Ground tour posting due — Q4 2026 (mandatory at 7-year mark)</div>
+            <div style="font-size:13px;color:var(--gray900);" id="snap-trigger">Ground tour posting due — Q4 2026 (mandatory at 7-year mark)</div>
           </div>
         </div>
       </div>
@@ -869,32 +893,36 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <div class="sel-ring"></div>
           <div class="path-icon">✈️</div>
           <div class="path-name">Command Track</div>
-          <div class="path-sub">Lead WSO → AFAC → MAJ command appointments → CSC → CO of Fighter Sqn or AWC unit</div>
-          <div class="path-benchmark"><strong>35%</strong>&nbsp;of similar profiles took this route</div>
+          <div class="path-next" id="pc-next-command">Next: AFAC FY2026/27</div>
+          <div class="path-sub" id="pc-sub-command">Lead WSO → AFAC → MAJ command appointments → CSC → CO of Fighter Sqn or AWC unit</div>
+          <div class="path-benchmark" id="pc-bm-command"><strong>35%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('staff',this)" data-path="staff">
           <div class="sel-ring"></div>
           <div class="path-icon">🏛️</div>
           <div class="path-name">Staff Track</div>
-          <div class="path-sub">HQ RSAF Air Plans Department → Joint Staff</div>
-          <div class="path-benchmark"><strong>28%</strong>&nbsp;of similar profiles took this route</div>
+          <div class="path-next" id="pc-next-staff">Next: Ground tour Q4 2026</div>
+          <div class="path-sub" id="pc-sub-staff">HQ RSAF Air Plans Department → Joint Staff</div>
+          <div class="path-benchmark" id="pc-bm-staff"><strong>28%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('tech',this)" data-path="tech">
           <div class="sel-ring"></div>
           <div class="path-icon">🔧</div>
           <div class="path-name">Capability Development Track</div>
-          <div class="path-sub">Air Plans Dept / Capability Branch / Air Warfare Centre · may include DSTA attachment</div>
-          <div class="path-benchmark"><strong>20%</strong>&nbsp;of similar profiles took this route</div>
+          <div class="path-next" id="pc-next-tech">Next: AWC / Cap-Dev tour</div>
+          <div class="path-sub" id="pc-sub-tech">Air Plans Dept / Capability Branch / Air Warfare Centre · may include DSTA attachment</div>
+          <div class="path-benchmark" id="pc-bm-tech"><strong>20%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
         <div class="path-card" onclick="selectPath('cross',this)" data-path="cross">
           <div class="sel-ring"></div>
           <div class="path-icon">🎓</div>
           <div class="path-name">Instructor Track</div>
-          <div class="path-sub">Air Force Training Command (AFTC) → Chief Instructor</div>
-          <div class="path-benchmark"><strong>17%</strong>&nbsp;of similar profiles took this route</div>
+          <div class="path-next" id="pc-next-cross">Next: WSO Instructor course</div>
+          <div class="path-sub" id="pc-sub-cross">Air Force Training Command (AFTC) → Chief Instructor</div>
+          <div class="path-benchmark" id="pc-bm-cross"><strong>17%</strong>&nbsp;of similar profiles took this route</div>
         </div>
 
       </div>
@@ -957,7 +985,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
         </div>
         <div class="brief-section">
           <div class="brief-section-label">Member</div>
-          <div class="brief-text">CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Sqn, Paya Lebar Air Base · 7 years service</div>
+          <div class="brief-text" id="brief-member">CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Sqn, Paya Lebar Air Base · 7 years service</div>
         </div>
         <div class="brief-section">
           <div class="brief-section-label">Stated Aspiration</div>
@@ -997,6 +1025,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <div class="section-desc">Select who you are. The dashboard changes to show exactly the information your role is permitted to see. Same person, different views.</div>
     </div>
 
+    <div id="persona-notice-b" class="persona-notice" style="display:none;"></div>
+
     <div class="role-selector">
       <div class="role-card active-role" onclick="selectRole('personnel',this)">
         <div class="role-icon-lg">🪖</div>
@@ -1028,8 +1058,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       </div>
       <div class="dash-body">
         <div class="db-profile">
-          <div class="avatar av-b">TW</div>
-          <div><div class="db-name">CPT Tan Wei Xiang</div><div class="db-sub">Weapons System Officer (Fighter) · 7 yr service · F-15SG Sqn, PLAB</div></div>
+          <div class="avatar av-b" id="db-personnel-avatar">TW</div>
+          <div><div class="db-name" id="db-personnel-name">CPT Tan Wei Xiang</div><div class="db-sub" id="db-personnel-sub">Weapons System Officer (Fighter) · 7 yr service · F-15SG Sqn, PLAB</div></div>
         </div>
         <div class="metric-grid mg-2">
           <div class="m-card mc-g" style="text-align:center;">
@@ -1081,37 +1111,33 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       </div>
       <div class="dash-body">
         <div class="db-profile">
-          <div class="avatar av-p">TW</div>
-          <div><div class="db-name">CPT Tan Wei Xiang</div><div class="db-sub">WSO (Fighter) · F-15SG Sqn, PLAB · reports to you</div></div>
+          <div class="avatar av-p" id="db-sup-avatar">TW</div>
+          <div><div class="db-name" id="db-sup-name">CPT Tan Wei Xiang</div><div class="db-sub" id="db-sup-sub">WSO (Fighter) · F-15SG Sqn, PLAB · reports to you</div></div>
         </div>
         <div class="metric-grid mg-3">
           <div class="m-card mc-g">
             <div class="m-label">Readiness Level</div>
-            <div class="m-value">High</div>
-            <div class="m-sub">Current posting fit</div>
+            <div class="m-value" id="db-sup-readiness">High</div>
+            <div class="m-sub" id="db-sup-readiness-sub">Current posting fit</div>
           </div>
           <div class="m-card mc-p">
-            <div class="m-label">Posting Urgency</div>
-            <div class="m-value">Q4 2026</div>
-            <div class="m-sub">Ground tour due</div>
+            <div class="m-label" id="db-sup-urgency-label">Posting Urgency</div>
+            <div class="m-value" id="db-sup-urgency">Q4 2026</div>
+            <div class="m-sub" id="db-sup-urgency-sub">Ground tour due</div>
           </div>
           <div class="m-card mc-a">
             <div class="m-label">Career Pact Status</div>
-            <div class="m-value" style="font-size:16px;">Not on file</div>
-            <div class="m-sub">No Pact on file</div>
+            <div class="m-value" style="font-size:16px;" id="db-sup-pact">Not on file</div>
+            <div class="m-sub" id="db-sup-pact-sub">No Pact on file</div>
           </div>
         </div>
         <div class="stars-box">
           <div class="stars-title">Performance indicators (your assessment input)</div>
-          <div class="star-row"><span class="star-icon-s">✈️</span><span class="star-lbl">Mission systems performance</span><span class="star-rating" style="color:var(--p700);">★★★★★</span></div>
-          <div class="star-row"><span class="star-icon-s">🎯</span><span class="star-lbl">Tactical mission delivery</span><span class="star-rating" style="color:var(--p700);">★★★★★</span></div>
-          <div class="star-row"><span class="star-icon-s">🤝</span><span class="star-lbl">Squadron contribution</span><span class="star-rating" style="color:var(--p700);">★★★★☆</span></div>
+          <div id="db-sup-stars"></div>
         </div>
         <div class="prog-section">
-          <div class="prog-section-title">Unit readiness impact if posted out</div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">EW coverage gap (sole EW Specialist)</span><span class="prog-val">HIGH</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:90%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Flight leadership gap</span><span class="prog-val">Medium</span></div><div class="prog-bar"><div class="prog-fill pf-p" style="width:55%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">EW handover time required</span><span class="prog-val">3 months</span></div><div class="prog-bar"><div class="prog-fill pf-b" style="width:40%"></div></div></div>
+          <div class="prog-section-title" id="db-sup-prog-title">Unit readiness impact if posted out</div>
+          <div id="db-sup-prog-rows"></div>
         </div>
         <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Information</th><th>Visible to you</th></tr></thead>
@@ -1124,8 +1150,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           </tbody>
         </table></div>
         <div class="dash-actions">
-          <button class="btn btn-primary" style="background:var(--p700);">Submit support input</button>
-          <button class="btn btn-secondary">Request 3-month EW handover plan</button>
+          <button class="btn btn-primary" style="background:var(--p700);" id="db-sup-action1">Submit support input</button>
+          <button class="btn btn-secondary" id="db-sup-action2">Request 3-month EW handover plan</button>
         </div>
       </div>
     </div>
@@ -1138,56 +1164,50 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       </div>
       <div class="dash-body">
         <div class="db-profile">
-          <div class="avatar av-g">TW</div>
-          <div><div class="db-name">CPT Tan Wei Xiang</div><div class="db-sub">WSO (Fighter) · 7 yr service · F-15SG Sqn, Paya Lebar Air Base</div></div>
+          <div class="avatar av-g" id="db-hr-avatar">TW</div>
+          <div><div class="db-name" id="db-hr-name">CPT Tan Wei Xiang</div><div class="db-sub" id="db-hr-sub">WSO (Fighter) · 7 yr service · F-15SG Sqn, Paya Lebar Air Base</div></div>
         </div>
         <div class="metric-grid mg-3">
           <div class="m-card mc-g">
-            <div class="m-label">Job Fit Score</div>
-            <div class="m-value">87%</div>
-            <div class="m-sub">Air Plans Department match</div>
+            <div class="m-label" id="db-hr-fit-label">Job Fit Score</div>
+            <div class="m-value" id="db-hr-fit">87%</div>
+            <div class="m-sub" id="db-hr-fit-sub">Air Plans Department match</div>
           </div>
           <div class="m-card mc-a">
             <div class="m-label">Retention Risk</div>
-            <div class="m-value">High</div>
-            <div class="m-sub">SAVER milestone (age 31 bonus)</div>
+            <div class="m-value" id="db-hr-risk">High</div>
+            <div class="m-sub" id="db-hr-risk-sub">SAVER milestone (age 31 bonus)</div>
           </div>
           <div class="m-card mc-r">
             <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
-            <div class="m-value">≈$420K</div>
-            <div class="m-sub">Illustrative · incl. overseas flying trg</div>
+            <div class="m-value" id="db-hr-replace">≈$420K</div>
+            <div class="m-sub" id="db-hr-replace-sub">Illustrative · incl. overseas flying trg</div>
           </div>
         </div>
         <div class="metric-grid mg-2">
           <div class="m-card mc-b">
             <div class="m-label">RSAF Investment ROI <span class="sens-badge">🔒</span></div>
-            <div class="m-value">5.2×</div>
-            <div class="m-sub">vs. fresh recruit cohort</div>
+            <div class="m-value" id="db-hr-roi">5.2×</div>
+            <div class="m-sub" id="db-hr-roi-sub">vs. fresh recruit cohort</div>
           </div>
           <div class="m-card mc-gray">
             <div class="m-label">Civil Market Value <span class="sens-badge">🔒</span></div>
-            <div class="m-value">~$100–160K</div>
-            <div class="m-sub">Illustrative · defence sector p.a.</div>
+            <div class="m-value" id="db-hr-civil">~$100–160K</div>
+            <div class="m-sub" id="db-hr-civil-sub">Illustrative · defence sector p.a.</div>
           </div>
         </div>
         <div class="prog-section">
-          <div class="prog-section-title">Job fit breakdown (Air Plans Department)</div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Mission systems proficiency</span><span class="prog-val">94%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:94%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Leadership readiness</span><span class="prog-val">82%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:82%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Ground coordination experience</span><span class="prog-val">65%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:65%"></div></div></div>
+          <div class="prog-section-title" id="db-hr-prog-title">Job fit breakdown (Air Plans Department)</div>
+          <div id="db-hr-prog-rows"></div>
         </div>
         <div class="dtable-wrap"><table class="dtable">
           <thead><tr><th>Recommended lever</th><th>Action</th></tr></thead>
-          <tbody>
-            <tr><td>Course assignment</td><td>AFAC (FY2026/27) — CPT→MAJ Route-of-Advancement course before ground tour</td></tr>
-            <tr><td>Next posting</td><td>Air Plans Department, HQ RSAF — 87% fit, leverages WSO operational expertise</td></tr>
-            <tr><td>Priority action</td><td>No Career Pact on file — schedule first conversation</td></tr>
-          </tbody>
+          <tbody id="db-hr-levers"></tbody>
         </table></div>
         <div class="dash-actions">
-          <button class="btn btn-primary">Schedule Career Pact</button>
-          <button class="btn btn-secondary">Download PDF brief</button>
-          <button class="btn btn-ghost">Flag retention risk</button>
+          <button class="btn btn-primary" id="db-hr-action1">Schedule Career Pact</button>
+          <button class="btn btn-secondary" id="db-hr-action2">Download PDF brief</button>
+          <button class="btn btn-ghost" id="db-hr-action3">Flag retention risk</button>
         </div>
         <div class="access-note">🔒 Fields marked sensitive are visible to HR Practitioners and Commanders only. They are not shown to the member to avoid transactional framing of the career relationship.</div>
       </div>
@@ -1201,49 +1221,46 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       </div>
       <div class="dash-body">
         <div class="db-profile">
-          <div class="avatar" style="background:var(--gray700);color:#fff;">TW</div>
-          <div><div class="db-name">CPT Tan Wei Xiang</div><div class="db-sub">WSO (Fighter) · 7 yr service · Ground tour posting Q4 2026</div></div>
+          <div class="avatar" style="background:var(--gray700);color:#fff;" id="db-cmd-avatar">TW</div>
+          <div><div class="db-name" id="db-cmd-name">CPT Tan Wei Xiang</div><div class="db-sub" id="db-cmd-sub">WSO (Fighter) · 7 yr service · Ground tour posting Q4 2026</div></div>
         </div>
         <div class="metric-grid mg-2">
           <div class="m-card mc-g">
-            <div class="m-label">Best-fit posting</div>
-            <div class="m-value" style="font-size:16px;">Air Plans Dept</div>
-            <div class="m-sub">87% fit · leverages WSO expertise</div>
+            <div class="m-label" id="db-cmd-bestfit-label">Best-fit posting</div>
+            <div class="m-value" style="font-size:16px;" id="db-cmd-bestfit">Air Plans Dept</div>
+            <div class="m-sub" id="db-cmd-bestfit-sub">87% fit · leverages WSO expertise</div>
           </div>
           <div class="m-card mc-a">
             <div class="m-label">Retention Risk <span class="sens-badge">🔒</span></div>
-            <div class="m-value">High</div>
-            <div class="m-sub">Act within 60 days</div>
+            <div class="m-value" id="db-cmd-risk">High</div>
+            <div class="m-sub" id="db-cmd-risk-sub">Act within 60 days</div>
           </div>
         </div>
         <div class="metric-grid mg-3">
           <div class="m-card mc-r">
             <div class="m-label">Replacement Cost <span class="sens-badge">🔒</span></div>
-            <div class="m-value">≈$420K</div>
-            <div class="m-sub">Illustrative · if lost to attrition</div>
+            <div class="m-value" id="db-cmd-replace">≈$420K</div>
+            <div class="m-sub" id="db-cmd-replace-sub">Illustrative · if lost to attrition</div>
           </div>
           <div class="m-card mc-b">
             <div class="m-label">Mission readiness impact</div>
-            <div class="m-value">High</div>
-            <div class="m-sub">Sole EW Specialist in sqn</div>
+            <div class="m-value" id="db-cmd-mri">High</div>
+            <div class="m-sub" id="db-cmd-mri-sub">Sole EW Specialist in sqn</div>
           </div>
           <div class="m-card mc-gray">
             <div class="m-label">Aspiration alignment</div>
-            <div class="m-value">Good</div>
-            <div class="m-sub">Command Track</div>
+            <div class="m-value" id="db-cmd-align">Good</div>
+            <div class="m-sub" id="db-cmd-align-sub">Command Track</div>
           </div>
         </div>
         <div class="prog-section">
-          <div class="prog-section-title">Posting options ranked by fit</div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Air Plans Department, HQ RSAF (recommended)</span><span class="prog-val">87%</span></div><div class="prog-bar"><div class="prog-fill pf-g" style="width:87%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Capability Branch / DSTA attachment</span><span class="prog-val">74%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:74%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">Air Warfare Centre — Staff Officer / Capability tour</span><span class="prog-val">71%</span></div><div class="prog-bar"><div class="prog-fill pf-a" style="width:71%"></div></div></div>
-          <div class="prog-row"><div class="prog-lrow"><span class="prog-label">AFTC WSO Instructor (lower fit)</span><span class="prog-val">61%</span></div><div class="prog-bar"><div class="prog-fill" style="width:61%;background:var(--gray400);"></div></div></div>
+          <div class="prog-section-title" id="db-cmd-options-title">Posting options ranked by fit</div>
+          <div id="db-cmd-options"></div>
         </div>
         <div class="dash-actions">
-          <button class="btn btn-primary" style="background:var(--gray900);">Approve Air Plans Department posting</button>
-          <button class="btn btn-secondary">Override with documentation</button>
-          <button class="btn btn-ghost">Schedule 4-seat Pact first</button>
+          <button class="btn btn-primary" style="background:var(--gray900);" id="db-cmd-action1">Approve Air Plans Department posting</button>
+          <button class="btn btn-secondary" id="db-cmd-action2">Override with documentation</button>
+          <button class="btn btn-ghost" id="db-cmd-action3">Schedule 4-seat Pact first</button>
         </div>
         <div class="access-note">Commander posting authority is not constrained by this tool. All sensitive data supports your decision — the career map is input to your decision, not a veto. Any override is logged in the Ledger.</div>
       </div>
@@ -1259,47 +1276,16 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="section-header">
       <div class="section-tag st-c">C · Four-Seat Structure</div>
       <div class="section-title">Pick a scenario and walk through the conversation</div>
-      <div class="section-desc">Select the event that triggered this Career Pact. See which seats activate, then step through what each person says — and what document is produced at the end.</div>
+      <div class="section-desc">Section C demonstrates how the Career Pact is actually held — not as a one-off form, but as a structured conversation. Each scenario below mirrors a real career event that should trigger a Pact, and the <strong>number of seats</strong> reflects how much authority and accountability the conversation needs to carry. Select an event to see which seats activate, step through what each person says, and view the document produced at the end.</div>
+      <div class="seat-primer">
+        <div class="seat-primer-row"><span class="seat-pill sp-2">2-seat Pact</span><span class="seat-primer-text"><strong>Member &amp; Career Manager.</strong> Routine reviews, aspiration resets, career map updates. The Member states intent; the CM records realistic options. No commitments to specific appointments — just direction and process.</span></div>
+        <div class="seat-primer-row"><span class="seat-pill sp-3">3-seat Pact</span><span class="seat-primer-text"><strong>Adds Supervisor <em>or</em> SSO.</strong> Triggered when a third actor's input or authority is needed — a posting cycle (Supervisor for unit fit), a financial/contractual milestone (SSO for scheme authority), or a sequencing decision that depends on unit endorsement.</span></div>
+        <div class="seat-primer-row"><span class="seat-pill sp-4">4-seat Pact</span><span class="seat-primer-text"><strong>Member, Supervisor, CM, SSO together.</strong> Used for binding decisions, contested postings, senior milestones, and parallel-destination commitments. Carries the most authority — and the most accountability to re-pact if circumstances change.</span></div>
+      </div>
     </div>
 
-    <!-- Scenario picker -->
-    <div class="scenario-grid" id="scenario-grid">
-      <div class="scenario-card" onclick="selectScenario('annual',this)">
-        <div class="sel-ring"></div>
-        <div class="scenario-icon">📅</div>
-        <div class="scenario-name">Annual career map review</div>
-        <div class="scenario-sub">Routine check-in — no posting imminent</div>
-        <span class="scenario-tier-badge stb-1">2-seat Pact</span>
-      </div>
-      <div class="scenario-card" onclick="selectScenario('posting',this)">
-        <div class="sel-ring"></div>
-        <div class="scenario-icon">📦</div>
-        <div class="scenario-name">Standard posting cycle</div>
-        <div class="scenario-sub">Q4 posting — member going to a new unit</div>
-        <span class="scenario-tier-badge stb-2">3-seat Pact</span>
-      </div>
-      <div class="scenario-card" onclick="selectScenario('recontract',this)">
-        <div class="sel-ring"></div>
-        <div class="scenario-icon">📝</div>
-        <div class="scenario-name">Career continuation milestone</div>
-        <div class="scenario-sub">Locking in senior path at a key inflection point</div>
-        <span class="scenario-tier-badge stb-3">4-seat Pact</span>
-      </div>
-      <div class="scenario-card" onclick="selectScenario('contested',this)">
-        <div class="sel-ring"></div>
-        <div class="scenario-icon">⚠️</div>
-        <div class="scenario-name">Contested posting</div>
-        <div class="scenario-sub">Member objects — posting deviates from career map</div>
-        <span class="scenario-tier-badge stb-3">4-seat Pact</span>
-      </div>
-      <div class="scenario-card" onclick="selectScenario('awc',this)">
-        <div class="sel-ring"></div>
-        <div class="scenario-icon">🎯</div>
-        <div class="scenario-name">AWC sequencing addendum</div>
-        <div class="scenario-sub">Air Warfare Centre tour and CO of an AWC unit as parallel options</div>
-        <span class="scenario-tier-badge stb-2">3-seat Pact</span>
-      </div>
-    </div>
+    <!-- Scenario picker (rendered dynamically per persona) -->
+    <div class="scenario-grid" id="scenario-grid"></div>
 
     <!-- Seats panel -->
     <div class="seats-panel" id="seats-panel">
@@ -1363,12 +1349,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 
       <!-- Print-only member profile strip -->
       <div class="print-only print-profile">
-        <div class="pp-row"><span class="pp-k">Member:</span><span class="pp-v">CPT Tan Wei Xiang</span></div>
-        <div class="pp-row"><span class="pp-k">Vocation:</span><span class="pp-v">Weapons System Officer (Fighter)</span></div>
-        <div class="pp-row"><span class="pp-k">Rank band:</span><span class="pp-v">CPT (MAJ-select)</span></div>
-        <div class="pp-row"><span class="pp-k">Unit:</span><span class="pp-v">F-15SG Squadron, PLAB</span></div>
-        <div class="pp-row"><span class="pp-k">Service:</span><span class="pp-v">7 years</span></div>
-        <div class="pp-row"><span class="pp-k">Career score:</span><span class="pp-v">82 / 100</span></div>
+        <div class="pp-row"><span class="pp-k">Member:</span><span class="pp-v" id="pp-member-name">CPT Tan Wei Xiang</span></div>
+        <div class="pp-row"><span class="pp-k">Vocation:</span><span class="pp-v" id="pp-vocation">Weapons System Officer (Fighter)</span></div>
+        <div class="pp-row"><span class="pp-k">Rank band:</span><span class="pp-v" id="pp-rank">CPT (MAJ-select)</span></div>
+        <div class="pp-row"><span class="pp-k">Unit:</span><span class="pp-v" id="pp-unit">F-15SG Squadron, PLAB</span></div>
+        <div class="pp-row"><span class="pp-k">Service:</span><span class="pp-v" id="pp-service">7 years</span></div>
+        <div class="pp-row"><span class="pp-k">Career score:</span><span class="pp-v" id="pp-score">82 / 100</span></div>
       </div>
 
       <div class="output-doc-title"><span class="screen-only-icon">📄</span> <span id="output-doc-title">Document produced</span></div>
@@ -1570,7 +1556,9 @@ document.getElementById('page-b').style.display='none';
 document.getElementById('page-c').style.display='none';
 
 /* ══ Section A ══ */
-const pathData = {
+let currentPersona = 'tan';
+
+const pathData_tan = {
   command: {
     timeline:[
       {year:'Now',role:'CPT · WSO (Fighter)',unit:'F-15SG Sqn, Paya Lebar Air Base'},
@@ -1657,6 +1645,175 @@ const pathData = {
   }
 };
 
+/* ── MAJ Lee Jia Hao — post-CSC SO, pre-Branch Head, pre-CO ── */
+const pathData_lee = {
+  command: {
+    timeline:[
+      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2028',role:'MAJ · Senior SO / MAJ-2IC',unit:'HQ RSAF or Fighter Wing'},
+      {year:'FY2030',role:'MAJ · pre-CO appointment / Branch Head',unit:'Fighter Wing or HQ RSAF'},
+      {year:'FY2032',role:'LTC · CO Fighter Squadron',unit:'149 Sqn or 142 Sqn (Tengah AB post-2030)'}
+    ],
+    gaps:[
+      {label:'CO board file readiness',status:'partial',impact:'CSC done; performance band must hold through MAJ tour'},
+      {label:'Senior SO / MAJ-2IC tour',status:'missing',impact:'Pre-CO grooming appointment required ahead of FY2032 board'},
+      {label:'GKS Command & Staff College (CSC)',status:'done',impact:'Completed FY2024 — CO prerequisite cleared'},
+      {label:'Pre-CSC operational appointment (Flight Cdr / OC)',status:'done',impact:'Completed pre-CSC — operational command credibility on file'}
+    ],
+    benchmark:42,
+    benchSub:'of post-CSC WSO(FTR) MAJs progressed to CO Fighter Sqn within 5 years.',
+    benchNote:'Lee is in the strongest part of the CO pipeline — post-CSC and inside the typical 3–5 year window. Flight Cdr / OC tour was completed pre-CSC, so the open question is which post-CSC sequence (second SO, MAJ-2IC, or Branch Head) best positions him for the FY2032 board.',
+    insight:'MAJ Lee is post-CSC, so the CO prerequisite is cleared. The conversation is no longer "can he get to CO" but "which post-CSC sequence — second SO, MAJ-2IC, or Branch Head — best positions the file for the FY2032 board."',
+    aspiration:'Targeting CO of a Fighter Squadron at the FY2032 board. Wants the post-CSC sequence to position him cleanly for the CO board, with options across HQ deepening, MAJ-2IC, or a Branch Head tour as the file-shaping next step.',
+    questions:'1. What is the realistic post-Air-Plans slate at MAJ level — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward? 2. Is a pre-CO grooming appointment (MAJ-2IC or Branch Head) expected before the FY2032 CO board? 3. How does the second MAJ tour shape the CO board file vs. a third HQ tour?',
+    gaps_brief:'CSC: done. Pre-CSC Flight Cdr/OC: done. Senior SO / MAJ-2IC: missing. CO board file: dependent on next 3 years of performance.'
+  },
+  staff: {
+    timeline:[
+      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2029',role:'MAJ · Branch Head OR Dep Dept Head (LTC-grade pull-forward)',unit:'HQ RSAF / MINDEF / Joint Staff'},
+      {year:'FY2033',role:'COL · Department Head',unit:'HQ RSAF or MINDEF (e.g. Hd Air Plans, Hd Air Intel)'}
+    ],
+    gaps:[
+      {label:'Branch Head / Dep Dept Head appointment',status:'partial',impact:'These are the two LTC-rank feeders for Dept Head — talent-tagged officers in either are best positioned for COL board'},
+      {label:'Joint Staff / inter-service exposure',status:'missing',impact:'Strengthens Branch Head / Dep Dept Head candidacy'},
+      {label:'Strategic policy portfolio',status:'partial',impact:'Air-ops policy depth from current tour — needs broader strategic exposure'},
+      {label:'GKS Command & Staff College (CSC)',status:'done',impact:'Completed FY2024'}
+    ],
+    benchmark:38,
+    benchSub:'of post-CSC WSO(FTR) MAJs progressed to Branch Head / Dep Dept Head as the feeder appointment for Dept Head at COL.',
+    benchNote:'Realistic staff trajectory. Talent-tagged Branch Heads and Dep Dept Heads are the two LTC-rank feeders best positioned for Dept Head at the COL board. This path softens the CO Fighter Sqn case but opens a clean COL ladder via Dept Head.',
+    insight:'A clean staff-track route to Dept Head at COL via Branch Head or Dep Dept Head as the LTC feeder appointment. Faster to a COL credential than the operational path, but trades away the CO Fighter Sqn ceiling. Best treated as a parallel COL destination, not a fallback.',
+    aspiration:'Open to a Branch Head or Dep Dept Head trajectory — wants Dept Head at COL surfaced as a parallel destination alongside CO Fighter Sqn, not as a fallback if the CO board does not pan out.',
+    questions:'1. Is Branch Head or Dep Dept Head the better LTC feeder for Dept Head — given his policy depth at Air Plans? 2. Can a Joint Staff or inter-service tour run concurrently with the CO pipeline, or does it force a choice? 3. What is the realistic Dep Dept Head slating window from his current grade?',
+    gaps_brief:'CSC: done. Branch Head / Dep Dept Head: partial (talent-tagged eligibility). Joint / inter-service exposure: missing. Strategic policy: partial.'
+  },
+  tech: {
+    timeline:[
+      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2028',role:'MAJ · Senior Capability SO',unit:'Air Warfare Centre / Capability Branch / DSTA secondment'},
+      {year:'FY2033',role:'LTC · CO of AWC unit',unit:'Air Warfare Centre'}
+    ],
+    gaps:[
+      {label:'Capability Development portfolio',status:'missing',impact:'Has not yet held a Cap-Dev appointment at MAJ'},
+      {label:'DSTA attachment (min 3 months)',status:'missing',impact:'Pre-requisite for senior Cap-Dev role'},
+      {label:'Programme Management Professional (PMP)',status:'partial',impact:'Foundation course done; full certification outstanding'}
+    ],
+    benchmark:18,
+    benchSub:'of post-CSC WSO(FTR) MAJs pivoted into Capability Development.',
+    benchNote:'Less common as a mid-MAJ pivot. CO of an AWC unit is a credible LTC destination if Lee invests two full tours in the Cap-Dev space, but it largely takes CO Fighter Sqn off the table at FY2032.',
+    insight:'A viable but slower LTC track. AWC CO destination is real, but the pivot costs the Fighter Sqn CO opportunity. Worth scoping only if CO Fighter Sqn is judged unlikely.',
+    aspiration:'Curious about AWC pathway as a contingency — not the primary direction. Wants CO of AWC unit understood as a parallel LTC destination, not a fallback after a missed CO board.',
+    questions:'1. Is a single AWC MAJ tour enough for CO of an AWC unit at LTC, or are two tours needed? 2. How does the AWC track sequence against the FY2032 CO Fighter Sqn board? 3. Does an AWC pivot preserve a return-to-operational option?',
+    gaps_brief:'Cap-Dev portfolio: missing. DSTA attachment: missing. PMP: partial. Track requires deliberate sequencing.'
+  },
+  cross: {
+    timeline:[
+      {year:'Now',role:'MAJ · Staff Officer (post-CSC)',unit:'Air Plans Department, HQ RSAF'},
+      {year:'FY2028',role:'MAJ · Secondment or Cross-Service tour',unit:'MHA / MFA / PMO secondment OR DIS / Joint Staff at MINDEF'},
+      {year:'FY2033',role:'LTC · Branch Head OR Dep Dept Head (cross-domain credential)',unit:'HQ RSAF / MINDEF / DIS'}
+    ],
+    gaps:[
+      {label:'Inter-ministry / cross-service exposure',status:'missing',impact:'Has not held a secondment or cross-service tour'},
+      {label:'DIS / cyber-EW credential',status:'partial',impact:'EW background fits DIS posting; no formal DIS appointment yet'},
+      {label:'Whole-of-government policy exposure',status:'missing',impact:'Strengthens Dep Dept Head / Branch Head candidacy on the cross-domain line'}
+    ],
+    benchmark:14,
+    benchSub:'of post-CSC WSO(FTR) MAJs took a secondment or cross-service tour at MAJ.',
+    benchNote:'Selective track. A secondment to MHA, MFA or PMO — or a cross-service posting to DIS (Digital and Intelligence Service) or Joint Staff at MINDEF — broadens the file and is increasingly valued for senior staff progression. EW background makes DIS a natural fit.',
+    insight:'A broadening tour rather than a fallback. Inter-ministry secondment or DIS / Joint Staff posting builds whole-of-government credibility and strengthens the cross-domain file for COL board. Compatible with both Dept Head (staff) and CO (command) destinations if sequenced once.',
+    aspiration:'Not a stated primary direction — included as a broadening option. Lee is open to a single secondment or cross-service tour if it strengthens the senior file without forcing a choice on the CO pipeline.',
+    questions:'1. Is a secondment or DIS posting compatible with returning to the CO pipeline, or does it force a choice? 2. What is the realistic timing for a MAJ-level secondment in FY2028 vs. FY2030? 3. Does a DIS tour count as cross-domain credit for both staff and command lines, or only one?',
+    gaps_brief:'Inter-ministry / cross-service exposure: missing. DIS / cyber-EW credential: partial. Whole-of-government policy: missing.'
+  }
+};
+/* ── LTC Kumar Rajan — SAF scholar, post-CO 149 Sqn ── */
+const pathData_kumar = {
+  command: {
+    timeline:[
+      {year:'Now',role:'LTC · post-CO Fighter Sqn',unit:'149 Sqn, Tengah AB — outgoing CO'},
+      {year:'FY2027',role:'LTC · Branch Head OR Dep Dept Head',unit:'HQ RSAF or MINDEF (LTC feeder for Dept Head)'},
+      {year:'FY2030',role:'SLTC · Senior Branch Head / Dep Dept Head',unit:'HQ RSAF / MINDEF / Joint Staff'},
+      {year:'FY2033',role:'COL · Department Head',unit:'HQ RSAF or MINDEF (e.g. Hd Air Plans, Hd Air Intel)'},
+      {year:'Post-Dept Hd',role:'COL · Commander of named Command',unit:'Air Combat Command / ADOC / APGC / Participation Command (operational pinnacle)'}
+    ],
+    gaps:[
+      {label:'Branch Head / Dep Dept Head appointment',status:'partial',impact:'These two LTC-rank feeders best position scholars for Dept Head at COL — talent-tagged eligibility on file'},
+      {label:'Strategic policy portfolio',status:'partial',impact:'CO-level operational credibility on file; needs HQ-side strategic depth'},
+      {label:'SAF Senior Command & Staff Course (SCSC)',status:'partial',impact:'Pending — slating expected before SLTC'},
+      {label:'GKS CSC',status:'done',impact:'Completed; full SAF SCSC pending'},
+      {label:'Group Commander tour (alt path)',status:'partial',impact:'One possible post-CO posting — most scholars skip this and route via Dept Head'}
+    ],
+    benchmark:55,
+    benchSub:'of post-CO Fighter Sqn LTCs on the scholar / high-talent track progressed via Dept Head to a Commander of a named Command.',
+    benchNote:'Strongest post-CO trajectory for a scholar. The high-talent route is staff tour → Dept Head at COL → Commander of a named Command (Air Combat Command, ADOC, APGC, Participation Command) as the operational pinnacle. Group Commander is one possible alternative posting after CO and is more common for non-scholars; talent-tagged officers typically skip it.',
+    insight:'Kumar is past the CO board success milestone. The scholar/high-talent route is staff → Dept Head (COL) → Commander of a named Command, with Branch Head or Dep Dept Head as the LTC feeder appointment. Group Cdr is the alternative path; most likely bypassed for this profile.',
+    aspiration:'Targeting Department Head at the FY2033 COL board via Branch Head or Dep Dept Head as the LTC feeder. Commander of a named Command (Air Combat Command, ADOC, APGC, Participation Command) as the longer-horizon operational pinnacle post-Dept Head.',
+    questions:'1. Is Branch Head or Dep Dept Head the better LTC feeder for Dept Head — operational vs. policy bias? 2. What is the realistic Dept Head slate at FY2033 — which Department? 3. Should Group Cdr be left visible as an alternative, or formally taken off the table for this trajectory?',
+    gaps_brief:'CSC: done. SAF SCSC: pending. Branch Head / Dep Dept Head: partial (talent-tagged). Strategic policy: partial. Group Cdr: alternative path noted for completeness.'
+  },
+  staff: {
+    timeline:[
+      {year:'Now',role:'LTC · post-CO Fighter Sqn',unit:'149 Sqn, Tengah AB — outgoing CO'},
+      {year:'FY2027',role:'LTC · Branch Head OR Dep Dept Head',unit:'HQ RSAF / MINDEF / Joint Staff'},
+      {year:'FY2030',role:'SLTC · Senior Branch Head / Dep Dept Head',unit:'HQ RSAF / MINDEF'},
+      {year:'FY2033',role:'COL · Department Head',unit:'HQ RSAF or MINDEF (e.g. Hd Air Plans, Hd Air Intel)'}
+    ],
+    gaps:[
+      {label:'Branch Head / Dep Dept Head appointment',status:'partial',impact:'LTC feeder appointments for Dept Head — talent-tagged eligibility confirmed'},
+      {label:'Strategic policy portfolio',status:'partial',impact:'Has air-ops policy depth — needs broader strategic exposure'},
+      {label:'SAF Senior Command & Staff Course (SCSC)',status:'partial',impact:'Pending — expected before SLTC'}
+    ],
+    benchmark:48,
+    benchSub:'of post-CO Fighter Sqn LTCs on the high-talent track routed to Dept Head at COL via Branch Head or Dep Dept Head.',
+    benchNote:'The natural high-talent post-CO route. Branch Head or Dep Dept Head at LTC is the explicit feeder appointment for Dept Head at the COL board. Sequencing depends on which Department aligns with his EW / air-plans background.',
+    insight:'Dominant scholar-track route. Branch Head or Dep Dept Head as the LTC anchor → Dept Head at COL is the most common trajectory for talent-tagged officers post-CO. Trade-off is HQ-side influence vs. additional command tour exposure.',
+    aspiration:'Department Head at COL (FY2033 board) — the staff-track destination. Branch Head or Dep Dept Head as the LTC feeder, with policy depth that fits his Air Plans background.',
+    questions:'1. Is Branch Head or Dep Dept Head the realistic FY2027 slate? 2. Which Department aligns best with his EW + air-plans background — Hd Air Plans, Hd Air Intel, or a Joint Staff Dept Head? 3. How does Dept Head selection compare to operational-line COL appointments?',
+    gaps_brief:'Branch Head / Dep Dept Head: partial (talent-tagged). Strategic policy: partial. SAF SCSC: pending.'
+  },
+  tech: {
+    timeline:[
+      {year:'Now',role:'LTC · post-CO Fighter Sqn',unit:'149 Sqn, Tengah AB — outgoing CO'},
+      {year:'FY2027',role:'LTC · CO of AWC unit',unit:'Air Warfare Centre'},
+      {year:'FY2031',role:'SLTC · AWC Deputy Director',unit:'Air Warfare Centre / Capability Branch'},
+      {year:'FY2033',role:'COL · Director, AWC or Capability',unit:'Air Warfare Centre or HQ RSAF Capability'}
+    ],
+    gaps:[
+      {label:'Capability Development portfolio at LTC',status:'missing',impact:'Has not held a Cap-Dev appointment since CPT'},
+      {label:'AWC unit familiarisation',status:'partial',impact:'Operational familiarity — not yet senior-leadership familiarity'}
+    ],
+    benchmark:14,
+    benchSub:'of post-CO Fighter Sqn LTCs took a second CO tour at the AWC.',
+    benchNote:'Uncommon but credible — a second CO at AWC is a recognised LTC destination, particularly for fighter COs with EW or capability depth. Trades Dept Head visibility for capability-line authority.',
+    insight:'A distinctive LTC route. CO of an AWC unit is a parallel LTC command destination; whether it leads to a COL Director-level appointment depends on the next two tours.',
+    aspiration:'Curious about AWC pathway — not the headline aspiration. Wants the option scoped against the Dept Head track.',
+    questions:'1. Is an AWC CO tour treated as parallel to Dept Head at the COL board, or as a softer destination? 2. What is the realistic sequencing to Director, AWC at COL? 3. How does this affect inter-service / secondment expectations?',
+    gaps_brief:'Cap-Dev portfolio at LTC: missing. AWC unit senior familiarisation: partial.'
+  },
+  cross: {
+    timeline:[
+      {year:'Now',role:'LTC · post-CO Fighter Sqn',unit:'149 Sqn, Tengah AB — outgoing CO'},
+      {year:'FY2028',role:'LTC · Secondment or Cross-Service tour',unit:'MHA / MFA / PMO secondment OR DIS / Joint Staff at MINDEF'},
+      {year:'FY2033',role:'COL · Dept Head (cross-domain credential)',unit:'HQ RSAF / MINDEF / DIS-aligned Dept'}
+    ],
+    gaps:[
+      {label:'Inter-ministry secondment',status:'missing',impact:'Has not held an MHA / MFA / PMO secondment'},
+      {label:'Cross-service exposure (DIS / Joint)',status:'missing',impact:'EW + air-ops background fits DIS posting; no formal DIS appointment yet'},
+      {label:'Whole-of-government policy exposure',status:'missing',impact:'Strengthens Dept Head candidacy on the cross-domain line'}
+    ],
+    benchmark:12,
+    benchSub:'of post-CO Fighter Sqn LTCs took an inter-ministry or cross-service secondment.',
+    benchNote:'Optional broadening track — not a mandatory gate. Secondment to MHA, MFA or PMO, or cross-service posting to DIS (Digital and Intelligence Service) or Joint Staff at MINDEF, builds whole-of-government credibility and supports the Dept Head trajectory. Especially natural given his EW background.',
+    insight:'A broadening track, not a fallback. One inter-ministry or cross-service tour during the LTC years strengthens the Dept Head file at COL board. DIS is a particularly natural fit given the EW background.',
+    aspiration:'Open to a single secondment or cross-service tour during the LTC years if it sharpens the COL Dept Head file — not a stated direction in its own right.',
+    questions:'1. Is an MHA / MFA / PMO secondment the better fit, or a DIS / Joint Staff posting? 2. Does a DIS tour count as cross-domain credit for the Dept Head board? 3. What is the realistic timing — FY2028, or post-SLTC?',
+    gaps_brief:'Inter-ministry secondment: missing. Cross-service (DIS / Joint): missing. Whole-of-government policy: missing.'
+  }
+};
+const pathData = { tan: pathData_tan, lee: pathData_lee, kumar: pathData_kumar };
+
+
 let selectedPath = null;
 let exploredPaths = [];
 
@@ -1683,7 +1840,7 @@ function aGoTo(step) {
 }
 
 function renderOutcome() {
-  const d = pathData[selectedPath];
+  const d = pathData[currentPersona][selectedPath];
   // Timeline
   let tlHTML = d.timeline.map((t,i) => {
     let html = `<div class="tl-step"><div class="tl-year">${t.year}</div><div class="tl-role">${t.role}</div><div class="tl-unit">${t.unit}</div></div>`;
@@ -1707,7 +1864,7 @@ function renderOutcome() {
 }
 
 function renderBrief() {
-  const d = pathData[selectedPath];
+  const d = pathData[currentPersona][selectedPath];
   document.getElementById('brief-aspiration').textContent = d.aspiration;
   const pnames = { command:'Command Track', staff:'Staff Track', tech:'Capability Development Track', cross:'Instructor Track' };
   document.getElementById('brief-paths-chips').innerHTML = exploredPaths.map(p=>`<span class="brief-chip">${pnames[p]}</span>`).join('');
@@ -1732,7 +1889,7 @@ function selectRole(role, card) {
 }
 
 /* ══ Section C ══ */
-const scenarioData = {
+const scenarioData_tan = {
   annual: {
     label:'Annual career map review',
     tier:'2-seat Pact',
@@ -1931,17 +2088,936 @@ const scenarioData = {
   }
 };
 
+/* ── MAJ Lee Jia Hao — Annual career map review (post-CSC reset) ── */
+const scenarioData_lee = {
+  annual: {
+    label:'Annual career map review (post-CSC reset)',
+    tier:'2-seat Pact',
+    seats:[true,false,true,false],
+    seatNotes:['Aspirations & commitments stated','Not required for routine review','Realistic options · update career map','Not required'],
+    convo:[
+      {seat:0,text:"Post-CSC, I want to reset the career map. My stated direction is unchanged — CO of a Fighter Squadron at the FY2032 board, with Dept Head at COL (FY2033) via Branch Head or Dep Dept Head as a parallel destination. What I want to nail down today is the post-CSC sequence — second SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward. I’m not asking anyone to guarantee CO Fighter Sqn — I’m asking that the path to a credible CO board file is on paper."},
+      {seat:2,text:"Useful framing. CSC done, performance band intact, pre-CSC Flight Cdr / OC tour on file, and a clean staff tour in progress — the file looks strong on both lines. Two things I can commit to from the CM seat: I’ll scope the realistic post-Air-Plans slate (Senior SO at HQ vs. MAJ-2IC at Fighter Wing vs. Branch Head pull-forward) within 60 days, and I’ll keep both the CO line and the Dept Head line visible in the slating discussion. What I can’t pre-empt is the FY2027 board demand."},
+      {seat:0,text:"That works. I’d like CO Fighter Sqn at FY2032 as the primary aspiration with Dept Head at COL (FY2033) recorded as the parallel destination — not as a fallback. Process commitments on board file quality and any pre-CO grooming appointment if slated."},
+      {seat:2,text:"Done. Logging this as a 2-seat Pact: aspirations on CO Fighter Sqn (primary) and Dept Head at COL (parallel), process commitments on both sides, and the post-Air-Plans MAJ slate flagged as conditional on FY2026/27 board demand. Re-pact in twelve months — or sooner if the slate forces a directional choice."}
+    ],
+    output:{
+      title:'Career Map Update — Post-CSC Reset',
+      aspirations:[
+        'Member: CO of a Fighter Squadron at the FY2032 board (primary aspiration).',
+        'Member: Dept Head at the FY2033 COL board via Branch Head or Dep Dept Head as the LTC feeder (parallel COL destination, not fallback).',
+        'Member: post-Air-Plans MAJ appointment that shapes the CO board file — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward (sequencing to be scoped).'
+      ],
+      process:[
+        'Career Manager: scope the realistic post-Air-Plans MAJ slate (Senior SO / MAJ-2IC / Branch Head) within 60 days.',
+        'Career Manager: keep both the CO Fighter Sqn line and the Dept Head line visible in slating discussions; surface any directional drift back to this Pact.',
+        'Member: maintain performance band and CSC-graduate file quality through the remainder of the Air Plans tour.',
+        'Member: complete the slate consultation with CM within 90 days of slating window opening.'
+      ],
+      conditional:[
+        'Post-Air-Plans MAJ slate — subject to FY2026/27 posting board, unit demand, and force-development priorities.',
+        'Pre-CO grooming appointment (MAJ-2IC or Branch Head pull-forward) sequencing relative to FY2032 CO board — subject to FY board demand and member file at the time.',
+        'CO Fighter Sqn appointment at FY2032 — subject to board outcome, vacancy, force-development priorities. NOT a personal guarantee.',
+        'Dept Head appointment at FY2033 — subject to COL board outcome, vacancy, and member profile at the time. NOT a personal guarantee.'
+      ],
+      repact:[
+        'If the post-Air-Plans MAJ slate forces a directional choice between the CO line and the Dept Head line.',
+        'If a pre-CO grooming appointment is offered or denied at the FY2029/30 slating cycle.',
+        'If performance band changes materially.',
+        'Routine: annual review (June 2027).'
+      ],
+      sigs:[0,2]
+    }
+  },
+
+  posting: {
+    label:'Posting cycle — post-CSC MAJ options',
+    tier:'3-seat Pact',
+    seats:[true,true,true,false],
+    seatNotes:['Aspirations & commitments stated','Supervisor input on next slate','Realistic options · sequence next tour','Not required for routine posting'],
+    convo:[
+      {seat:0,text:"The Air Plans tour is closing out in about nine months. I want to use this Pact to lock in which post-CSC sequence best shapes the CO board file at FY2032. The options I see are: Senior SO at HQ RSAF (deepen policy), MAJ-2IC at a Fighter Wing (pre-CO grooming line), Branch Head pull-forward (LTC-feeder credential), or a single secondment / DIS tour (cross-domain broadening). I want the trade-offs on paper before the slating board, not after."},
+      {seat:1,text:"From the Supervisor seat, my read is the MAJ-2IC at Fighter Wing is the strongest signal for the FY2032 CO board — pre-CO grooming on file, currency on the line, and a Wing endorsement. The Branch Head pull-forward looks attractive on paper but it tilts the file towards Dept Head, which we’re also tracking as a parallel destination. A Senior SO deepening tour at HQ doesn’t add a lot relative to what he already has from Air Plans."},
+      {seat:2,text:"Agree on the MAJ-2IC read for the CO line. From the CM seat: the FY2027 MAJ-2IC slate is visible for one Fighter Wing — I can scope feasibility against Lee’s file within 60 days. The Branch Head pull-forward is genuinely available at MAJ level only for talent-tagged officers; that’s on the table but it strongly shapes the trajectory towards Dept Head. The secondment / DIS option is genuinely once-in-career — better to time it later (post-pre-CO grooming) if we choose it. Senior SO at HQ — I’d agree it’s the weakest of the four for his file."},
+      {seat:0,text:"That clears it. I’d like MAJ-2IC at Fighter Wing as the primary preferred slate, Branch Head pull-forward recorded as the parallel option that explicitly tilts towards Dept Head, secondment / DIS deferred to post-pre-CO grooming, and Senior SO at HQ deprioritised. Process commitments — performance band, currency refresh ahead of MAJ-2IC, and a written acknowledgement that picking Branch Head pull-forward reframes the primary aspiration."},
+      {seat:1,text:"I’ll provide a written Wing recommendation in support of MAJ-2IC at the FY2027 slating cycle. If the slate doesn’t materialise, I’d back Branch Head as the next preference but flag explicitly that this is a directional change."},
+      {seat:2,text:"Logged as a 3-seat Pact. Primary aspiration MAJ-2IC Fighter Wing FY2027, Branch Head pull-forward as parallel-with-directional-change, secondment/DIS deferred, Senior SO HQ deprioritised. Currency refresh as a process commitment, Wing recommendation as a process commitment from the Supervisor seat. Re-pact triggers around slate availability and any directional change."}
+    ],
+    output:{
+      title:'Posting Cycle Pact — Post-CSC MAJ Sequence',
+      aspirations:[
+        'Member: MAJ-2IC at a Fighter Wing in FY2027 as the primary preferred slate (CO board file shaping).',
+        'Member: Branch Head pull-forward (LTC-grade) recorded as parallel option — explicitly tilts trajectory towards Dept Head at COL (FY2033).',
+        'Member: secondment or DIS / Joint Staff tour deferred to post-pre-CO grooming (FY2030 or later).',
+        'Member: Senior SO at HQ deprioritised for this slate.'
+      ],
+      process:[
+        'Career Manager: scope FY2027 MAJ-2IC Fighter Wing slate feasibility against the member file within 60 days.',
+        'Career Manager: keep Branch Head pull-forward visible as parallel option; flag any directional drift back to this Pact.',
+        'Supervisor (Wing): provide a written Wing recommendation in support of MAJ-2IC at the FY2027 slating cycle.',
+        'Member: maintain performance band and complete a currency-refresh block ahead of MAJ-2IC if slated.',
+        'Member: written acknowledgement at the time of slate confirmation if Branch Head pull-forward is chosen — formal directional change.'
+      ],
+      conditional:[
+        'FY2027 MAJ-2IC Fighter Wing slate — subject to FY2026 posting board, Wing demand, and force-development priorities.',
+        'Branch Head pull-forward availability — gated to talent-tagged officers; not guaranteed.',
+        'Currency-refresh block — subject to operations tempo and Wing capacity.',
+        'Picking Branch Head pull-forward formally reframes the primary aspiration to Dept Head at COL — recorded as conditional decision point.'
+      ],
+      repact:[
+        'If the FY2027 MAJ-2IC slate does not materialise — fall to Branch Head pull-forward with formal directional change.',
+        'If Branch Head pull-forward is taken — re-pact the primary aspiration line.',
+        'If Wing recommendation cannot be secured at slating cycle.',
+        'Routine: review at the annual career map review.'
+      ],
+      sigs:[0,1,2]
+    }
+  },
+
+  sed: {
+    label:'Post-age-34 SED → retirement-runway review',
+    tier:'3-seat Pact',
+    seats:[true,false,true,true],
+    seatNotes:['Member states financial-decision context','Not required for this conversation','Realistic options · sequencing & timing','Endorses retirement-window framing'],
+    convo:[
+      {seat:0,text:"I want to talk about the financial runway, separate from the career file. I’m post-age-34. The last cash SAVER bonus is done. From now to SAVER End Date at age 44, SAVER Account contributions still accrue at 15% — about ten more years of build-up. Then six years between SED and mandatory retirement at 50 with no further SAVER growth. The question I want answered is whether this changes how the career conversation is being run. Does the financial-runway picture make me more conservative, more aggressive, or unchanged on the CO board gamble?"},
+      {seat:2,text:"Fair question, and it’s rarer than it should be that members raise it. From the CM seat, the honest answer is: the financial runway should change posture only at the edges — the appointment ladder is built around contribution to the Service, not around accrual. But there is a real signal in your question. If the CO board doesn’t pan out, the Dept Head line at COL preserves a higher rank-and-salary trajectory through the SED window — that compounds. If CO Fighter Sqn lands, the same logic applies but on the operational ladder. Either way the financial story is better than holding at MAJ through SED."},
+      {seat:3,text:"From the SSO seat — agreed. The SED → 50 window is not a SAVER decision point; it is a rank-at-retirement decision point. The career conversation is the financial conversation, just on a different timescale. We should record this as an acknowledged context, not as a financial-decision Pact in its own right."},
+      {seat:0,text:"That’s the answer I needed. I’m not asking for a contract change — I’m asking that the rank-at-retirement implication is visible in how the FY2027 slate is scoped. If Branch Head pull-forward is on offer and it materially strengthens the Dept Head COL trajectory, the financial runway is a tiebreaker, not an override."},
+      {seat:2,text:"Logged. I’ll commit to flagging rank-at-retirement implications explicitly when the FY2027 slate options are presented — not as the decision criterion, but as a visible factor."},
+      {seat:3,text:"Endorsing this as a 3-seat Pact. Rank-at-retirement implication as a visible factor in slate discussions, not a decision criterion. Member confirms no contract change requested. The Pact captures context, not commitment to a financial outcome."}
+    ],
+    output:{
+      title:'Financial-Runway Pact — Post-Age-34 SED Window',
+      aspirations:[
+        'Member: retirement-window financial picture (SED at 44, mandatory retirement at 50) made visible in career slate discussions as context.',
+        'Member: rank-at-retirement implication treated as a tiebreaker between equally-credible options, not as an override.',
+        'Member: no contract change requested; SAVER scheme acknowledged as-is.'
+      ],
+      process:[
+        'Career Manager: flag rank-at-retirement implications explicitly when presenting FY2027 slate options.',
+        'Career Manager: surface SED-window trade-offs (CO Fighter Sqn vs. Dept Head COL) when slate options diverge materially in projected rank-at-retirement.',
+        'Member: maintain his own rolling view of the runway; raise it at the next annual review.',
+        'SSO / Authority: record this conversation as acknowledged context, not as a financial-decision Pact.'
+      ],
+      conditional:[
+        'SED date and SAVER contribution schedule — fixed by scheme; not a decision variable in this Pact.',
+        'Mandatory retirement age — fixed at 50 for officers; not a decision variable.',
+        'Rank-at-retirement — depends on board outcomes (CO, COL) not guaranteed by this document.',
+        'Treatment as tiebreaker only — financial runway is NOT a basis for slate selection in its own right.'
+      ],
+      repact:[
+        'If SAVER scheme changes materially (e.g. SED age, contribution rate, or bonus schedule).',
+        'If a slate option materially changes the projected rank-at-retirement picture.',
+        'Routine: review at the annual career map review.'
+      ],
+      sigs:[0,2,3]
+    }
+  },
+
+  contested: {
+    label:'Contested CO Fighter Sqn board (FY2032)',
+    tier:'4-seat Pact',
+    seats:[true,true,true,true],
+    seatNotes:['Aspirations & objections stated','Wing recommendation · file endorsement','Realistic options · re-sequencing','Board outcome · final endorsement'],
+    convo:[
+      {seat:0,text:"The FY2032 CO Fighter Sqn board outcome doesn’t look like it will land. I have visibility on the slate, and my file is on the second tier — credible, but not the top of the list. I want to use this Pact to do two things before the board sits: one, confirm the file is as strong as it can be; two, agree on what happens if the board outcome is not CO Fighter Sqn. I don’t want a fallback that gets sprung on me at the next slating cycle."},
+      {seat:1,text:"From the Wing seat, the Wing recommendation has been written and it is supportive. Currency band, operational tour history, and command-credibility narrative are all on file. The file is competitive — what we cannot influence is the relative position against the other slated names this cycle. If the board does not land CO this cycle, my recommendation would be to keep the file warm for the FY2033 cycle as a CO board re-take, not to immediately pivot."},
+      {seat:2,text:"From the CM seat: agreed that the file is competitive. What I can commit to is keeping the FY2033 CO Fighter Sqn slate visible as a re-take if the FY2032 board doesn’t land. If we don’t take the re-take — or if it doesn’t materialise — the genuine alternative path is Branch Head or Dep Dept Head at LTC pointing to Dept Head at COL (FY2033 or FY2034). That is a directional reframe, not a fallback — and I want to record it as such, not as something that activates automatically."},
+      {seat:3,text:"From the SSO seat. The board outcome is the board’s call — that is non-negotiable. What I can endorse is the process: a clean FY2032 board file, a clean re-take option at FY2033, and an explicit directional reframe to the Dept Head line if neither lands. The reframe must be a deliberate decision at a future Pact, not an auto-activation."},
+      {seat:0,text:"Agreed. Process: file submitted strongest possible; re-take FY2033 if FY2032 doesn’t land; explicit directional reframe to Dept Head if re-take doesn’t land. I also commit to staying in the line and not making the re-take decision under stress immediately post-board."},
+      {seat:2,text:"Logging as a 4-seat Pact. File quality endorsed by Wing, re-take pathway kept visible by CM, directional reframe option recorded as deliberate-not-automatic by SSO, member commitment to deliberate decision-making post-board. Re-pact at FY2032 board outcome, and again at FY2033 cycle if needed."}
+    ],
+    output:{
+      title:'Contested CO Board Pact — FY2032',
+      aspirations:[
+        'Member: CO Fighter Sqn at the FY2032 board — primary aspiration submitted.',
+        'Member: CO Fighter Sqn at the FY2033 board as a re-take if FY2032 does not land.',
+        'Member: Dept Head at COL (FY2033 or FY2034 board) via Branch Head / Dep Dept Head as the deliberate directional reframe if neither CO cycle lands.',
+        'Member: deliberate, not stress-driven, decision-making post-FY2032 board outcome.'
+      ],
+      process:[
+        'Supervisor (Wing): written Wing recommendation submitted for FY2032 CO Fighter Sqn board — currency, operational tour history, command-credibility narrative.',
+        'Career Manager: file submission supported for the strongest possible FY2032 case.',
+        'Career Manager: FY2033 CO Fighter Sqn slate kept visible as a re-take pathway if FY2032 does not land.',
+        'Career Manager: Branch Head / Dep Dept Head route to Dept Head at COL kept visible as deliberate directional reframe, not auto-activation.',
+        'SSO / Authority: board process endorsement — clean file, clean re-take option, deliberate reframe decision.',
+        'Member: no decision on the reframe in the 30 days immediately following the FY2032 board outcome; re-pact convened first.'
+      ],
+      conditional:[
+        'FY2032 CO Fighter Sqn appointment — subject to board outcome, vacancy, force-development priorities. NOT a personal guarantee.',
+        'FY2033 CO Fighter Sqn re-take slate — subject to FY2033 board slating decision.',
+        'Branch Head / Dep Dept Head slate post-FY2032 — subject to FY2032/33 LTC slating cycle.',
+        'Dept Head appointment at FY2033 or FY2034 — subject to COL board outcome, vacancy, and member profile at the time.',
+        'Directional reframe is a deliberate decision; this Pact does NOT pre-authorise activation.'
+      ],
+      repact:[
+        'At FY2032 CO Fighter Sqn board outcome — convened within 60 days regardless of result.',
+        'At FY2033 cycle if re-take is on the slate or has been declined.',
+        'If member profile changes materially before either board (performance band, currency).',
+        'If the Branch Head / Dep Dept Head slate forces a directional decision ahead of the FY2033 board.'
+      ],
+      sigs:[0,1,2,3]
+    }
+  },
+
+  parallel: {
+    label:'Branch Head as parallel COL destination',
+    tier:'4-seat Pact',
+    seats:[true,true,true,true],
+    seatNotes:['Member aspiration · parallel destination','Wing input on cross-line credibility','Realistic options · keep both lines warm','SSO endorsement · parallel-not-fallback'],
+    convo:[
+      {seat:0,text:"I want to put Dept Head at COL (FY2033) on paper as a parallel destination to CO Fighter Sqn — not a fallback. The reason for this Pact is that as I move closer to the FY2032 CO board, the natural tendency is to drift towards a single-track narrative. I want both the CO line and the Dept Head line kept warm with explicit process commitments, so that whichever board lands is the result of a genuine choice, not a one-line file."},
+      {seat:1,text:"From the Wing seat — supportive in principle. The risk I see is that the cross-line credibility is real but optical: a MAJ who is genuinely positioned for both is rare. We can support the Wing-side endorsement for the CO line cleanly. The Dept Head line needs an HQ-side narrative we don’t generate — that’s the CM and SSO conversation."},
+      {seat:2,text:"From the CM seat: the way we keep both lines warm in practice is by sequencing the MAJ tours so that the second MAJ appointment doesn’t pin the file to one line prematurely. If MAJ-2IC at Fighter Wing is the slate, that strengthens the CO line and is neutral on the Dept Head line. If Branch Head pull-forward is the slate, that strengthens the Dept Head line and softens the CO line. The Pact then is to scope both at the FY2027 slating cycle and pick the one that genuinely fits — recorded as a deliberate choice, not a default."},
+      {seat:3,text:"From the SSO seat — I can endorse parallel-not-fallback formally. The board paperwork at COL FY2033 will assess Dept Head and other COL destinations on their own merits; we don’t treat Dept Head as a soft landing for officers who didn’t make CO. That distinction needs to be in the Pact Record explicitly so it’s not lost over the next six years."},
+      {seat:0,text:"Agreed. Aspirations: CO Fighter Sqn FY2032 and Dept Head at COL FY2033 as parallel COL destinations. Process: keep both lines warm through the FY2027 slate decision; re-pact at the slate decision if it forces a directional choice; final assessment at the FY2032 CO board and FY2033 COL board on their own merits. I also commit to written acknowledgement that parallel-not-fallback is real, not a polite framing."},
+      {seat:2,text:"Logging as a 4-seat Pact. Parallel destination explicitly endorsed by SSO. CM commits to keeping both lines visible at FY2027 slating. Wing commits to clean CO-line endorsement and acknowledges the Dept Head line is HQ-driven. Member commits to deliberate slate decision-making."}
+    ],
+    output:{
+      title:'Parallel COL Destination Pact — CO Fighter Sqn ∥ Dept Head',
+      aspirations:[
+        'Member: CO Fighter Sqn at the FY2032 board (operational COL line).',
+        'Member: Dept Head at the FY2033 COL board (staff COL line) — parallel destination, not fallback.',
+        'Both COL destinations treated on their own merits at their respective boards.',
+        'Member: deliberate choice at the FY2027 slate decision — neither line should be pinned by default.'
+      ],
+      process:[
+        'Career Manager: keep both the CO line and the Dept Head line visible at the FY2027 MAJ slating cycle.',
+        'Career Manager: present MAJ-2IC Fighter Wing (CO-strengthening) and Branch Head pull-forward (Dept Head-strengthening) as the directional fork.',
+        'Supervisor (Wing): provide clean Wing recommendation for the CO line at FY2032 board.',
+        'Supervisor (Wing): acknowledge Dept Head line is HQ-driven and not in the Wing recommendation scope.',
+        'SSO / Authority: record parallel-not-fallback framing in the Pact Record; carry it forward in board paperwork as appropriate.',
+        'Member: written acknowledgement at the FY2027 slate decision confirming the directional choice is deliberate.'
+      ],
+      conditional:[
+        'FY2027 MAJ slate (MAJ-2IC vs. Branch Head pull-forward vs. other) — subject to posting board.',
+        'FY2032 CO Fighter Sqn board outcome — board decision, not guaranteed.',
+        'FY2033 Dept Head COL board outcome — board decision, not guaranteed.',
+        'Parallel-not-fallback framing — formal in the Pact Record; cannot be unilaterally rescinded.'
+      ],
+      repact:[
+        'At the FY2027 MAJ slate decision — confirms which line is being strengthened.',
+        'If either line is materially softened (performance band, slate non-availability) ahead of board.',
+        'At FY2032 CO board outcome.',
+        'At FY2033 COL board outcome.',
+        'Routine: annual career map review.'
+      ],
+      sigs:[0,1,2,3]
+    }
+  }
+};
+/* ── LTC Kumar Rajan — Senior-officer career direction (post-CO, 4-seat Pact) ── */
+const scenarioData_kumar = {
+  senior: {
+    label:'Senior-officer career direction (post-CO)',
+    tier:'4-seat Pact',
+    seats:[true,true,true,true],
+    seatNotes:['Aspirations & commitments stated','Wing input on senior trajectory','Realistic options · post-CO roadmap','Endorses senior milestones · sign off'],
+    convo:[
+      {seat:0,text:"I’m about to hand over 149 Sqn. I’d like to put the post-CO direction on paper before I step out. My stated aspiration is Department Head at the FY2033 COL board — that’s the scholar / high-talent route. Branch Head or Dep Dept Head at LTC as the feeder appointment. Commander of a named Command (Air Combat Command, ADOC, APGC, or Participation Command) as the longer-horizon operational pinnacle, post-Dept Head. I’d like the option of one inter-ministry secondment or DIS / Joint Staff tour during the LTC years if it sharpens the Dept Head file — but that’s broadening, not a gate. Group Cdr is the alternative post-CO posting; for this profile I’d expect it to be bypassed."},
+      {seat:1,text:"From the Wing seat — supportive of the Dept Head trajectory. The recommendation I’ll write covers Branch Head and Dep Dept Head at the FY2027 LTC slating cycle as the preferred feeder appointments. Operational credibility from the CO tour is strong; that translates well to Hd Air Plans or Hd Air Intel-direction Dept Head selection. If Group Cdr lands instead, I’d back it — but I agree it’s the alternative path, not the scholar default."},
+      {seat:2,text:"From the CM seat: I’ll commit to scoping the realistic Branch Head and Dep Dept Head slate at FY2027 within 60 days — covering both HQ RSAF and MINDEF / Joint Staff variants. I’ll surface inter-ministry secondment (MHA / MFA / PMO) and DIS / Joint Staff cross-service options for FY2028 or post-SLTC with realistic timelines. SAF SCSC slating is pending and we’ll track it. Group Commander I’ll keep visible as the alternative path, but I agree the scholar trajectory routes via Dept Head."},
+      {seat:3,text:"From the SSO seat. I’ll record Department Head at the FY2033 COL board as the endorsed senior aspiration and commit to consider the file for the COL board in FY2033 if performance holds, SAF SCSC is completed, and the file shows Branch Head or Dep Dept Head experience. Commander of a named Command (ACC / ADOC / APGC / Participation Command) is the longer-horizon operational pinnacle and is captured as aspiration — the COL board itself selects to Dept Head; Cmdr of a named Command is a subsequent assignment decision. Group Commander recorded as the alternative path for completeness — not the scholar default for this profile."},
+      {seat:0,text:"That covers it. I commit to SAF SCSC when offered, maintaining performance band through the LTC tour, taking up one inter-ministry secondment or DIS / Joint Staff tour if sequenced, and accepting whichever LTC feeder appointment lands at FY2027. Aspirations on paper, process commitments from each seat, board outcomes conditional. I’ll sign that."}
+    ],
+    output:{
+      title:'Full Career Pact — Senior-Officer Direction (Post-CO)',
+      aspirations:[
+        'Member: Department Head at the FY2033 COL board — primary scholar / high-talent post-CO aspiration.',
+        'Member: Branch Head OR Dep Dept Head at LTC (FY2027) — preferred feeder appointment for the Dept Head trajectory.',
+        'Member: Commander of a named Command (Air Combat Command / ADOC / APGC / Participation Command) — longer-horizon operational pinnacle, post-Dept Head.',
+        'Member: one inter-ministry secondment (MHA / MFA / PMO) OR cross-service tour (DIS / Joint Staff at MINDEF) during the LTC years — broadening, not a gate.',
+        'Member: Group Commander recorded as the alternative post-CO path (typical for non-scholars; most likely bypassed for this profile).'
+      ],
+      process:[
+        'Career Manager: scope the realistic Branch Head and Dep Dept Head slate at FY2027 within 60 days — covering HQ RSAF and MINDEF / Joint Staff variants.',
+        'Career Manager: surface inter-ministry secondment (MHA / MFA / PMO) and DIS / Joint Staff cross-service options for FY2028 or post-SLTC with realistic timelines.',
+        'Career Manager: track SAF Senior Command & Staff Course (SCSC) slating — pending.',
+        'Career Manager: keep Group Commander visible as the alternative path — flag if the trajectory drifts off the scholar route.',
+        'Supervisor (Wing): provide a written Wing recommendation at FY2027 LTC slating — covering Branch Head and Dep Dept Head as the preferred feeder appointments.',
+        'SSO / Authority: consider the file for the FY2033 COL board for Dept Head selection if SAF SCSC is completed and performance is maintained.',
+        'Member: complete SAF SCSC when offered.',
+        'Member: maintain performance band and currency through the LTC tour.',
+        'Member: accept whichever Branch Head / Dep Dept Head appointment lands at FY2027, and take up one secondment or cross-service tour if sequenced.'
+      ],
+      conditional:[
+        'FY2027 Branch Head / Dep Dept Head slate — subject to FY2027 posting board, unit demand, force-development priorities.',
+        'Inter-ministry secondment or DIS / Joint Staff tour (FY2028 or post-SLTC) — subject to slate availability; broadening, not a gate.',
+        'SAF Senior Command & Staff Course slating — subject to course availability and board.',
+        'COL board outcome at FY2033 (Dept Head selection) — subject to board outcome, vacancy, force-development priorities, and member profile at the time. NOT a personal guarantee.',
+        'Commander of a named Command — a subsequent assignment decision post-Dept Head; this Pact captures it as aspiration only.',
+        'Group Commander recorded as alternative path; this Pact does NOT pre-authorise either trajectory.'
+      ],
+      repact:[
+        'If the FY2027 Branch Head / Dep Dept Head slate does not materialise.',
+        'If a secondment or cross-service tour cannot be sequenced.',
+        'If the COL pipeline shifts materially (Dept Head numbers, timing, or fit criteria).',
+        'If the member profile changes (performance band drop, currency gap, SCSC slating risk).',
+        'If the trajectory drifts towards the Group Commander alternative path.',
+        'Routine: annual review against this Pact.'
+      ],
+      sigs:[0,1,2,3]
+    }
+  }
+};
+const scenarioData = { tan: scenarioData_tan, lee: scenarioData_lee, kumar: scenarioData_kumar };
+
+
 let currentScenario = null;
 let convoStep_idx = 0;
 const sigNames = ['Member','Supervisor','Career Manager','SSO / Authority'];
 const sigClass = ['sig-1','sig-2','sig-3','sig-4'];
+
+
+/* ══ Persona module ══ */
+const personaData = {
+  tan: {
+    fullName:'CPT Tan Wei Xiang',
+    initials:'TW',
+    avatarClass:'av-g',
+    pathExplorerHeading:'Available paths for CPT Tan Wei Xiang (WSO Fighter)',
+    aiGenHeading:'3 non-obvious paths suggested for CPT Tan Wei Xiang (WSO Fighter)',
+    profileSub:'Weapons System Officer (Fighter) · 7 years service · F-15SG Squadron, Paya Lebar Air Base',
+    profileChips:[
+      'MAJ-select band','Career Score 82/100','Flying hours: ~950','Ground tour due'
+    ],
+    snapAspiration:'Wants to stay on the Command Track — AFAC in FY2026/27, CSC ahead of the FY2033 CO board, and CO of a Fighter Squadron or Air Warfare Centre unit by FY2033',
+    snapLast:{text:'No Career Pact on file', color:'var(--r700)'},
+    snapTrigger:'Ground tour posting due — Q4 2026 (mandatory at 7-year mark)',
+    pbMember:'CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Squadron, Paya Lebar Air Base · 7 years service',
+    pbAspiration:'Wants to remain on the Command Track — targeting Air Force Advanced Course (AFAC, the CPT→MAJ Route-of-Advancement course) in FY2026 or FY2027, GKS Command & Staff College (CSC) ahead of the FY2033 CO board, and CO of a Fighter Squadron — or CO of an Air Warfare Centre unit — by FY2033. Prefers Air Plans Department or Air Warfare Centre as ground tour posting to maintain mission relevance.',
+    pbQuestions:'1. Is AFAC FY2026 or FY2027 the realistic slating window — and can it run before the Q4 2026 ground tour?&nbsp; 2. Is Air Plans Department (or an Air Warfare Centre tour) confirmed as the ground tour posting?&nbsp; 3. What is the realistic CSC sequencing ahead of the FY2033 CO board (Fighter Sqn or AWC unit)?',
+    pbGaps:'Missing: Air Force Advanced Course (AFAC) — CPT→MAJ ROA; Lead WSO qualification; GKS CSC (prerequisite for CO appointment). Partially completed: Advanced Weapons Employment Course (Phase 1 done). Electronic Warfare Specialist: completed.',
+    briefMember:'CPT Tan Wei Xiang · Weapons System Officer (Fighter) · F-15SG Sqn, Paya Lebar Air Base · 7 years service',
+    pcSub:{
+      command:'Lead WSO → AFAC → MAJ command appointments → CSC → CO of Fighter Sqn or AWC unit',
+      staff:'HQ RSAF Air Plans Department → Joint Staff',
+      tech:'Air Plans Dept / Capability Branch / Air Warfare Centre · may include DSTA attachment',
+      cross:'Air Force Training Command (AFTC) → Chief Instructor'
+    },
+    pcNext:{
+      command:'Next: AFAC FY2026/27',
+      staff:'Next: Ground tour Q4 2026',
+      tech:'Next: AWC / Cap-Dev tour',
+      cross:'Next: WSO Instructor course'
+    },
+    pcBm:{ command:35, staff:28, tech:20, cross:17 },
+    dbPersonnel:{
+      name:'CPT Tan Wei Xiang',
+      sub:'Weapons System Officer (Fighter) · 7 yr service · F-15SG Sqn, PLAB',
+      avatarClass:'av-b'
+    },
+    print:{
+      member:'CPT Tan Wei Xiang',
+      vocation:'Weapons System Officer (Fighter)',
+      rank:'CPT (MAJ-select)',
+      unit:'F-15SG Squadron, PLAB',
+      service:'7 years',
+      score:'82 / 100'
+    },
+
+    dbSupervisor:{
+      name:'CPT Tan Wei Xiang',
+      sub:'WSO (Fighter) · F-15SG Sqn, PLAB · reports to you',
+      avatarInitials:'TW',
+      readiness:'High',
+      readinessSub:'Current posting fit',
+      urgencyLabel:'Posting Urgency',
+      urgency:'Q4 2026',
+      urgencySub:'Ground tour due',
+      pact:'Not on file',
+      pactSub:'No Pact on file',
+      stars:[
+        {icon:'✈️',lbl:'Mission systems performance',rating:'★★★★★'},
+        {icon:'🎯',lbl:'Tactical mission delivery',rating:'★★★★★'},
+        {icon:'🤝',lbl:'Squadron contribution',rating:'★★★★☆'}
+      ],
+      progTitle:'Unit readiness impact if posted out',
+      progRows:[
+        {label:'EW coverage gap (sole EW Specialist)',val:'HIGH',pct:90,fill:'pf-a'},
+        {label:'Flight leadership gap',val:'Medium',pct:55,fill:'pf-p'},
+        {label:'EW handover time required',val:'3 months',pct:40,fill:'pf-b'}
+      ],
+      action1:'Submit support input',
+      action2:'Request 3-month EW handover plan'
+    },
+    dbHR:{
+      name:'CPT Tan Wei Xiang',
+      sub:'WSO (Fighter) · 7 yr service · F-15SG Sqn, Paya Lebar Air Base',
+      avatarInitials:'TW',
+      fitLabel:'Job Fit Score',
+      fit:'87%',
+      fitSub:'Air Plans Department match',
+      risk:'High',
+      riskSub:'SAVER milestone (age 31 bonus)',
+      replace:'≈$420K',
+      replaceSub:'Illustrative · incl. overseas flying trg',
+      roi:'5.2×',
+      roiSub:'vs. fresh recruit cohort',
+      civil:'~$100–160K',
+      civilSub:'Illustrative · defence sector p.a.',
+      progTitle:'Job fit breakdown (Air Plans Department)',
+      progRows:[
+        {label:'Mission systems proficiency',val:'94%',pct:94,fill:'pf-g'},
+        {label:'Leadership readiness',val:'82%',pct:82,fill:'pf-g'},
+        {label:'Ground coordination experience',val:'65%',pct:65,fill:'pf-a'}
+      ],
+      levers:[
+        {lever:'Course assignment',action:'AFAC (FY2026/27) — CPT→MAJ Route-of-Advancement course before ground tour'},
+        {lever:'Next posting',action:'Air Plans Department, HQ RSAF — 87% fit, leverages WSO operational expertise'},
+        {lever:'Priority action',action:'No Career Pact on file — schedule first conversation'}
+      ],
+      action1:'Schedule Career Pact',
+      action2:'Download PDF brief',
+      action3:'Flag retention risk'
+    },
+    dbCommander:{
+      name:'CPT Tan Wei Xiang',
+      sub:'WSO (Fighter) · 7 yr service · Ground tour posting Q4 2026',
+      avatarInitials:'TW',
+      bestfitLabel:'Best-fit posting',
+      bestfit:'Air Plans Dept',
+      bestfitSub:'87% fit · leverages WSO expertise',
+      risk:'High',
+      riskSub:'Act within 60 days',
+      replace:'≈$420K',
+      replaceSub:'Illustrative · if lost to attrition',
+      mri:'High',
+      mriSub:'Sole EW Specialist in sqn',
+      align:'Good',
+      alignSub:'Command Track',
+      optionsTitle:'Posting options ranked by fit',
+      options:[
+        {label:'Air Plans Department, HQ RSAF (recommended)',val:'87%',pct:87,fill:'pf-g'},
+        {label:'Capability Branch / DSTA attachment',val:'74%',pct:74,fill:'pf-a'},
+        {label:'Air Warfare Centre — Staff Officer / Capability tour',val:'71%',pct:71,fill:'pf-a'},
+        {label:'AFTC WSO Instructor (lower fit)',val:'61%',pct:61,fill:'gray'}
+      ],
+      action1:'Approve Air Plans Department posting',
+      action2:'Override with documentation',
+      action3:'Schedule 4-seat Pact first'
+    },
+    sectionBNotice:null,
+    scenarios:['annual','posting','recontract','contested','awc']
+  },
+  lee: {
+    fullName:'MAJ Lee Jia Hao',
+    initials:'LJ',
+    avatarClass:'av-b',
+    pathExplorerHeading:'Available paths for MAJ Lee Jia Hao (WSO Fighter · post-CSC)',
+    aiGenHeading:'3 non-obvious paths suggested for MAJ Lee Jia Hao (WSO Fighter · post-CSC)',
+    profileSub:'Weapons System Officer (Fighter) · 12 years service · Staff Officer, Air Plans Department, HQ RSAF',
+    profileChips:[
+      'MAJ · post-CSC','Career Score 86/100','Pre-Branch Head','Pre-CO board (FY2032)'
+    ],
+    snapAspiration:'CO of a Fighter Squadron at the FY2032 board — with Branch Head / Dep Dept Head → Dept Head at COL (FY2033) tracked as a parallel COL destination, not a fallback',
+    snapLast:{text:'Last Career Pact: June 2024 (post-CSC reset due)', color:'var(--a700)'},
+    snapTrigger:'Annual career map review — post-CSC reset window (mid-tour, no posting imminent)',
+    pbMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · Staff Officer, Air Plans Department, HQ RSAF · 12 years service · post-CSC',
+    pbAspiration:'CO of a Fighter Squadron at the FY2032 board. Post-CSC sequence (Senior SO, MAJ-2IC, or Branch Head as the file-shaping next step) is the open conversation. Branch Head or Dep Dept Head → Dept Head at COL (FY2033) tracked as a parallel destination, not a fallback after a missed CO board. Flight Cdr / OC tour was completed pre-CSC.',
+    pbQuestions:'1. What is the realistic post-Air-Plans MAJ slate — Senior SO at HQ, MAJ-2IC at Fighter Wing, or a Branch Head pull-forward?&nbsp; 2. Is a pre-CO grooming appointment expected before the FY2032 CO board?&nbsp; 3. How does the second MAJ tour shape the CO board file vs. the Dept Head trajectory?',
+    pbGaps:'Done: GKS Command & Staff College (CSC); pre-CSC Flight Cdr / OC tour. Partial: Branch Head / Dep Dept Head appointment (talent-tagged); CO board file (performance band must hold). Missing: Senior SO / MAJ-2IC tour at MAJ level; Joint Staff / inter-service exposure.',
+    briefMember:'MAJ Lee Jia Hao · Weapons System Officer (Fighter) · Air Plans Department, HQ RSAF · 12 years service · post-CSC',
+    pcSub:{
+      command:'Senior SO / MAJ-2IC → pre-CO appointment → CO Fighter Sqn (FY2032)',
+      staff:'Branch Head / Dep Dept Head (LTC feeder) → Dept Head at COL (FY2033)',
+      tech:'AWC / Capability Branch / DSTA secondment → CO of AWC unit',
+      cross:'Inter-ministry secondment OR DIS / Joint Staff at MINDEF'
+    },
+    pcNext:{
+      command:'Next: Senior SO / MAJ-2IC slate FY2028',
+      staff:'Next: Branch Head / Dep Dept Head slate FY2029',
+      tech:'Next: Cap-Dev tour FY2028',
+      cross:'Next: Secondment / DIS tour FY2028'
+    },
+    pcBm:{ command:42, staff:38, tech:18, cross:14 },
+    dbPersonnel:{
+      name:'MAJ Lee Jia Hao',
+      sub:'WSO (Fighter) · 12 yr service · Staff Officer, Air Plans Dept, HQ RSAF · post-CSC',
+      avatarClass:'av-b'
+    },
+    print:{
+      member:'MAJ Lee Jia Hao',
+      vocation:'Weapons System Officer (Fighter)',
+      rank:'MAJ (post-CSC, pre-CO)',
+      unit:'Air Plans Department, HQ RSAF',
+      service:'12 years',
+      score:'86 / 100'
+    },
+
+    dbSupervisor:{
+      name:'MAJ Lee Jia Hao',
+      sub:'WSO (Fighter) · Air Plans Department, HQ RSAF · reports to you',
+      avatarInitials:'LJ',
+      readiness:'High',
+      readinessSub:'Strong tour delivery; post-CSC',
+      urgencyLabel:'Tour Closeout',
+      urgency:'Q4 2027',
+      urgencySub:'Air Plans tour closes; next slate due',
+      pact:'Annual reset',
+      pactSub:'Last Pact June 2024 · review due',
+      stars:[
+        {icon:'🏛️',lbl:'Policy & staff work quality',rating:'★★★★★'},
+        {icon:'📋',lbl:'Stakeholder engagement (cross-Dept)',rating:'★★★★★'},
+        {icon:'🎯',lbl:'Strategic judgement',rating:'★★★★☆'},
+        {icon:'🤝',lbl:'Team leadership (Branch SOs)',rating:'★★★★☆'}
+      ],
+      progTitle:'HQ Branch impact if posted out',
+      progRows:[
+        {label:'Air Plans portfolio handover',val:'Medium',pct:60,fill:'pf-p'},
+        {label:'Branch continuity (Lead SO)',val:'Medium',pct:55,fill:'pf-p'},
+        {label:'Handover time required',val:'2 months',pct:35,fill:'pf-b'}
+      ],
+      action1:'Endorse for FY2027 MAJ slate',
+      action2:'Provide written CO-line recommendation'
+    },
+    dbHR:{
+      name:'MAJ Lee Jia Hao',
+      sub:'WSO (Fighter) · 12 yr service · post-CSC · Air Plans Department, HQ RSAF',
+      avatarInitials:'LJ',
+      fitLabel:'Job Fit Score',
+      fit:'91%',
+      fitSub:'MAJ-2IC, Fighter Wing match',
+      risk:'Medium',
+      riskSub:'Post-age-34 SAVER · pre-CO board uncertainty',
+      replace:'≈$680K',
+      replaceSub:'Illustrative · incl. CSC + 12yr investment',
+      roi:'6.8×',
+      roiSub:'vs. fresh recruit cohort',
+      civil:'~$160–230K',
+      civilSub:'Illustrative · defence/aerospace p.a.',
+      progTitle:'Job fit breakdown (MAJ-2IC, Fighter Wing)',
+      progRows:[
+        {label:'Operational currency & WSO leadership',val:'88%',pct:88,fill:'pf-g'},
+        {label:'CSC credential & staff judgement',val:'95%',pct:95,fill:'pf-g'},
+        {label:'CO board file readiness',val:'72%',pct:72,fill:'pf-a'},
+        {label:'Cross-Dept / Joint exposure',val:'48%',pct:48,fill:'pf-a'}
+      ],
+      levers:[
+        {lever:'Next slate (FY2027)',action:'MAJ-2IC, Fighter Wing — strongest CO-board signal; alt: Branch Head pull-forward'},
+        {lever:'Pre-CO grooming',action:'Currency refresh + Lead WSO re-qualification block before operational return'},
+        {lever:'Priority action',action:'Schedule annual reset Pact — post-CSC sequence not yet on file'}
+      ],
+      action1:'Schedule annual reset Pact',
+      action2:'Download PDF brief',
+      action3:'Flag pre-CO grooming need'
+    },
+    dbCommander:{
+      name:'MAJ Lee Jia Hao',
+      sub:'WSO (Fighter) · 12 yr service · post-CSC · next MAJ slate due FY2027',
+      avatarInitials:'LJ',
+      bestfitLabel:'Best-fit slate',
+      bestfit:'MAJ-2IC Fighter Wing',
+      bestfitSub:'91% fit · CO-board file shaping',
+      risk:'Medium',
+      riskSub:'CO board uncertainty · pre-board pact recommended',
+      replace:'≈$680K',
+      replaceSub:'Illustrative · if lost to attrition',
+      mri:'Medium',
+      mriSub:'HQ Branch handover · 2 months',
+      align:'Strong',
+      alignSub:'Member aspiration: CO Fighter Sqn FY2032',
+      optionsTitle:'FY2027 MAJ slate options ranked by fit',
+      options:[
+        {label:'MAJ-2IC, Fighter Wing (recommended · CO-line)',val:'91%',pct:91,fill:'pf-g'},
+        {label:'Branch Head pull-forward (Dept Head line — directional change)',val:'84%',pct:84,fill:'pf-a'},
+        {label:'Senior SO at HQ — policy deepening',val:'72%',pct:72,fill:'pf-a'},
+        {label:'Secondment / DIS tour (defer to post-grooming)',val:'66%',pct:66,fill:'gray'}
+      ],
+      action1:'Approve MAJ-2IC Fighter Wing slate',
+      action2:'Override with directional change documentation',
+      action3:'Schedule 3-seat Pact first'
+    },
+    sectionBNotice:'',
+    scenarios:['annual','posting','sed','contested','parallel']
+  },
+  kumar: {
+    fullName:'LTC Kumar Rajan',
+    initials:'KR',
+    avatarClass:'av-g',
+    pathExplorerHeading:'Available paths for LTC Kumar Rajan (WSO Fighter · post-CO)',
+    aiGenHeading:'3 non-obvious paths suggested for LTC Kumar Rajan (WSO Fighter · post-CO)',
+    profileSub:'Weapons System Officer (Fighter) · 16 years service · outgoing CO, 149 Squadron, Tengah AB',
+    profileChips:[
+      'LTC · post-CO','Career Score 91/100','SAF Scholar','Dept Head track · COL FY2033'
+    ],
+    snapAspiration:'Department Head at the FY2033 COL board via Branch Head or Dep Dept Head as the LTC feeder appointment, with Commander of a named Command as the longer-horizon operational pinnacle (post-Dept Head)',
+    snapLast:{text:'Last Career Pact: pre-CO milestone (Aug 2024)', color:'var(--a700)'},
+    snapTrigger:'Post-CO handover — senior-officer direction Pact due',
+    pbMember:'LTC Kumar Rajan · Weapons System Officer (Fighter) · outgoing CO, 149 Squadron, Tengah AB · 16 years service · SAF Scholar',
+    pbAspiration:'Department Head at the FY2033 COL board — the scholar / high-talent post-CO trajectory. Branch Head or Dep Dept Head as the LTC feeder appointment. Commander of a named Command (Air Combat Command / ADOC / APGC / Participation Command) as the longer-horizon operational pinnacle post-Dept Head. Group Commander noted as an alternative path (typical for non-scholars; most likely bypassed). Open to one inter-ministry secondment or cross-service tour (DIS / Joint Staff) during the LTC years if it sharpens the Dept Head file.',
+    pbQuestions:'1. Is Branch Head or Dep Dept Head the better FY2027 slate — operational vs. policy bias?&nbsp; 2. Which Department aligns best with his EW + air-plans background — Hd Air Plans, Hd Air Intel, or a Joint Staff Dept Head?&nbsp; 3. When is SAF Senior Command & Staff Course (SCSC) slating expected, and how does it sequence against the secondment / DIS option?',
+    pbGaps:'Done: GKS CSC. Partial: Branch Head / Dep Dept Head eligibility (talent-tagged); strategic policy portfolio; SAF SCSC pending. Missing: inter-ministry secondment; DIS / Joint Staff exposure.',
+    briefMember:'LTC Kumar Rajan · Weapons System Officer (Fighter) · outgoing CO, 149 Sqn, Tengah AB · 16 years service · SAF Scholar',
+    pcSub:{
+      command:'Branch Head / Dep Dept Head → Dept Head (COL FY2033) → Cmdr of named Command (longer horizon)',
+      staff:'Branch Head / Dep Dept Head (LTC feeder) → Dept Head at COL (FY2033)',
+      tech:'CO of AWC unit → AWC Deputy Director → Director, AWC / Capability',
+      cross:'Inter-ministry secondment OR DIS / Joint Staff at MINDEF'
+    },
+    pcNext:{
+      command:'Next: Br Head / Dep Dept Head FY2027',
+      staff:'Next: Br Head / Dep Dept Head FY2027',
+      tech:'Next: CO of AWC unit FY2027',
+      cross:'Next: Secondment / DIS tour FY2028'
+    },
+    pcBm:{ command:55, staff:48, tech:14, cross:12 },
+    dbPersonnel:{
+      name:'LTC Kumar Rajan',
+      sub:'WSO (Fighter) · 16 yr service · outgoing CO 149 Sqn, Tengah AB · SAF Scholar',
+      avatarClass:'av-g'
+    },
+    print:{
+      member:'LTC Kumar Rajan',
+      vocation:'Weapons System Officer (Fighter)',
+      rank:'LTC (post-CO)',
+      unit:'149 Squadron, Tengah AB (outgoing CO)',
+      service:'16 years',
+      score:'91 / 100'
+    },
+
+    dbSupervisor:{
+      name:'LTC Kumar Rajan',
+      sub:'WSO (Fighter) · outgoing CO 149 Sqn, Tengah AB · reports to you',
+      avatarInitials:'KR',
+      readiness:'Very High',
+      readinessSub:'CO tour at handover; performance band exceeded',
+      urgencyLabel:'CO Handover',
+      urgency:'Q1 2027',
+      urgencySub:'Post-CO LTC slate due FY2027',
+      pact:'Pre-CO milestone',
+      pactSub:'Senior-direction Pact due',
+      stars:[
+        {icon:'⭐',lbl:'CO-level command judgement',rating:'★★★★★'},
+        {icon:'✈️',lbl:'Operational delivery (Sqn)',rating:'★★★★★'},
+        {icon:'🎯',lbl:'Strategic & policy aptitude',rating:'★★★★★'},
+        {icon:'🤝',lbl:'Force-development engagement',rating:'★★★★☆'}
+      ],
+      progTitle:'Sqn impact post-CO handover',
+      progRows:[
+        {label:'Incoming CO ready-state',val:'Strong',pct:85,fill:'pf-g'},
+        {label:'Command continuity (Sqn 2IC)',val:'Strong',pct:80,fill:'pf-g'},
+        {label:'Handover time complete',val:'On track',pct:90,fill:'pf-b'}
+      ],
+      action1:'Endorse for FY2027 LTC slate (Br Head / Dep Dept Head)',
+      action2:'Provide written CO-line recommendation'
+    },
+    dbHR:{
+      name:'LTC Kumar Rajan',
+      sub:'WSO (Fighter) · 16 yr service · SAF Scholar · outgoing CO 149 Sqn, Tengah AB',
+      avatarInitials:'KR',
+      fitLabel:'Best LTC slate fit',
+      fit:'94%',
+      fitSub:'Branch Head / Dep Dept Head (Hd Air Plans line)',
+      risk:'Low',
+      riskSub:'SAF Scholar · long-bond active · scholar trajectory intact',
+      replace:'≈$1.1M',
+      replaceSub:'Illustrative · 16yr + scholar + CO investment',
+      roi:'9.4×',
+      roiSub:'vs. fresh recruit cohort',
+      civil:'~$240–340K',
+      civilSub:'Illustrative · defence/strategy p.a.',
+      progTitle:'Job fit breakdown (Branch Head / Dep Dept Head, HQ RSAF)',
+      progRows:[
+        {label:'CO-level command credibility',val:'97%',pct:97,fill:'pf-g'},
+        {label:'Strategic / policy depth',val:'82%',pct:82,fill:'pf-g'},
+        {label:'Cross-Dept / Joint exposure',val:'58%',pct:58,fill:'pf-a'},
+        {label:'SAF SCSC credential (pending)',val:'Pending',pct:40,fill:'pf-a'}
+      ],
+      levers:[
+        {lever:'Next slate (FY2027)',action:'Branch Head OR Dep Dept Head at HQ RSAF / MINDEF — LTC feeder for Dept Head COL board'},
+        {lever:'Course slating',action:'SAF Senior Command & Staff Course (SCSC) — slate before SLTC tour'},
+        {lever:'Broadening (optional)',action:'Inter-ministry secondment (MHA / MFA / PMO) OR DIS / Joint Staff at MINDEF'}
+      ],
+      action1:'Schedule senior-direction Pact',
+      action2:'Download PDF brief',
+      action3:'Submit Dept Head FY2033 board input'
+    },
+    dbCommander:{
+      name:'LTC Kumar Rajan',
+      sub:'WSO (Fighter) · 16 yr service · SAF Scholar · post-CO LTC slate due FY2027',
+      avatarInitials:'KR',
+      bestfitLabel:'Best-fit LTC slate',
+      bestfit:'Br Head / Dep Dept Head',
+      bestfitSub:'94% fit · Dept Head COL feeder',
+      risk:'Low',
+      riskSub:'Scholar bond active · low attrition exposure',
+      replace:'≈$1.1M',
+      replaceSub:'Illustrative · if lost to attrition',
+      mri:'Strong',
+      mriSub:'CO handover on track · Sqn 2IC ready',
+      align:'Strong',
+      alignSub:'Member aspiration: Dept Head COL FY2033',
+      optionsTitle:'FY2027 LTC slate options ranked by fit',
+      options:[
+        {label:'Br Head / Dep Dept Head, HQ RSAF (recommended · Dept Head feeder)',val:'94%',pct:94,fill:'pf-g'},
+        {label:'Br Head / Dep Dept Head, MINDEF or Joint Staff',val:'88%',pct:88,fill:'pf-g'},
+        {label:'CO of AWC unit (parallel LTC command — Capability line)',val:'76%',pct:76,fill:'pf-a'},
+        {label:'Secondment to MHA / MFA / PMO OR DIS / Joint Staff',val:'71%',pct:71,fill:'pf-a'},
+        {label:'Group Commander (alternative path · typical for non-scholars)',val:'62%',pct:62,fill:'gray'}
+      ],
+      action1:'Approve Br Head / Dep Dept Head, HQ RSAF',
+      action2:'Override with documentation',
+      action3:'Schedule 4-seat senior-direction Pact'
+    },
+    sectionBNotice:'',
+    scenarios:['senior']
+  }
+};
+
+/* Scenario card catalog — describes how each scenario id should render in the picker grid */
+const scenarioCardCatalog = {
+  annual:    { icon:'📅', name:'Annual career map review',          sub:'Routine check-in — career map reset',                                  tierBadgeClass:'stb-1', tierBadge:'2-seat Pact' },
+  posting:   { icon:'📦', name:'Standard posting cycle',            sub:'Q4 posting — member going to a new unit',                              tierBadgeClass:'stb-2', tierBadge:'3-seat Pact' },
+  recontract:{ icon:'📝', name:'Career continuation milestone',     sub:'Locking in senior path at a key inflection point',                     tierBadgeClass:'stb-3', tierBadge:'4-seat Pact' },
+  contested: { icon:'⚠️', name:'Contested posting',                 sub:'Member objects — posting deviates from career map',                    tierBadgeClass:'stb-3', tierBadge:'4-seat Pact' },
+  awc:       { icon:'🎯', name:'AWC sequencing addendum',           sub:'Air Warfare Centre tour and CO of an AWC unit as parallel options',   tierBadgeClass:'stb-2', tierBadge:'3-seat Pact' },
+  sed:       { icon:'💰', name:'Financial-runway review',           sub:'Post-age-34 SED window → mandatory retirement at 50',                 tierBadgeClass:'stb-2', tierBadge:'3-seat Pact' },
+  parallel:  { icon:'🔀', name:'Parallel COL destination Pact',     sub:'CO Fighter Sqn ∥ Dept Head — parallel, not fallback',                 tierBadgeClass:'stb-3', tierBadge:'4-seat Pact' },
+  senior:    { icon:'⭐', name:'Senior-officer career direction',   sub:'Post-CO scholar route — Br Head/Dep Dept Head → Dept Head FY2033',    tierBadgeClass:'stb-3', tierBadge:'4-seat Pact' }
+};
+/* Per-persona scenario sub-text overrides (fall back to scenarioCardCatalog default) */
+const scenarioSubOverrides = {
+  lee: {
+    posting:'Post-CSC MAJ slate — sequence next tour to shape CO board file',
+    contested:'FY2032 CO Fighter Sqn board outcome unlikely to land — pre-board pact'
+  },
+  kumar: {}
+};
+
+function renderScenarioGrid() {
+  const ids = personaData[currentPersona].scenarios;
+  const grid = document.getElementById('scenario-grid');
+  if (!grid) return;
+  const overrides = scenarioSubOverrides[currentPersona] || {};
+  grid.innerHTML = ids.map(id => {
+    const c = scenarioCardCatalog[id];
+    if (!c) return '';
+    const sub = overrides[id] || c.sub;
+    return `<div class="scenario-card" onclick="selectScenario('${id}',this)">
+      <div class="sel-ring"></div>
+      <div class="scenario-icon">${c.icon}</div>
+      <div class="scenario-name">${c.name}</div>
+      <div class="scenario-sub">${sub}</div>
+      <span class="scenario-tier-badge ${c.tierBadgeClass}">${c.tierBadge}</span>
+    </div>`;
+  }).join('');
+}
+
+function setTextById(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+function setHtmlById(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = val;
+}
+
+function applyPersonaToDOM() {
+  const p = personaData[currentPersona];
+  if (!p) return;
+
+  /* ── Section A — Career Twin ── */
+  setTextById('path-explorer-heading', p.pathExplorerHeading);
+  setTextById('ai-gen-heading', p.aiGenHeading);
+
+  // Prep brief fields (path-explorer demo panel)
+  setTextById('pb-member', p.pbMember);
+  setHtmlById('pb-aspiration', p.pbAspiration);
+  setHtmlById('pb-questions', p.pbQuestions);
+  setTextById('pb-gaps', p.pbGaps);
+
+  // Profile card (Step 1)
+  setTextById('profile-name-a', p.fullName);
+  setTextById('profile-sub-a', p.profileSub);
+  const avA = document.getElementById('profile-avatar-a');
+  if (avA) { avA.className = 'avatar ' + p.avatarClass; avA.textContent = p.initials; }
+  const chipsA = document.getElementById('profile-chips-a');
+  if (chipsA) chipsA.innerHTML = p.profileChips.map(c => `<span class="chip">${c}</span>`).join('');
+
+  // Snapshot card (Step 1)
+  setTextById('snap-aspiration', p.snapAspiration);
+  const snapLast = document.getElementById('snap-last');
+  if (snapLast) { snapLast.textContent = p.snapLast.text; snapLast.style.color = p.snapLast.color; }
+  setTextById('snap-trigger', p.snapTrigger);
+
+  // Path cards sub-text + next-milestone + benchmarks (Step 2)
+  ['command','staff','tech','cross'].forEach(k => {
+    setTextById('pc-sub-'+k, p.pcSub[k]);
+    if (p.pcNext) setTextById('pc-next-'+k, p.pcNext[k]);
+    const bm = document.getElementById('pc-bm-'+k);
+    if (bm) bm.innerHTML = `<strong>${p.pcBm[k]}%</strong>&nbsp;of similar profiles took this route`;
+  });
+
+  // Brief (Step 4)
+  setTextById('brief-member', p.briefMember);
+
+  // Print profile strip
+  setTextById('pp-member-name', p.print.member);
+  setTextById('pp-vocation',    p.print.vocation);
+  setTextById('pp-rank',        p.print.rank);
+  setTextById('pp-unit',        p.print.unit);
+  setTextById('pp-service',     p.print.service);
+  setTextById('pp-score',       p.print.score);
+
+  /* ── Section B — Personnel dashboard profile (only the Personnel db-profile swaps) ── */
+  setTextById('db-personnel-name', p.dbPersonnel.name);
+  setTextById('db-personnel-sub',  p.dbPersonnel.sub);
+  const dpAv = document.getElementById('db-personnel-avatar');
+  if (dpAv) { dpAv.className = 'avatar ' + p.dbPersonnel.avatarClass; dpAv.textContent = p.initials; }
+
+  /* Section B - Supervisor dashboard */
+  if (p.dbSupervisor) {
+    const s = p.dbSupervisor;
+    setTextById('db-sup-name', s.name);
+    setTextById('db-sup-sub',  s.sub);
+    const sAv = document.getElementById('db-sup-avatar');
+    if (sAv) sAv.textContent = s.avatarInitials;
+    setTextById('db-sup-readiness',     s.readiness);
+    setTextById('db-sup-readiness-sub', s.readinessSub);
+    setTextById('db-sup-urgency-label', s.urgencyLabel);
+    setTextById('db-sup-urgency',       s.urgency);
+    setTextById('db-sup-urgency-sub',   s.urgencySub);
+    setTextById('db-sup-pact',          s.pact);
+    setTextById('db-sup-pact-sub',      s.pactSub);
+    const starsHost = document.getElementById('db-sup-stars');
+    if (starsHost) {
+      starsHost.innerHTML = s.stars.map(st =>
+        `<div class="star-row"><span class="star-icon-s">${st.icon}</span><span class="star-lbl">${st.lbl}</span><span class="star-rating" style="color:var(--p700);">${st.rating}</span></div>`
+      ).join('');
+    }
+    setTextById('db-sup-prog-title', s.progTitle);
+    const progHost = document.getElementById('db-sup-prog-rows');
+    if (progHost) {
+      progHost.innerHTML = s.progRows.map(r =>
+        `<div class="prog-row"><div class="prog-lrow"><span class="prog-label">${r.label}</span><span class="prog-val">${r.val}</span></div><div class="prog-bar"><div class="prog-fill ${r.fill}" style="width:${r.pct}%"></div></div></div>`
+      ).join('');
+    }
+    setTextById('db-sup-action1', s.action1);
+    setTextById('db-sup-action2', s.action2);
+  }
+
+  /* Section B - HR Practitioner dashboard */
+  if (p.dbHR) {
+    const h = p.dbHR;
+    setTextById('db-hr-name', h.name);
+    setTextById('db-hr-sub',  h.sub);
+    const hAv = document.getElementById('db-hr-avatar');
+    if (hAv) hAv.textContent = h.avatarInitials;
+    setTextById('db-hr-fit-label',    h.fitLabel);
+    setTextById('db-hr-fit',          h.fit);
+    setTextById('db-hr-fit-sub',      h.fitSub);
+    setTextById('db-hr-risk',         h.risk);
+    setTextById('db-hr-risk-sub',     h.riskSub);
+    setTextById('db-hr-replace',      h.replace);
+    setTextById('db-hr-replace-sub',  h.replaceSub);
+    setTextById('db-hr-roi',          h.roi);
+    setTextById('db-hr-roi-sub',      h.roiSub);
+    setTextById('db-hr-civil',        h.civil);
+    setTextById('db-hr-civil-sub',    h.civilSub);
+    setTextById('db-hr-prog-title',   h.progTitle);
+    const hprog = document.getElementById('db-hr-prog-rows');
+    if (hprog) {
+      hprog.innerHTML = h.progRows.map(r =>
+        `<div class="prog-row"><div class="prog-lrow"><span class="prog-label">${r.label}</span><span class="prog-val">${r.val}</span></div><div class="prog-bar"><div class="prog-fill ${r.fill}" style="width:${r.pct}%"></div></div></div>`
+      ).join('');
+    }
+    const levBody = document.getElementById('db-hr-levers');
+    if (levBody) {
+      levBody.innerHTML = h.levers.map(l =>
+        `<tr><td>${l.lever}</td><td>${l.action}</td></tr>`
+      ).join('');
+    }
+    setTextById('db-hr-action1', h.action1);
+    setTextById('db-hr-action2', h.action2);
+    setTextById('db-hr-action3', h.action3);
+  }
+
+  /* Section B - Commander dashboard */
+  if (p.dbCommander) {
+    const c = p.dbCommander;
+    setTextById('db-cmd-name', c.name);
+    setTextById('db-cmd-sub',  c.sub);
+    const cAv = document.getElementById('db-cmd-avatar');
+    if (cAv) cAv.textContent = c.avatarInitials;
+    setTextById('db-cmd-bestfit-label', c.bestfitLabel);
+    setTextById('db-cmd-bestfit',       c.bestfit);
+    setTextById('db-cmd-bestfit-sub',   c.bestfitSub);
+    setTextById('db-cmd-risk',          c.risk);
+    setTextById('db-cmd-risk-sub',      c.riskSub);
+    setTextById('db-cmd-replace',       c.replace);
+    setTextById('db-cmd-replace-sub',   c.replaceSub);
+    setTextById('db-cmd-mri',           c.mri);
+    setTextById('db-cmd-mri-sub',       c.mriSub);
+    setTextById('db-cmd-align',         c.align);
+    setTextById('db-cmd-align-sub',     c.alignSub);
+    setTextById('db-cmd-options-title', c.optionsTitle);
+    const optHost = document.getElementById('db-cmd-options');
+    if (optHost) {
+      optHost.innerHTML = c.options.map(o => {
+        const fillStyle = o.fill === 'gray'
+          ? `width:${o.pct}%;background:var(--gray400);`
+          : `width:${o.pct}%`;
+        const fillClass = o.fill === 'gray' ? '' : ' ' + o.fill;
+        return `<div class="prog-row"><div class="prog-lrow"><span class="prog-label">${o.label}</span><span class="prog-val">${o.val}</span></div><div class="prog-bar"><div class="prog-fill${fillClass}" style="${fillStyle}"></div></div></div>`;
+      }).join('');
+    }
+    setTextById('db-cmd-action1', c.action1);
+    setTextById('db-cmd-action2', c.action2);
+    setTextById('db-cmd-action3', c.action3);
+  }
+
+  // Section B persona-scope notice (shown only for non-Tan personas)
+  const noticeB = document.getElementById('persona-notice-b');
+  if (noticeB) {
+    if (p.sectionBNotice) { noticeB.innerHTML = p.sectionBNotice; noticeB.style.display = 'block'; }
+    else { noticeB.style.display = 'none'; noticeB.innerHTML = ''; }
+  }
+
+  /* ── Section C — render scenario picker for this persona ── */
+  renderScenarioGrid();
+
+  // Reset Section A selections and Section C state
+  selectedPath = null;
+  exploredPaths = [];
+  document.querySelectorAll('.path-card').forEach(c => {
+    c.classList.remove('selected');
+    const ring = c.querySelector('.sel-ring');
+    if (ring) ring.textContent = '';
+  });
+  const toStep3 = document.getElementById('a-to-step3');
+  if (toStep3) toStep3.disabled = true;
+  if (typeof aGoTo === 'function') aGoTo(1);
+  // Reset Section C selection
+  if (typeof cReset === 'function') cReset();
+}
+
+function switchPersona(id) {
+  if (!personaData[id]) return;
+  currentPersona = id;
+  document.querySelectorAll('.persona-btn').forEach(b => {
+    const on = b.dataset.persona === id;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  applyPersonaToDOM();
+}
+
+// Initial render so Section C scenario grid is built for CPT Tan on first load
+document.addEventListener('DOMContentLoaded', () => {
+  renderScenarioGrid();
+});
+
+/* ══ END Persona module ══ */
+
 
 function selectScenario(id, card) {
   document.querySelectorAll('.scenario-card').forEach(c=>{ c.classList.remove('sel-scenario'); c.querySelector('.sel-ring').textContent=''; });
   card.classList.add('sel-scenario');
   card.querySelector('.sel-ring').textContent='✓';
   currentScenario = id;
-  const d = scenarioData[id];
+  const d = scenarioData[currentPersona][id];
   // Show seats panel
   const sp = document.getElementById('seats-panel');
   sp.style.display='block';
@@ -1961,7 +3037,7 @@ function selectScenario(id, card) {
 function startConvo() {
   document.getElementById('convo-panel').style.display='block';
   document.getElementById('output-doc').style.display='none';
-  const d = scenarioData[currentScenario];
+  const d = scenarioData[currentPersona][currentScenario];
   document.getElementById('convo-scenario-label').textContent = d.label;
   convoStep_idx=0;
   document.getElementById('convo-thread').innerHTML='';
@@ -1969,7 +3045,7 @@ function startConvo() {
 }
 
 function renderConvoStep() {
-  const d = scenarioData[currentScenario];
+  const d = scenarioData[currentPersona][currentScenario];
   const steps = d.convo;
   const thread = document.getElementById('convo-thread');
   thread.innerHTML='';
@@ -2003,13 +3079,13 @@ function renderConvoStep() {
 }
 
 function convoStep(dir) {
-  const d=scenarioData[currentScenario];
+  const d=scenarioData[currentPersona][currentScenario];
   convoStep_idx=Math.max(0,Math.min(convoStep_idx+dir,d.convo.length-1));
   renderConvoStep();
 }
 
 function showOutput() {
-  const d=scenarioData[currentScenario];
+  const d=scenarioData[currentPersona][currentScenario];
   const o=d.output;
   document.getElementById('output-doc').style.display='block';
   document.getElementById('output-doc-title').textContent=o.title;
@@ -2047,7 +3123,7 @@ function showOutput() {
     <div class="print-sig-cell">
       <div class="print-sig-line"></div>
       <div class="print-sig-role">${sigNames[i]}</div>
-      <div class="print-sig-name">${i===0 ? 'CPT Tan Wei Xiang' : 'Name & date'}</div>
+      <div class="print-sig-name">${i===0 ? (personaData[currentPersona]?.fullName || 'Member') : 'Name & date'}</div>
     </div>`).join('');
 
   document.getElementById('output-doc').scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -2056,10 +3132,11 @@ function showOutput() {
 function printPact() {
   // Set a friendly document title so the saved-PDF default filename is useful
   const prevTitle = document.title;
-  const d = scenarioData[currentScenario];
+  const d = scenarioData[currentPersona][currentScenario];
   if (d) {
     const safe = d.output.title.replace(/[^a-z0-9\- ]/gi,'').trim().replace(/\s+/g,'_');
-    document.title = `PostingPact_${safe}_CPT_Tan_Wei_Xiang`;
+    const memberSlug = (personaData[currentPersona]?.fullName || 'Member').replace(/[^a-z0-9\- ]/gi,'').trim().replace(/\s+/g,'_');
+    document.title = `PostingPact_${safe}_${memberSlug}`;
   }
   window.print();
   setTimeout(()=>{ document.title = prevTitle; }, 1000);
